@@ -1,0 +1,1439 @@
+geschosse:
+- id: 1
+  name: untergeschoss
+  rooms:
+  - id: 1
+    name: Eingang
+    objects:
+    - id: 1
+      name: "Steckdose Türe rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Türe links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 3
+      name: "Steckdose oben rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 4
+      name: "Steckdose oben links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Anschluss Eingangstüre "
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 6
+      name: "Netzwerk Türe links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 7
+      name: "Kontakt Eingangstüre"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 8
+      name: "KNX Eingang"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 9
+      name: "Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 10
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 2
+    name: Einliegerwohnung
+    objects:
+    - id: 1
+      name: "Steckdose Türe rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Türe links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 3
+      name: "Steckdose Terassentüre rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Terassentüre links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Anschluss Kühlschrank "
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 6
+      name: "Steckdose Spüle rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 7
+      name: "Anschluss Herd"
+      con-type: anschluss
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 8
+      name: "Anschluss Backofen"
+      con-type: anschluss
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 9
+      name: "Steckdose Spüle links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 10
+      name: "Anschluss Spüle"
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 11
+      name: "Rolladen Terassentüre"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 12
+      name: "Rolladen Fenster"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 13
+      name: "Netzwerk Terassentüre rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 14
+      name: "Netzwerk Terassentüre rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 15
+      name: "Kontakt Terasentüre "
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 16
+      name: "Kontakt Fenster"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 17
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 18
+      name: "Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 19
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 3
+    name: Bad
+    objects:
+    - id: 1
+      name: "Steckdose Türe"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Spiegel links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 3
+      name: "Steckdose Spiegel rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 4
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 5
+      name: "Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 6
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 7
+      name: "Licht Spiegel"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 8
+      name: "Kontakt Türe"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+  - id: 4
+    name: Diele
+    objects:
+    - id: 1
+      name: "Steckdose 1"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Steckdose 2"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Steckdose 3"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose 4"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Netzwerk Accesspoint"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+        vert: decke
+    - id: 6
+      name: "Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 7
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 8
+      name: "Licht Schrank"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+- id: 2
+  name: erdgeschoss
+  rooms:
+  - id: 1
+    name: Kueche
+    objects:
+    - id: 1
+      name: "Doppelsteckdose gegenüber"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+        hori: [934.28,105.54]
+    - id: 2
+      name: "Doppelsteckdose Spühle links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+        hori: [1374.91,96.19]
+    - id: 3
+      name: "Anschluss Spühlmaschine"
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 10A
+      pos:
+    - id: 4
+      name: "Steckdose Leibung Fenster links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Steckdose Leibung Fenster rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Steckdose Spüle rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 7
+      name: "Anschluss Ofen "
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 8
+      name: "Anschluss Dampfgarer "
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 9
+      name: "Anschluss Kühlschrank "
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 10
+      name: "Anschluss Herd"
+      con-type: anschluss
+      anzahl: 1
+      einzelsicherung: 16A
+      pos:
+    - id: 11
+      name: "Steckdose Herd"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 12
+      name: "Netzwerk Herd"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 13
+      name: "KNX Herd"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 14
+      name: "Kontakt Herd"
+      con-type: kontakt
+      anzahl: 1
+      pos:
+    - id: 15
+      name: "Präsenzmelder Küche"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 16
+      name: "Rolladen Terassentüre"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 17
+      name: "Kontakt Terassentüre"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 18
+      name: "Rolladen Fenster"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 19
+      name: "Kontakt Fenster"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 20
+      name: "Licht Insel"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 21
+      name: "Licht Spüle"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 22
+      name: "Netzwerk Spüle"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+  - id: 2
+    name: Esszimmer
+    objects:
+    - id: 1
+      name: "Doppelsteckdose Hochschrank"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Liege"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Doppelsteckdose Halbschrank"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Doppelsteckdose Fensterleibung"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Doppelsteckdose Gegenwand"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 6
+      name: "Doppelsteckdose Durchgang"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 7
+      name: "Netzwerk Liege"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 8
+      name: "Netzwerk Durchgang"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Kontakt Balkontüre"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 10
+      name: "KNX Durchgang"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 11
+      name: "Licht Tisch"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 12
+      name: "Licht Hochschrank/Kaffeemaschine"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 13
+      name: "Licht Halbschrank"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 14
+      name: "Licht Gegenwand links"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 15
+      name: "Licht Gegenwand rechts"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 3
+    name: Vorraum
+    objects:
+    - id: 1
+      name: "Doppelsteckdose Durchgang links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Treppenaufgang"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Doppelsteckdose Empore"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Präsenzmelder Vorraum"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 5
+      name: "Licht Vorraum"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 4
+    name: Wohnzimmer
+    objects:
+    - id: 1
+      name: "Doppelsteckdose Durchgang"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Wand mitte"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Doppelsteckdose Wand rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Leibung Sitzfenster"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Doppelsteckdose Wand Balkon"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 6
+      name: "Steckdose Trennwand"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 7
+      name: "Doppelsteckdose Trennwand rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 8
+      name: "Steckdose Toilette"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk Durchgang"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Netzwerk Wand mitte"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 11
+      name: "Netzwerk Wand rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 12
+      name: "Netzwerk Trennwand"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 13
+      name: "Netzwerk Ofen"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 14
+      name: "Netzwerk Accesspoint"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+        vert: decke
+    - id: 15
+      name: "Kontakt Balkontür"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 16
+      name: "Kontakt Trennwand"
+      con-type: kontakt
+      anzahl: 1
+      pos:
+    - id: 17
+      name: "Kontakt Ofen"
+      con-type: kontakt
+      anzahl: 1
+      pos:
+    - id: 18
+      name: "KNX Durchgang"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 19
+      name: "KNX Trennwand"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 20
+      name: "KNX Ofen"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 21
+      name: "KNX Präsenzmelder Wohnzimmer"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 22
+      name: "Licht Wohnzimmer"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 23
+      name: "Licht Wand links"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 24
+      name: "Licht Wand rechts"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 5
+    name: Spielen
+    objects:
+    - id: 1
+      name: "Doppelsteckdose Durchgang"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Wand Balkontür"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Doppelsteckdose Wand link"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Doppelsteckdose Wand rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Steckdose Wand Links Oben"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 6
+      name: "Netzwerk Wand links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 7
+      name: "Netzwerk Wand rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 8
+      name: "Kontakt Balkontür"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 9
+      name: "KNX Wand links"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 10
+      name: "KNX Wand rechts"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 11
+      name: "KNX Durchgang"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 12
+      name: "Präsenzmelder Spielen"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 13
+      name: "Licht Spielen"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 14
+      name: "Licht Wand links"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+    - id: 15
+      name: "Licht Wand rechts"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 6
+    name: Schlafzimmer
+    objects:
+    - id: 1
+      name: "Steckdose Türe"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Wand links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Doppelsteckdose Wand rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Doppelsteckdose Fenster rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Steckdose Schrank"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Netzwerk"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 7
+      name: "Rolladen"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 8
+      name: "Kontakt Fenster"
+      con-type: kontakt
+      anzahl: 4
+      knx: input
+      pos:
+    - id: 9
+      name: "KNX Taster Türe"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 10
+      name: "Präsenzmelder Schlafen"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 11
+      name: "Licht Schlafen"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 7
+    name: Bad
+    objects:
+    - id: 1
+      name: "Doppelsteckdose Spiegel rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Doppelsteckdose Spiegel links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Steckdose Leibung"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 4
+      name: "Steckdose Wand links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Netzwerk Spiegel"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Kontakt Fenster links"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 7
+      name: "Kontakt Fenster rechts"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 8
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 9
+      name: "Präsenzmelder Bad"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 10
+      name: "Licht Bad"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 11
+      name: "Licht Spiegel"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 8
+    name: WC
+    objects:
+    - id: 1
+      name: "Steckdose Türe"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Toilette"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 3
+      name: "Kontakt Fenster "
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 4
+      name: "Präsenzmelder Toilette"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 5
+      name: "Licht Decke"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 6
+      name: "Licht Spiegel"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+- id: 3
+  name: obergeschoss
+  rooms:
+  - id: 1
+    name: Flur
+    objects:
+    - id: 1
+      name: "Steckdose Türe Bad links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Tpre Bad rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 3
+      name: "Steckdose Tür Zi1 links"
+      con-type: steckdose
+      anzahl: 1
+      einzelsicherung: 10A
+      pos:
+    - id: 4
+      name: "Steckdose Tür Zi1 rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Steckdose Arbeitsplatz"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 6
+      name: "Steckdose Empore"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 7
+      name: "Fensterheber"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 8
+      name: "Netzwerk Arbeitsplatz"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk Tür Bad rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Netzwerk Accesspoint"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+        vert: decke
+    - id: 11
+      name: "Kontakt Fenster links"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 12
+      name: "Kontakt Fenster rechts"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 13
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 14
+      name: "Präsenzmelder Bad"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 15
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 16
+      name: "Licht Arbeitsplatz"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 2
+    name: Lernen
+    objects:
+    - id: 1
+      name: "Steckdose Türe Zi3"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Arbeitsplatz links"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 3
+      name: "Steckdose Arbeitsplatz rechts"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 4
+      name: "Steckdose Türe Zi2"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Rolladen"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 6
+      name: "Netzwerk Arbeitsplatz links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 7
+      name: "Netzwerk Arbeitsplatz rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 8
+      name: "Kontakt Fenster links"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 9
+      name: "Kontakt Fenster mitte"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 10
+      name: "Kontakt Fenster rechts"
+      con-type: kontakt
+      anzahl: 1
+      knx: input
+      pos:
+    - id: 11
+      name: "KNX Tür Zi3"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 12
+      name: "KNX Tür Zi2"
+      con-type: knx
+      knx-component: re
+      pos:
+    - id: 13
+      name: "Präsenzmelder Bad"
+      con-type: knx
+      knx-component: pm
+      pos:
+        vert: decke
+    - id: 14
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 15
+      name: "Licht Arbeitsplatz links"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 16
+      name: "Licht Arbeitsplatz rechts"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 3
+    name: Zimmer1
+    objects:
+    - id: 1
+      name: "Steckdose Kamin"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Steckdose Fenster"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Steckdose Oben links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Oben rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Steckdose Türe"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 6
+      name: "Rolladen Fenster"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 7
+      name: "Rolladen Dachfenster"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 8
+      name: "Netzwerk Fenster"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk Oben links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Netzwerk Oben rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 11
+      name: "Kontakt Fenster "
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 12
+      name: "Kontakt Dachfenster"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 13
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 14
+      name: "KNX Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+    - id: 15
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+  - id: 4
+    name: Zimmer2
+    objects:
+    - id: 1
+      name: "Steckdose Türe rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Areitsplatz"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 3
+      name: "Steckdose unten links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Oben links"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Steckdose Türe links"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Rolladen Fenster unten"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 7
+      name: "Rolladen Fenster links"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 8
+      name: "Netzwerk Arbeitsplatz"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk unten links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Netzwerk Oben links"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 11
+      name: "Kontakt Fenster unten"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 12
+      name: "Kontakt Fenster links"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 13
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 14
+      name: "KNX Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+    - id: 15
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 16
+      name: "Licht Arbeitsplatz"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 5
+    name: Zimmer3
+    objects:
+    - id: 1
+      name: "Steckdose Türe "
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 2
+      name: "Steckdose Areitsplatz"
+      con-type: steckdose
+      anzahl: 3
+      pos:
+    - id: 3
+      name: "Steckdose unten rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Oben rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 5
+      name: "Steckdose Schrank"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Rolladen Fenster unten"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 7
+      name: "Rolladen Fenster rechts"
+      con-type: anschluss
+      anzahl: 2
+      knx: rolladen
+      pos:
+    - id: 8
+      name: "Netzwerk Arbeitsplatz"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk unten rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Netzwerk oben rechts"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 11
+      name: "Kontakt Fenster unten"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 12
+      name: "Kontakt Fenster links"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 13
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 14
+      name: "KNX Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+    - id: 15
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke
+    - id: 16
+      name: "Licht Arbeitsplatz"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: oben
+  - id: 6
+    name: Bad
+    objects:
+    - id: 1
+      name: "Steckdose Spiegel links "
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 2
+      name: "Steckdose Spiegel mitte"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 3
+      name: "Steckdose Spiegel rechts"
+      con-type: steckdose
+      anzahl: 2
+      pos:
+    - id: 4
+      name: "Steckdose Toilette"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 5
+      name: "Steckdose Schrank rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 6
+      name: "Steckdose Schrank rechts"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 7
+      name: "Steckdose Türe"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+    - id: 8
+      name: "Netzwerk Spiegel"
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 9
+      name: "Netzwerk Badewanne "
+      con-type: netzwerk
+      anzahl: 1
+      pos:
+    - id: 10
+      name: "Kontakt Fenster"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 11
+      name: "Kontakt Dachfenster"
+      con-type: kontakt
+      anzahl: 2
+      knx: input
+      pos:
+    - id: 12
+      name: "KNX Glastaster"
+      con-type: knx
+      knx-component: gt
+      pos:
+    - id: 13
+      name: "KNX Präsenzmelder"
+      con-type: knx
+      knx-component: pm
+      pos:
+    - id: 14
+      name: "Licht"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        vert: decke

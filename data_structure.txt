@@ -1,0 +1,32 @@
+Geschoss
+ Raum
+  Objekte
+  - pos
+    - hori: (x,y)
+    - vert: unten, mitte, oben, decke
+  - con-type
+    - Steckdosen (Anzahl, schaltbar)
+    - KNX Komponenten
+      - knx-component:(Taster (gt), Präsenzmelder (pm), Reserve (re))
+    - Kontakte (Anzahl)
+    - Lichter (Anzahl)
+    - Stromanschlüsse (Anzahl Adern)
+    - Netzwerk
+  - knx
+    - schaltbar
+    - rolladen
+    - dimmbar
+    - input
+
+Leitung
+    - [Objekte]
+    - Leitungstyp (NYM (3x1.5; 5x1.5; 5x2.5); KNX; CAT7; Kontakt)
+
+Sicherung
+    - [Leitungen]
+
+FI
+    - [Sicherungen]
+    - Polanzahl
+
+

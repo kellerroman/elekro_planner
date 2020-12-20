@@ -1,0 +1,73 @@
+geschosse:
+- id: 1
+  name: untergeschoss
+- id: 2
+  name: erdgeschoss
+  height: 2.55
+  walls:
+  - id: 1
+    pos:
+      hori: [25,0]
+    ende: [36.5,329]
+  - id: 2
+    pos:
+      hori: [61.5,0]
+    ende: [587.5,36.5]
+  - id: 3
+    pos:
+      hori: [649,0]
+    ende: [287.5,24]
+  - id: 4
+    pos:
+      hori: [912.5,0]
+    ende: [24,324]
+  - id: 5
+    pos:
+      hori: [936.5,36.5]
+    ende: [475,36.5]
+  - id: 6
+    pos:
+      hori: [1375,73]
+    ende: [36.5,951]
+  - id: 7
+    pos:
+      hori: [1387.5,1024]
+    ende: [24.0,165]
+  - id: 8
+    pos:
+      hori: [0,292.5]
+    ende: [36.5,756.5]
+  - id: 9
+    pos:
+      hori: [0,1025]
+    ende: [936.5,24]
+  - id: 10
+    pos:
+      hori: [0,575]
+    ende: [511.5,24]
+  - id: 11
+    pos:
+      hori: [500,0]
+    ende: [11.5,599]
+  - id: 12
+    pos:
+      hori: [25,223.5]
+    ende: [486.5,11.5]
+  - id: 13
+    pos:
+      hori: [637.5,0]
+    ende: [11.5,324]
+  - id: 14
+    pos:
+      hori: [500,312.5]
+    ende: [149,11.5]
+  - id: 15
+    pos:
+      hori: [912.5,554]
+    ende: [24,624]
+  - id: 16
+    pos:
+      hori: [912.5,1001]
+    ende: [499,24]
+- id: 3
+  name: obergeschoss
