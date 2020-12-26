@@ -8,7 +8,7 @@ geschosse:
   - id: 1
     pos:
       hori: [25,0]
-    ende: [36.5,329]
+    ende: [36.5,324]
   - id: 2
     pos:
       hori: [61.5,0]
@@ -47,12 +47,12 @@ geschosse:
     ende: [511.5,24]
   - id: 11
     pos:
-      hori: [500,0]
-    ende: [11.5,599]
+      hori: [500,237]
+    ende: [11.5,362]
   - id: 12
     pos:
-      hori: [25,223.5]
-    ende: [486.5,11.5]
+      hori: [25,212]
+    ende: [486.5,25]
   - id: 13
     pos:
       hori: [637.5,0]
@@ -69,5 +69,63 @@ geschosse:
     pos:
       hori: [912.5,1001]
     ende: [499,24]
+  - id: 17
+    pos:
+      hori: [486.5,0]
+    ende: [25,237]
+  windows:
+  - id: 1
+    pos:
+      hori: [1375,194]
+    ende: [36.5,111]
+  - id: 2
+    pos:
+      hori: [995,36.5]
+    ende: [330, 36.5]
+  - id: 3
+    pos:
+      hori: [995,1001]
+    ende: [330, 24]
+  - id: 4
+    pos:
+      hori: [695,1025]
+    ende: [173.5, 24]
+  - id: 5
+    pos:
+      hori: [144,1025]
+    ende: [436, 24]
+  - id: 6
+    pos:
+      hori: [0,324]
+    ende: [36.5, 226]
+  - id: 7
+    pos:
+      hori: [207.5,0]
+    ende: [111, 36.5]
+  - id: 8
+    pos:
+      hori: [332.5,0]
+    ende: [111, 36.5]
+  - id: 9
+    pos:
+      hori: [521,0]
+    ende: [107, 36.5]
+  - id: 10
+    pos:
+      hori: [677,0]
+    ende: [208, 24]
+  doors:
+  - id: 1
+    pos:
+      hori: [79.5,212]
+    ende: [101,25]
+  - id: 2
+    pos:
+      hori: [500,398]
+    ende: [11.5,101]
+  - id: 3
+    pos:
+      hori: [539,312.5]
+    ende: [88.5,11.5]
 - id: 3
   name: obergeschoss

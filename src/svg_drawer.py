@@ -2,97 +2,104 @@
 
 # Create simple SVG
 import svgwrite
-from read_objecte import read_objects, Haus
-from read_walls import read_walls
+from read_setup import *
 
-output_file      = "simple.svg"
-WIDTH, HEIGHT = 1900, 900
-BORDER = 5
+def create_svg(haus):
+    output_file      = "simple.svg"
+    WIDTH, HEIGHT = 1900, 900
+    BORDER = 5
 
-haus = Haus()
-yaml_file = "data/eg.yaml"
-read_walls(haus,yaml_file)
+    max_val_x = 0
+    min_val_x = WIDTH
+    max_val_y = 0
+    min_val_y = HEIGHT
+    for geschoss in haus.geschosse:
+        for wall in geschoss.walls:
+            max_val_x = max(wall.x,wall.x+wall.dx,max_val_x)
+            max_val_y = max(wall.y,wall.y+wall.dy,max_val_y)
+            min_val_x = min(wall.x,wall.x+wall.dx,min_val_x)
+            min_val_y = min(wall.y,wall.y+wall.dy,min_val_y)
 
-dwg = svgwrite.Drawing(output_file, (WIDTH, HEIGHT))
-dwg.add(dwg.rect((0,0), (WIDTH-1,HEIGHT-1),
-                 stroke="red",
-                 fill="none"))
+    WIDTH = max_val_x * 10
+    HEIGHT = max_val_y * 10
+    dwg = svgwrite.Drawing(output_file, (WIDTH, HEIGHT), id="svg_eg")
+    dwg.add(dwg.rect((0,0), (WIDTH-1,HEIGHT-1),
+                    stroke="red",
+                    fill="none"))
+    for geschoss in haus.geschosse:
+        for wall in geschoss.walls:
+            xs = wall.x * 10
+            ys = wall.y * 10
+            xe = wall.dx * 10
+            ye = wall.dy * 10
+            text = str(wall.id)
+            # dwg.add(dwg.rect((xs,ys), (xe,ye), style="cursor:wait;", stroke="black", fill="white", id="wall_"+text))
+            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="black", fill="black", id="wall_"+text)
+            rect['class'] = 'wall'
+            dwg.add(rect)
+            # dwg.add(dwg.text(text , insert=(xs+0.5*xe, ys+0.5*ye), fill='red', id="wall_test_"+text))
+        for window in geschoss.windows:
+            xs = window.x * 10
+            ys = window.y * 10
+            xe = window.dx * 10
+            ye = window.dy * 10
+            text = str(window.id)
+            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="blue", fill="white", id="window_"+text)
+            rect['class'] = 'window'
+            dwg.add(rect)
+        for door in geschoss.doors:
+            xs = door.x * 10
+            ys = door.y * 10
+            xe = door.dx * 10
+            ye = door.dy * 10
+            text = str(door.id)
+            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="brown", fill="white", id="door_"+text)
+            rect['class'] = 'door'
+            dwg.add(rect)
 
-max_val_x = 0
-min_val_x = WIDTH
-max_val_y = 0
-min_val_y = HEIGHT
-for geschoss in haus.geschosse:
-    for wall in geschoss.walls:
-        max_val_x = max(wall.x,wall.x+wall.dx,max_val_x)
-        max_val_y = max(wall.y,wall.y+wall.dy,max_val_y)
-        min_val_x = min(wall.x,wall.x+wall.dx,min_val_x)
-        min_val_y = min(wall.y,wall.y+wall.dy,min_val_y)
+    for geschoss in haus.geschosse:
+        for room in geschoss.rooms:
+            for obj in room.objects:
+                if obj.pos.horizontal != [0,0]:
 
-# print (WIDTH,HEIGHT)
-# print (min_val_x, max_val_x, min_val_y, max_val_y)
+                    x = obj.pos.horizontal[0] * 10
+                    y = obj.pos.horizontal[1] * 10
+                    xs = x
+                    ys = y
+                    if type(obj) is Licht:
+                        r = 100;
+                        xs = x
+                        ys = y
+                        draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="yellow", fill="yellow")
+                        draw_obj['class'] = 'licht'
+                    elif type(obj) is Knx:
+                        r = 5000;
+                        xs = x
+                        ys = y
+                        draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="green", fill="none")
+                        draw_obj['class'] = 'pm_radius'
+                        dwg.add(draw_obj)
+                        xe = 85;
+                        ye = 85;
+                        xs = x - xe * 0.5
+                        ys = y - ye * 0.5
+                        draw_obj = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="green", fill="green")
+                        draw_obj['class'] = 'knx'
+                    else:
+                        xe = 50;
+                        ye = 50;
+                        draw_obj = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="blue", fill="blue")
+                        draw_obj['class'] = 'object'
+                    dwg.add(draw_obj)
 
-max_val_x = (WIDTH-2* BORDER ) / (max_val_x-min_val_x)
-max_val_y = (HEIGHT-2* BORDER ) / (max_val_y-min_val_y)
-
-# max_val_x,max_val_y,min_val_x,min_val_y,BORDER = 1,1,0,0,0
-SCRIPT = """
-var min_val_x = {};
-var max_val_x = {};
-var min_val_y = {};
-var max_val_y = {};
-var border = {};
-function copy() {{
-    var myline = document.getElementById("pos_test");
-    if (myline){{
-       myline.select();
-       var result = document.execCommand('copy');
-    }}
- }}
-
-const round = (number, decimalPlaces) => {{
-  const factorOfTen = Math.pow(10, decimalPlaces)
-  return Math.round(number * factorOfTen) / factorOfTen
-}}
-window.onmousedown = function(e)
-{{
-    var myline = document.getElementById("pos_test");
-    if (myline){{
-        var x = round((e.layerX - border ) / max_val_x + min_val_x,2);
-        var y = round((e.layerY - border ) / max_val_y + min_val_y,2);
-        myline.textContent =  "        hori: ["+ x+","+y+"]";
-        console.log(myline.textContent);
-    }}
-}}
-"""
-dwg.add(dwg.text("0,0" , insert=(int(WIDTH*0.9),20 ), fill='red', id="pos_test"))
-for geschoss in haus.geschosse:
-  for wall in geschoss.walls:
-    xs = int((wall.x - min_val_x ) * max_val_x + BORDER)
-    ys = int((wall.y - min_val_y ) * max_val_y + BORDER)
-    xe = int((wall.dx ) * max_val_x)
-    ye = int((wall.dy ) * max_val_y)
-    text = str(wall.id)
-    # print(xs,ys,xe,ye,text)
-    # dwg.add(dwg.rect((xs,ys), (xe,ye), style="cursor:wait;", stroke="black", fill="white", id="wall_"+text))
-    dwg.add(dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="black", fill="black", id="wall_"+text))
-    # dwg.add(dwg.text(text , insert=(xs+0.5*xe, ys+0.5*ye), fill='red', id="wall_test_"+text))
-
-
-yaml_file = "data/anschluesse.yaml"
-read_objects(haus,yaml_file)
-for geschoss in haus.geschosse:
-    for room in geschoss.rooms:
-        for obj in room.objects:
-            if obj.pos.horizontal != [0,0]:
-              x = obj.pos.horizontal[0]
-              y = obj.pos.horizontal[1]
-              xs = int((x - min_val_x ) * max_val_x + BORDER)
-              ys = int((y - min_val_y ) * max_val_y + BORDER)
-              xe = 5;
-              ye = 5;
-              dwg.add(dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="blue", fill="blue"))
-
-
-dwg.defs.add(dwg.script(content=SCRIPT.format(min_val_x,max_val_x,min_val_y, max_val_y, BORDER)))
-dwg.save()
+    dwg.viewbox(
+      minx   = 0,
+      miny   = 0,
+      width  = WIDTH,
+      height = HEIGHT
+    )
+    dwg.save()
+    return dwg.tostring()
+if __name__ == '__main__':
+    yaml_file = "data/setup.yaml"
+    print(create_svg(read_setup(yaml_file)))

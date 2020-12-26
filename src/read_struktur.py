@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 
-from data import  Haus, Geschoss, Wall
+from data import  Haus, Geschoss, Wall, Window, Door
 import yaml
-def read_walls(haus,yaml_file):
+def read_struktur(haus,yaml_file):
     with open(yaml_file, 'r') as stream:
         data = yaml.safe_load(stream)
 
     id = [0,0,0]
     wall_count = 0
+    window_count = 0
+    door_count = 0
     geschoss_count = 0
     for geschoss in data["geschosse"]:
         id[0] = id[0] + 1
@@ -29,10 +31,20 @@ def read_walls(haus,yaml_file):
                     quit(1)
                 haus.geschosse[-1].walls.append(Wall(obj,haus.geschosse[-1]))
                 wall_count += 1
+        if "windows" in geschoss:
+            for obj in geschoss["windows"]:
+                haus.geschosse[-1].windows.append(Window(obj,haus.geschosse[-1]))
+                window_count += 1
+        if "doors" in geschoss:
+            for obj in geschoss["doors"]:
+                haus.geschosse[-1].doors.append(Door(obj,haus.geschosse[-1]))
+                door_count += 1
     print(" Geschosse: {} ".format(geschoss_count))
     print(" Wände: {} ".format(wall_count))
+    print(" Fenster: {} ".format(window_count))
+    print(" Türen: {} ".format(door_count))
 
 if __name__ == '__main__':
     haus = Haus()
     yaml_file = "data/eg.yaml"
-    read_walls(haus,yaml_file)
+    read_struktur(haus,yaml_file)

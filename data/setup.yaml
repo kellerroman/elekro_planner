@@ -1,0 +1,8 @@
+config:
+  name: Vogelsangstraße V001
+  struktur: struktur.yaml
+  anschluesse: anschluesse.yaml
+  kabel: kabel.yaml
+  moebel: moebel.yaml
+
+

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from data import Steckdose, Licht, Stromanschluss, Knx, Kontakt, Netzwerk, Haus, Geschoss, Room
 import yaml
-def read_objects(haus,yaml_file):
+def read_anschluesse(haus,yaml_file):
 
     # Read YAML file
     with open(yaml_file, 'r') as stream:
@@ -19,7 +19,7 @@ def read_objects(haus,yaml_file):
         if id[0] != gid:
             print ("Geschoss-Id not correct {} ist: {}".format(id[0],gid))
             quit(1)
-        print(gname+"("+str(gid)+")")
+        # print(gname+"("+str(gid)+")")
         found = False
         for ges in haus.geschosse:
             if ges.id == gid and ges.name == gname:
@@ -38,7 +38,7 @@ def read_objects(haus,yaml_file):
                     print ("Room-Id not correct {} ist: {}".format(id[1],
                         room["id"]))
                     quit(1)
-                print(" - "+room["name"]+"("+str(geschoss["id"])+"."+str(room["id"])+")")
+                # print(" - "+room["name"]+"("+str(geschoss["id"])+"."+str(room["id"])+")")
                 haus.geschosse[-1].rooms.append(Room())
                 room_count += 1
                 if "objects" in room:
@@ -49,11 +49,11 @@ def read_objects(haus,yaml_file):
                             print ("Room-Id not correct {} ist: {}".format(id[1],
                                 obj["id"]))
                             quit(1)
-                        print("    - "
-                                +obj["name"]+"("
-                                +str(geschoss["id"])+"."
-                                +str(room["id"])+"."
-                                +str(obj["id"])+")")
+                        # print("    - "
+                        #         +obj["name"]+"("
+                        #         +str(geschoss["id"])+"."
+                        #         +str(room["id"])+"."
+                        #         +str(obj["id"])+")")
                         object_count += 1
                         st = "con-type"
                         if  st in obj:
@@ -76,9 +76,9 @@ def read_objects(haus,yaml_file):
 
     print(" Geschosse: {} {} ".format(geschoss_count,len(haus.geschosse)))
     print(" Räume: {} ".format(room_count))
-    print(" Objekte: {} ".format(object_count))
+    print(" Anschlüsse: {} ".format(object_count))
 
 if __name__ == '__main__':
     haus = Haus()
     yaml_file = "data/anschluesse.yaml"
-    read_objects(haus,yaml_file)
+    read_anschluesse(haus,yaml_file)

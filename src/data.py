@@ -77,7 +77,7 @@ class Position:
        if yaml != None:
          st = "hori"
          if st in yaml:
-            self.horizontal = [yaml[st][0],yaml[st][1]]
+            self.horizontal = [float(eval(str(yaml[st][0]))),float(eval(str(yaml[st][1])))]
        self.vertical = read_value_from_yaml_to_enum(yaml,"vert",VerticalPosition,False)
 
 class Haus:
@@ -91,6 +91,8 @@ class Geschoss:
         self.height = read_value_from_yaml(yaml,"height",False)
         self.rooms = []
         self.walls = []
+        self.windows = []
+        self.doors = []
 
 class Room:
     def __init__(self):
@@ -112,6 +114,7 @@ class Stromanschluss(Object):
         super().__init__(yaml,parent)
         self.anzahl = read_value_from_yaml(yaml,"anzahl")
         self.stromstaerke = 0
+        self.voltage = 230
         self.knx = read_value_from_yaml_to_enum(yaml,"knx",KnxType,False)
 
 class Steckdose(Stromanschluss):
@@ -143,6 +146,28 @@ class Netzwerk(Object):
         self.anzahl = read_value_from_yaml(yaml,"anzahl")
 
 class Wall(Point):
+    def __init__(self,yaml,parent):
+        self.dx = 0
+        self.dy = 0
+        super().__init__(yaml,parent)
+        self.x = self.pos.horizontal[0]
+        self.y = self.pos.horizontal[1]
+        st = "ende"
+        if yaml != None and st in yaml:
+            self.dx = yaml[st][0]
+            self.dy = yaml[st][1]
+class Window(Point):
+    def __init__(self,yaml,parent):
+        self.dx = 0
+        self.dy = 0
+        super().__init__(yaml,parent)
+        self.x = self.pos.horizontal[0]
+        self.y = self.pos.horizontal[1]
+        st = "ende"
+        if yaml != None and st in yaml:
+            self.dx = yaml[st][0]
+            self.dy = yaml[st][1]
+class Door(Point):
     def __init__(self,yaml,parent):
         self.dx = 0
         self.dy = 0

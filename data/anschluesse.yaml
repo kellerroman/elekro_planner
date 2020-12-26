@@ -291,70 +291,83 @@ geschosse:
       anzahl: 1
       einzelsicherung: 10A
       pos:
+        hori: [1375,148.3]
     - id: 4
       name: "Steckdose Leibung Fenster links"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [1385,190.7]
     - id: 5
       name: "Steckdose Leibung Fenster rechts"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [1385,301.7]
     - id: 6
       name: "Steckdose Spüle rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1375,375.7]
     - id: 7
       name: "Anschluss Ofen "
       con-type: steckdose
       anzahl: 1
       einzelsicherung: 16A
       pos:
+        hori: [1375, 36.5*2+320]
     - id: 8
-      name: "Anschluss Dampfgarer "
+      name: "Anschluss Dampfgarer"
       con-type: steckdose
       anzahl: 1
       einzelsicherung: 16A
       pos:
+        hori: [1375, 36.5*2+330]
     - id: 9
       name: "Anschluss Kühlschrank "
       con-type: steckdose
       anzahl: 1
       einzelsicherung: 16A
       pos:
+        hori: [1375, 36.5*2+330+60]
     - id: 10
       name: "Anschluss Herd"
       con-type: anschluss
-      anzahl: 1
+      anzahl: 3
       einzelsicherung: 16A
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 11
       name: "Steckdose Herd"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 12
       name: "Netzwerk Herd"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 13
       name: "KNX Herd"
       con-type: knx
       knx-component: re
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 14
       name: "Kontakt Herd"
       con-type: kontakt
       anzahl: 1
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 15
       name: "Präsenzmelder Küche"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5,518.43]
         vert: decke
     - id: 16
       name: "Rolladen Terassentüre"
@@ -362,30 +375,35 @@ geschosse:
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [985.5,51.7]
     - id: 17
       name: "Kontakt Terassentüre"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
+        hori: [985.5,51.7]
     - id: 18
       name: "Rolladen Fenster"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [1393.3,184.3]
     - id: 19
       name: "Kontakt Fenster"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [1393.3,184.3]
     - id: 20
       name: "Licht Insel"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [25+1422.5-18-36.5-0.5*438.5,36.5*2+100]
         vert: decke
     - id: 21
       name: "Licht Spüle"
@@ -393,6 +411,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [1358.4,393.6]
         vert: oben
     - id: 22
       name: "Netzwerk Spüle"
@@ -460,6 +479,7 @@ geschosse:
       knx: schaltbar
       pos:
         vert: decke
+        hori: [25+1422.5-18-36.5-0.5*438.5,764.43]
     - id: 12
       name: "Licht Hochschrank/Kaffeemaschine"
       con-type: licht
