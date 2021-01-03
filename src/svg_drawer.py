@@ -23,7 +23,8 @@ def create_svg(haus):
 
         WIDTH = max_val_x * 10
         HEIGHT = max_val_y * 10
-        dwg = svgwrite.Drawing(output_file, (WIDTH, HEIGHT), id="svg_eg")
+        dwg = svgwrite.Drawing(output_file, (WIDTH, HEIGHT),
+                id="svg_"+geschoss.name)
         dwg.add(dwg.rect((0,0), (WIDTH-1,HEIGHT-1),
                     stroke="red",
                     fill="none"))

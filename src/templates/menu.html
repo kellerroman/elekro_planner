@@ -68,9 +68,6 @@ svg {width: 100%; height: auto;}
   </div>
   <div id="eg" class="tabcontent2">
     <h3>Erdgeschoss</h3>
-    <!-- <object type="image/svg+xml" data="{{url_for('static', filename='grundriss_eg.svg')}}"  class="emb" id="svg_eg"> -->
-    <!--   <img src="{{url_for('static', filename='grundriss_eg.svg')}}" /> -->
-    <!-- </object> -->
     {% autoescape false %}
     {{grundriss_eg}}
     {% endautoescape %}
@@ -153,7 +150,7 @@ function who(e) {
   var text =  "        hori: ["+ x+","+y+"]";
   copy(text);
 }
-var svg=document.getElementById("svg_eg");
+var svg=document.getElementById("svg_obergeschoss");
 var pt=svg.createSVGPoint();
 document.onmousemove = handleMM
 function getCursor(evt) {

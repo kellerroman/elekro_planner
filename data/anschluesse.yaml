@@ -1021,53 +1021,63 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [912.7,327.9]
     - id: 2
-      name: "Steckdose Tpre Bad rechts"
+      name: "Steckdose Türe Bad rechts"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [912.7,498.5]
     - id: 3
       name: "Steckdose Tür Zi1 links"
       con-type: steckdose
       anzahl: 1
       einzelsicherung: 10A
       pos:
+        hori: [509.4,549.3]
     - id: 4
       name: "Steckdose Tür Zi1 rechts"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [509.4,398.4]
     - id: 5
       name: "Steckdose Arbeitsplatz"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [509.4,24.7]
     - id: 6
       name: "Steckdose Empore"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [649.7,33]
     - id: 7
       name: "Fensterheber"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [912.7,7.2]
     - id: 8
       name: "Netzwerk Arbeitsplatz"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [509.4,27.7]
     - id: 9
       name: "Netzwerk Tür Bad rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [912.7,450]
     - id: 10
       name: "Netzwerk Accesspoint"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [720.2,534.9]
         vert: decke
     - id: 11
       name: "Kontakt Fenster links"
@@ -1075,22 +1085,26 @@ geschosse:
       anzahl: 2
       knx: input
       pos:
+        hori: [634.5,7.2]
     - id: 12
       name: "Kontakt Fenster rechts"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
+        hori: [912.7,8.8]
     - id: 13
       name: "KNX Glastaster"
       con-type: knx
       knx-component: re
       pos:
+        hori: [912.7,450]
     - id: 14
-      name: "Präsenzmelder Bad"
+      name: "Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [726.2,359.7]
         vert: decke
     - id: 15
       name: "Licht"
@@ -1098,6 +1112,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [722.4,472.7]
         vert: decke
     - id: 16
       name: "Licht Arbeitsplatz"
@@ -1105,6 +1120,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [509.4,42.1]
         vert: decke
   - id: 2
     name: Lernen
@@ -1114,70 +1130,83 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [912.7,735]
     - id: 2
       name: "Steckdose Arbeitsplatz links"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [912.7,1060]
     - id: 3
       name: "Steckdose Arbeitsplatz rechts"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [508.7,1060]
     - id: 4
       name: "Steckdose Türe Zi2"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [509.4,735]
     - id: 5
       name: "Rolladen"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [914.2,1080.7]
     - id: 6
       name: "Netzwerk Arbeitsplatz links"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [912.7,1060]
     - id: 7
       name: "Netzwerk Arbeitsplatz rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [508.7,1060]
     - id: 8
       name: "Kontakt Fenster links"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [510.2,1079.9]
     - id: 9
       name: "Kontakt Fenster mitte"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
+        hori: [649.7,1079.1]
     - id: 10
       name: "Kontakt Fenster rechts"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
+        hori: [787.6,1080.7]
     - id: 11
       name: "KNX Tür Zi3"
       con-type: knx
       knx-component: re
       pos:
+        hori: [912.7,735]
     - id: 12
       name: "KNX Tür Zi2"
       con-type: knx
       knx-component: re
       pos:
+        hori: [509.4,735]
     - id: 13
-      name: "Präsenzmelder Bad"
+      name: "Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [715.6,863.1]
         vert: decke
     - id: 14
       name: "Licht"
@@ -1185,6 +1214,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [716.4,999.5]
         vert: decke
     - id: 15
       name: "Licht Arbeitsplatz links"
@@ -1192,6 +1222,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [911.2,1057.9]
         vert: decke
     - id: 16
       name: "Licht Arbeitsplatz rechts"
@@ -1199,6 +1230,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [508.7,1057.9]
         vert: decke
   - id: 3
     name: Zimmer1
@@ -1208,81 +1240,96 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [400.3,575]
     - id: 2
       name: "Steckdose Fenster"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [23.5,558.4]
     - id: 3
       name: "Steckdose Oben links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [56.9,163.4]
     - id: 4
       name: "Steckdose Oben rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [479.8,162.7]
     - id: 5
       name: "Steckdose Türe"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [495,396.9]
     - id: 6
       name: "Rolladen Fenster"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [10.6,436.3]
     - id: 7
       name: "Rolladen Dachfenster"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [222.9,211.2]
     - id: 8
       name: "Netzwerk Fenster"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [23.5,558.4]
     - id: 9
       name: "Netzwerk Oben links"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [56.9,163.4]
     - id: 10
       name: "Netzwerk Oben rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [479.8,162.7]
     - id: 11
       name: "Kontakt Fenster "
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [9.1,438.6]
     - id: 12
       name: "Kontakt Dachfenster"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [320.7,211.2]
     - id: 13
       name: "KNX Glastaster"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [495,396.9]
     - id: 14
       name: "KNX Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [461.7,210.4]
     - id: 15
       name: "Licht"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [254.7,379.5]
         vert: decke
   - id: 4
     name: Zimmer2
@@ -1292,81 +1339,96 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [495,732.7]
     - id: 2
       name: "Steckdose Areitsplatz"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [495,1059.4]
     - id: 3
       name: "Steckdose unten links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [33.4,1001.8]
     - id: 4
       name: "Steckdose Oben links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [35.6,583.4]
     - id: 5
       name: "Steckdose Türe links"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [495.8,606.1]
     - id: 6
       name: "Rolladen Fenster unten"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [360.8,1079.9]
     - id: 7
       name: "Rolladen Fenster links"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [11.4,623.5]
     - id: 8
       name: "Netzwerk Arbeitsplatz"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [495,1059.4]
     - id: 9
       name: "Netzwerk unten links"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [33.4,1001.8]
     - id: 10
       name: "Netzwerk Oben links"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [35.6,583.4]
     - id: 11
       name: "Kontakt Fenster unten"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [361.6,1078.4]
     - id: 12
       name: "Kontakt Fenster links"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [10.6,623.5]
     - id: 13
       name: "KNX Glastaster"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [495,732.7]
     - id: 14
       name: "KNX Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [459.4,881.3]
     - id: 15
       name: "Licht"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [247.1,787.3]
         vert: decke
     - id: 16
       name: "Licht Arbeitsplatz"
@@ -1374,6 +1436,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [495.8,1057.9]
         vert: oben
   - id: 5
     name: Zimmer3
@@ -1383,81 +1446,96 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [936.2,733.5]
     - id: 2
       name: "Steckdose Areitsplatz"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [936.2,1058.7]
     - id: 3
       name: "Steckdose unten rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1378.1,1001.1]
     - id: 4
       name: "Steckdose Oben rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1376.6,610.7]
     - id: 5
       name: "Steckdose Schrank"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [953.6,550]
     - id: 6
       name: "Rolladen Fenster unten"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [1071.1,1079.9]
     - id: 7
       name: "Rolladen Fenster rechts"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [1398.6,739.5]
     - id: 8
       name: "Netzwerk Arbeitsplatz"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [936.2,1058.7]
     - id: 9
       name: "Netzwerk unten rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1378.1,1001.1]
     - id: 10
       name: "Netzwerk oben rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1376.6,610.7]
     - id: 11
       name: "Kontakt Fenster unten"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [937,1079.1]
     - id: 12
       name: "Kontakt Fenster links"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [1397.9,741]
     - id: 13
       name: "KNX Glastaster"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [936.2,733.5]
     - id: 14
       name: "KNX Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [993.8,870.7]
     - id: 15
       name: "Licht"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [1182.6,806.2]
         vert: decke
     - id: 16
       name: "Licht Arbeitsplatz"
@@ -1465,6 +1543,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [936.2,1057.9]
         vert: oben
   - id: 6
     name: Bad
@@ -1474,72 +1553,95 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [994.6,531.1]
     - id: 2
       name: "Steckdose Spiegel mitte"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1090.1,531.1]
     - id: 3
       name: "Steckdose Spiegel rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1190.6,531.1]
     - id: 4
       name: "Steckdose Toilette"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [1346.3,208.1]
     - id: 5
       name: "Steckdose Schrank rechts"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [1219.7,210.4]
     - id: 6
       name: "Steckdose Schrank rechts"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [965.8,210.4]
     - id: 7
       name: "Steckdose Türe"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [936.2,327.9]
     - id: 8
       name: "Netzwerk Spiegel"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1090.1,530.3]
     - id: 9
       name: "Netzwerk Badewanne "
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1162.9,210.4]
     - id: 10
       name: "Kontakt Fenster"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [1402.4,327.1]
     - id: 11
       name: "Kontakt Dachfenster"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [1147.7,211.2]
+        vert: decke
     - id: 12
       name: "KNX Glastaster"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [936.2,449.2]
     - id: 13
       name: "KNX Präsenzmelder"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [1254.6,310.5]
     - id: 14
       name: "Licht"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [1117.4,390.1]
+        vert: decke
+    - id: 15
+      name: "Licht Spiegel"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        hori: [1095.4,531.8]
         vert: decke
