@@ -337,37 +337,37 @@ geschosse:
       anzahl: 3
       einzelsicherung: 16A
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 11
       name: "Steckdose Herd"
       con-type: steckdose
       anzahl: 1
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 12
       name: "Netzwerk Herd"
       con-type: netzwerk
       anzahl: 1
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 13
       name: "KNX Herd"
       con-type: knx
       knx-component: re
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 14
       name: "Kontakt Herd"
       con-type: kontakt
       anzahl: 1
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
     - id: 15
       name: "Präsenzmelder Küche"
       con-type: knx
       knx-component: pm
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5,518.43]
+        hori: [7+1422.5-18-36.5-0.5*438.5,518.43]
         vert: decke
     - id: 16
       name: "Rolladen Terassentüre"
@@ -403,7 +403,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
-        hori: [25+1422.5-18-36.5-0.5*438.5,36.5*2+100]
+        hori: [7+1422.5-18-36.5-0.5*438.5,36.5*2+100]
         vert: decke
     - id: 21
       name: "Licht Spüle"
@@ -411,13 +411,14 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
-        hori: [1358.4,393.6]
+        hori: [1375,393.6]
         vert: oben
     - id: 22
       name: "Netzwerk Spüle"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1375,434.8]
   - id: 2
     name: Esszimmer
     objects:
@@ -426,66 +427,77 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1375,36.5*2+560]
     - id: 2
       name: "Doppelsteckdose Liege"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1375,36.5*2+560+210]
     - id: 3
       name: "Doppelsteckdose Halbschrank"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [1375,36.5*2+927-20]
     - id: 4
-      name: "Doppelsteckdose Fensterleibung"
+      name: "Doppelsteckdose Gegenwand links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-20]
     - id: 5
-      name: "Doppelsteckdose Gegenwand"
+      name: "Doppelsteckdose Gegenwand mitte"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.5]
     - id: 6
       name: "Doppelsteckdose Durchgang"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445+20]
     - id: 7
       name: "Netzwerk Liege"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [1375,36.5*2+560+210]
     - id: 8
       name: "Netzwerk Durchgang"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445+20]
     - id: 9
       name: "Kontakt Balkontüre"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [1233.4,1012.4]
     - id: 10
       name: "KNX Durchgang"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445+20]
     - id: 11
       name: "Licht Tisch"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [7+1422.5-18-36.5-0.5*438.5,764.43]
         vert: decke
-        hori: [25+1422.5-18-36.5-0.5*438.5,764.43]
     - id: 12
       name: "Licht Hochschrank/Kaffeemaschine"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [1375,36.5*2+560]
         vert: oben
     - id: 13
       name: "Licht Halbschrank"
@@ -493,6 +505,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [1375,36.5*2+927-20]
         vert: oben
     - id: 14
       name: "Licht Gegenwand links"
@@ -500,6 +513,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.25]
         vert: oben
     - id: 15
       name: "Licht Gegenwand rechts"
@@ -507,6 +521,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.75]
         vert: oben
   - id: 3
     name: Vorraum
@@ -516,21 +531,25 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+463.5+11.5+401, 36.5*2+263-20]
     - id: 2
       name: "Doppelsteckdose Treppenaufgang"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+463.5+11.5+126+11.5, 292.5+31.5-20]
     - id: 3
       name: "Doppelsteckdose Empore"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+463.5+11.5+126+11.5, 24+20]
     - id: 4
       name: "Präsenzmelder Vorraum"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [36.5+463.5+11.5+126+11.5+0.5*263.5, 36.5*2+263+218*0.5]
         vert: decke
     - id: 5
       name: "Licht Vorraum"
@@ -538,6 +557,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+463.5+11.5+401*0.5, 36.5*2+263+218*0.5]
         vert: decke
   - id: 4
     name: Wohnzimmer
@@ -547,71 +567,85 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+415+10+50+401,37.5+36.5+263+218+20]
     - id: 2
       name: "Doppelsteckdose Wand mitte"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+415+10+50+401,37.5+36.5+263+218+0.5*(624-107-18-24)]
     - id: 3
       name: "Doppelsteckdose Wand rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+415+10+50+401,36.5+245+17.5+276+24+426-20]
     - id: 4
       name: "Steckdose Leibung Sitzfenster"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [695,1025+10]
     - id: 5
       name: "Doppelsteckdose Wand Balkon"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [24+120+436+10,1025]
     - id: 6
       name: "Steckdose Trennwand"
       con-type: steckdose
       anzahl: 3
       pos:
+        hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
     - id: 7
       name: "Doppelsteckdose Trennwand rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+415+10+20,36.5+245+17.5+276+24]
     - id: 8
       name: "Steckdose Toilette"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [500+11.5,292.5+31.5+20]
     - id: 9
       name: "Netzwerk Durchgang"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50+401,37.5+36.5+263+218+20]
     - id: 10
       name: "Netzwerk Wand mitte"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50+401,37.5+36.5+263+218+0.5*(624-107-18-24)]
     - id: 11
       name: "Netzwerk Wand rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50+401,36.5+245+17.5+276+24+426-20]
     - id: 12
       name: "Netzwerk Trennwand"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
     - id: 13
       name: "Netzwerk Ofen"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50,36.5+245+17.5+276+24-0.75*100]
     - id: 14
       name: "Netzwerk Accesspoint"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50+401*0.5,36.5+245+17.5+276+24-0.5*100]
         vert: decke
     - id: 15
       name: "Kontakt Balkontür"
@@ -619,36 +653,43 @@ geschosse:
       anzahl: 1
       knx: input
       pos:
+        hori: [24+120+436,36.5+245+17.5+276+24+426+24*0.5]
     - id: 16
       name: "Kontakt Trennwand"
       con-type: kontakt
       anzahl: 1
       pos:
+        hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
     - id: 17
       name: "Kontakt Ofen"
       con-type: kontakt
       anzahl: 1
       pos:
+        hori: [36.5+415+10+50,36.5+245+17.5+276+24-0.75*100]
     - id: 18
       name: "KNX Durchgang"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [36.5+415+10+50+401,37.5+36.5+263+218+20]
     - id: 19
       name: "KNX Trennwand"
       con-type: knx
       knx-component: re
       pos:
+        hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
     - id: 20
       name: "KNX Ofen"
       con-type: knx
       knx-component: re
       pos:
+        hori: [36.5+415+10+50,36.5+245+17.5+276+24-0.75*100]
     - id: 21
       name: "KNX Präsenzmelder Wohnzimmer"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [36.5+463.5+11.5+401*0.5,36.5+245+17.5+276+24+100+10+206*0.5]
         vert: decke
     - id: 22
       name: "Licht Wohnzimmer"
@@ -656,6 +697,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+463.5+11.5+401*0.5,36.5+245+17.5+276+24+100+10+206*0.5]
         vert: decke
     - id: 23
       name: "Licht Wand links"
@@ -663,6 +705,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+415+10+50+401,36.5+245+17.5+276+24+426*0.25]
         vert: oben
     - id: 24
       name: "Licht Wand rechts"
@@ -670,6 +713,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+415+10+50+401,36.5+245+17.5+276+24+426*0.75]
         vert: oben
   - id: 5
     name: Spielen
@@ -679,62 +723,74 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+415-20,36.5+245+17.5+276+24]
     - id: 2
       name: "Doppelsteckdose Wand Balkontür"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [24+120-10,1025]
     - id: 3
       name: "Doppelsteckdose Wand link"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+426-50]
     - id: 4
       name: "Doppelsteckdose Wand rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+100]
     - id: 5
       name: "Steckdose Wand Links Oben"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+20,36.5+245+17.5+276+24]
     - id: 6
       name: "Netzwerk Wand links"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+426-50]
     - id: 7
       name: "Netzwerk Wand rechts"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+100]
     - id: 8
       name: "Kontakt Balkontür"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [24+120+109,1025+12]
     - id: 9
       name: "KNX Wand links"
       con-type: knx
       knx-component: re
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+426-50]
     - id: 10
       name: "KNX Wand rechts"
       con-type: knx
       knx-component: re
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+100]
     - id: 11
       name: "KNX Durchgang"
       con-type: knx
       knx-component: re
       pos:
+        hori: [36.5+415-20,36.5+245+17.5+276+24]
     - id: 12
       name: "Präsenzmelder Spielen"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [36.5+415*0.5,36.5+245+17.5+276+24+100+10+206*0.5]
         vert: decke
     - id: 13
       name: "Licht Spielen"
@@ -742,6 +798,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+415*0.5,36.5+245+17.5+276+24+100+10+206*0.5]
         vert: decke
     - id: 14
       name: "Licht Wand links"
@@ -749,6 +806,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+426-50]
         vert: oben
     - id: 15
       name: "Licht Wand rechts"
@@ -756,6 +814,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5,36.5+245+17.5+276+24+100]
         vert: oben
   - id: 6
     name: Schlafzimmer
@@ -765,43 +824,51 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [36.5+463.5,292.5+31.5+74-10]
     - id: 2
       name: "Doppelsteckdose Wand links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+270,36.5+245+17.5+276]
     - id: 3
       name: "Doppelsteckdose Wand rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [36.5+50,36.5+245+17.5+276]
     - id: 4
       name: "Doppelsteckdose Fenster rechts"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [25,292.5+31.5]
     - id: 5
       name: "Steckdose Schrank"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [36.5+463.5-10,36.5+175.5+25]
     - id: 6
       name: "Netzwerk"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [36.5+50,36.5+245+17.5+276]
     - id: 7
       name: "Rolladen"
       con-type: anschluss
       anzahl: 2
       knx: rolladen
       pos:
+        hori: [7.6,551.5]
     - id: 8
       name: "Kontakt Fenster"
       con-type: kontakt
       anzahl: 4
       knx: input
       pos:
+        hori: [7.6,551.5]
     - id: 9
       name: "KNX Taster Türe"
       con-type: knx
@@ -812,6 +879,7 @@ geschosse:
       con-type: knx
       knx-component: pm
       pos:
+        hori: [36.5+463.5*0.5,36.5+245+17.5+276*0.5]
         vert: decke
     - id: 11
       name: "Licht Schlafen"
@@ -819,6 +887,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+463.5*0.5,36.5+245+17.5+276*0.5]
         vert: decke
   - id: 7
     name: Bad
@@ -828,48 +897,57 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [220,36.5+175.5]
     - id: 2
       name: "Doppelsteckdose Spiegel links"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [300,36.5+175.5]
     - id: 3
       name: "Steckdose Leibung"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [207.5,36.5-10]
     - id: 4
       name: "Steckdose Wand links"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [25+36.5,36.5+175.5-10]
     - id: 5
       name: "Netzwerk Spiegel"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [300,36.5+175.5]
     - id: 6
       name: "Kontakt Fenster links"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [207.5+111,10]
     - id: 7
       name: "Kontakt Fenster rechts"
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [332.5+111,10]
     - id: 8
       name: "KNX Glastaster"
       con-type: knx
       knx-component: gt
       pos:
+        hori: [25+36.5+18+101+14,36.5+175.5]
     - id: 9
       name: "Präsenzmelder Bad"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [25+36.5+425*0.5,36.5+175.5*0.5]
         vert: decke
     - id: 10
       name: "Licht Bad"
@@ -877,6 +955,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [25+36.5+425*0.5,36.5+175.5*0.5]
         vert: decke
     - id: 11
       name: "Licht Spiegel"
@@ -884,6 +963,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [260,36.5+175.5]
         vert: oben
   - id: 8
     name: WC
@@ -893,22 +973,26 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [36.5+463.5+11.5,292.5+31.5-20]
     - id: 2
       name: "Steckdose Toilette"
       con-type: steckdose
       anzahl: 1
       pos:
+        hori: [36.5+463.5+11.5,150]
     - id: 3
       name: "Kontakt Fenster "
       con-type: kontakt
       anzahl: 2
       knx: input
       pos:
+        hori: [521+107,10]
     - id: 4
       name: "Präsenzmelder Toilette"
       con-type: knx
       knx-component: pm
       pos:
+        hori: [36.5+463.5+11.5+126*0.5,36.5+(292.5-5)*0.5]
         vert: decke
     - id: 5
       name: "Licht Decke"
@@ -916,6 +1000,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+463.5+11.5+126*0.5,36.5+(292.5-5)*0.5]
         vert: decke
     - id: 6
       name: "Licht Spiegel"
@@ -923,6 +1008,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
+        hori: [36.5+463.5+11.5,200]
         vert: oben
 - id: 3
   name: obergeschoss

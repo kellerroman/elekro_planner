@@ -15,7 +15,7 @@ def read_anschluesse(haus,yaml_file):
         id[0] = id[0] + 1
         id[1] = 0
         gid = geschoss["id"]
-        gname =geschoss["name"]
+        gname = geschoss["name"]
         if id[0] != gid:
             print ("Geschoss-Id not correct {} ist: {}".format(id[0],gid))
             quit(1)
@@ -39,10 +39,10 @@ def read_anschluesse(haus,yaml_file):
                         room["id"]))
                     quit(1)
                 # print(" - "+room["name"]+"("+str(geschoss["id"])+"."+str(room["id"])+")")
-                haus.geschosse[-1].rooms.append(Room())
+                current_geschoss.rooms.append(Room())
                 room_count += 1
                 if "objects" in room:
-                    current_room = haus.geschosse[-1].rooms[-1]
+                    current_room = current_geschoss.rooms[-1]
                     for obj in room["objects"]:
                         id[2] = id[2] + 1
                         if id[2] != obj["id"]:

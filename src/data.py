@@ -154,8 +154,8 @@ class Wall(Point):
         self.y = self.pos.horizontal[1]
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = yaml[st][0]
-            self.dy = yaml[st][1]
+            self.dx = float(eval(str(yaml[st][0])))
+            self.dy = float(eval(str(yaml[st][1])))
 class Window(Point):
     def __init__(self,yaml,parent):
         self.dx = 0
@@ -165,8 +165,8 @@ class Window(Point):
         self.y = self.pos.horizontal[1]
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = yaml[st][0]
-            self.dy = yaml[st][1]
+            self.dx = float(eval(str(yaml[st][0])))
+            self.dy = float(eval(str(yaml[st][1])))
 class Door(Point):
     def __init__(self,yaml,parent):
         self.dx = 0
@@ -176,5 +176,5 @@ class Door(Point):
         self.y = self.pos.horizontal[1]
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = yaml[st][0]
-            self.dy = yaml[st][1]
+            self.dx = float(eval(str(yaml[st][0])))
+            self.dy = float(eval(str(yaml[st][1])))

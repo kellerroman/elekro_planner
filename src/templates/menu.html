@@ -62,7 +62,9 @@ svg {width: 100%; height: auto;}
   </div>
   <div id="ug" class="tabcontent2">
     <h3>Untergeschoss</h3>
-	<object class="emb" data="{{url_for('static', filename='test.svg')}}" width="100" height="100" type="image/svg+xml"></object>
+    {% autoescape false %}
+    {{grundriss_ug}}
+    {% endautoescape %}
   </div>
   <div id="eg" class="tabcontent2">
     <h3>Erdgeschoss</h3>
@@ -75,6 +77,9 @@ svg {width: 100%; height: auto;}
   </div>
   <div id="og" class="tabcontent2">
     <h3>Obergeschoss</h3>
+    {% autoescape false %}
+    {{grundriss_og}}
+    {% endautoescape %}
   </div>
 </div>
 
@@ -113,7 +118,7 @@ function clickInit() {
   tablinks = document.getElementsByClassName("tablinks1");
   tablinks[0].click();
   tablinks = document.getElementsByClassName("tablinks2");
-  tablinks[1].click();
+  tablinks[2].click();
 }
 
 function copy(text) {
