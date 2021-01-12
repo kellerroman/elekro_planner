@@ -18,7 +18,7 @@ def read_struktur(haus,yaml_file):
         if id[0] != gid:
             print ("Geschoss-Id not correct {} ist: {}".format(id[0], gid))
             quit(1)
-        print(geschoss["name"]+"("+str(gid)+")")
+        # print(geschoss["name"]+"("+str(gid)+")")
         haus.geschosse.append(Geschoss(geschoss))
         geschoss_count += 1
         if "walls" in geschoss:
@@ -39,11 +39,6 @@ def read_struktur(haus,yaml_file):
             for obj in geschoss["doors"]:
                 haus.geschosse[-1].doors.append(Door(obj,haus.geschosse[-1]))
                 door_count += 1
-    print(" Geschosse: {} ".format(geschoss_count))
-    print(" Wände: {} ".format(wall_count))
-    print(" Fenster: {} ".format(window_count))
-    print(" Türen: {} ".format(door_count))
-
 if __name__ == '__main__':
     haus = Haus()
     yaml_file = "data/eg.yaml"

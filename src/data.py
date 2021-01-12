@@ -83,24 +83,34 @@ class Position:
 class Haus:
     def __init__(self):
         self.geschosse = []
+        self.book = dict()
+        self.geschoss_count = 0
+        self.room_count = 0
 
 class Geschoss:
     def __init__(self,yaml):
         self.id = read_value_from_yaml(yaml,"id")
+        self.cid = self.id
         self.name = read_value_from_yaml(yaml,"name")
         self.height = read_value_from_yaml(yaml,"height",False)
         self.rooms = []
         self.walls = []
         self.windows = []
         self.doors = []
+        self.book = dict()
 
 class Room:
-    def __init__(self):
+    def __init__(self,yaml,parent):
+        self.id = read_value_from_yaml(yaml,"id")
+        self.cid = str(parent.cid)+"."+str(self.id)
+        self.name = read_value_from_yaml(yaml,"name")
         self.objects = []
+        self.book = dict()
 
 class Point:
     def __init__(self,yaml,parent):
         self.id = read_value_from_yaml(yaml,"id")
+        self.cid = str(parent.cid)+"."+str(self.id)
         self.pos = Position(yaml["pos"])
         self.parent = parent
 

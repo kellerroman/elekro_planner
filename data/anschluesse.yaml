@@ -513,15 +513,23 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
-        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.25]
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.1]
         vert: oben
     - id: 15
+      name: "Licht Gegenwand mitte"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.5]
+        vert: oben
+    - id: 16
       name: "Licht Gegenwand rechts"
       con-type: licht
       anzahl: 1
       knx: schaltbar
       pos:
-        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.75]
+        hori: [7+1422.5-18-36.5-438.5,36.5*2+927-445*0.9]
         vert: oben
   - id: 3
     name: Vorraum
@@ -559,6 +567,18 @@ geschosse:
       pos:
         hori: [36.5+463.5+11.5+401*0.5, 36.5*2+263+218*0.5]
         vert: decke
+    - id: 6
+      name: "Licht Empore links"
+      con-type: licht
+      anzahl: 2
+      pos:
+        hori: [36.5+463.5+11.5+126+11.5, 24+5]
+    - id: 7
+      name: "Licht Empore rechts"
+      con-type: licht
+      anzahl: 2
+      pos:
+        hori: [36.5+463.5+11.5+126+11.5+265, 24+5]
   - id: 4
     name: Wohnzimmer
     objects:
@@ -714,6 +734,14 @@ geschosse:
       knx: schaltbar
       pos:
         hori: [36.5+415+10+50+401,36.5+245+17.5+276+24+426*0.75]
+        vert: oben
+    - id: 25
+      name: "Licht Wand unten"
+      con-type: licht
+      anzahl: 1
+      knx: schaltbar
+      pos:
+        hori: [640,36.5+245+17.5+276+24+426]
         vert: oben
   - id: 5
     name: Spielen
@@ -1262,7 +1290,7 @@ geschosse:
     - id: 5
       name: "Steckdose Türe"
       con-type: steckdose
-      anzahl: 2
+      anzahl: 1
       pos:
         hori: [495,396.9]
     - id: 6

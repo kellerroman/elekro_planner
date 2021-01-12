@@ -9,7 +9,7 @@ import os
 def read_setup(yaml_file):
     with open(yaml_file, 'r') as stream:
         data = yaml.safe_load(stream)
-    print("Reading Setup for {}".format(data["config"]["name"]))
+    # print("Reading Setup for {}".format(data["config"]["name"]))
 
     folder = os.path.dirname(os.path.abspath(yaml_file))+ "/"
     yaml_anschluesse = folder + data["config"]["anschluesse"]

@@ -83,6 +83,58 @@ svg {width: 100%; height: auto;}
 <div id="rb" class="tabcontent">
   <h3>Raumbuch</h3>
   <p>Liste der Räume</p>
+  <p>  {{haus.book["object"]}}
+           | {{haus.book["licht"]}}
+           | {{haus.book["knx_input"]}}
+           | {{haus.book["knx_presenzmelder"]}}
+           | {{haus.book["knx_glastaster"]}}
+           | {{haus.book["stromanschluss"]}}
+           | {{haus.book["kontakt"]}}
+           | {{haus.book["netzwerk"]}}
+  </p>
+  <ul>
+  {% for geschoss in haus.geschosse %}
+  <li>
+   <details open>
+       <summary>{{geschoss.cid}}
+           | {{ geschoss.name }}
+           | {{geschoss.book["object"]}}
+           | {{geschoss.book["licht"]}}
+           | {{geschoss.book["knx_input"]}}
+           | {{geschoss.book["knx_presenzmelder"]}}
+           | {{geschoss.book["knx_glastaster"]}}
+           | {{geschoss.book["stromanschluss"]}}
+           | {{geschoss.book["kontakt"]}}
+           | {{geschoss.book["netzwerk"]}}
+       </summary>
+    <ul>
+     {% for room in geschoss.rooms %}
+       <li>
+        <details >
+            <summary>{{room.cid}}
+           | {{ room.name }}
+           | {{room.book["object"]}}
+           | {{room.book["licht"]}}
+           | {{room.book["knx_input"]}}
+           | {{room.book["knx_presenzmelder"]}}
+           | {{room.book["knx_glastaster"]}}
+           | {{room.book["stromanschluss"]}}
+           | {{room.book["kontakt"]}}
+           | {{room.book["netzwerk"]}}
+            </summary>
+            <ul>
+            {% for obj in room.objects %}
+            <li>{{obj.cid}} | {{obj.name}} </li>
+            {% endfor %}
+            </ul>
+        </details>
+     {% endfor %}
+    </ul>
+   </details>
+  </li>
+  {% endfor %}
+  </ul>
+
 </div>
 
 <div id="mb" class="tabcontent">
@@ -115,7 +167,7 @@ function clickInit() {
   tablinks = document.getElementsByClassName("tablinks1");
   tablinks[0].click();
   tablinks = document.getElementsByClassName("tablinks2");
-  tablinks[2].click();
+  tablinks[1].click();
 }
 
 function copy(text) {
@@ -150,7 +202,7 @@ function who(e) {
   var text =  "        hori: ["+ x+","+y+"]";
   copy(text);
 }
-var svg=document.getElementById("svg_obergeschoss");
+var svg=document.getElementById("svg_erdgeschoss");
 var pt=svg.createSVGPoint();
 document.onmousemove = handleMM
 function getCursor(evt) {

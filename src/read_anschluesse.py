@@ -39,7 +39,7 @@ def read_anschluesse(haus,yaml_file):
                         room["id"]))
                     quit(1)
                 # print(" - "+room["name"]+"("+str(geschoss["id"])+"."+str(room["id"])+")")
-                current_geschoss.rooms.append(Room())
+                current_geschoss.rooms.append(Room(room,current_geschoss))
                 room_count += 1
                 if "objects" in room:
                     current_room = current_geschoss.rooms[-1]
@@ -73,10 +73,6 @@ def read_anschluesse(haus,yaml_file):
                                 raise RuntimeError("Connection Type unknown {}".format(obj[st]))
                         else:
                             raise RuntimeError("Connection Type not set")
-
-    print(" Geschosse: {} {} ".format(geschoss_count,len(haus.geschosse)))
-    print(" Räume: {} ".format(room_count))
-    print(" Anschlüsse: {} ".format(object_count))
 
 if __name__ == '__main__':
     haus = Haus()
