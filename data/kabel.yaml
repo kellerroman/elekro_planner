@@ -4,6 +4,38 @@ kabel:
   start: 1.1.1
   end: [3.3.1,3.3.2]
 - id: 2
-  name: "SK1 KiZi 2"
+  name: "SK2 KiZi 1"
   start: 1.1.1
   end: [3.3.3,3.3.4,3.3.5]
+- id: 3
+  name: "Rolladen KiZi 1 Fenster"
+  start: 1.1.1
+  end: [3.3.6]
+- id: 4
+  name: "Rolladen KiZi 1 Dachfenster"
+  start: 1.1.1
+  end: [3.3.7]
+- id: 5
+  name: "Licht KiZi 1"
+  start: 1.1.1
+  end: [3.3.15]
+- id: 6
+  name: "SK1 KiZi 2"
+  start: 1.1.1
+  end: [3.3.1,3.3.2]
+- id: 7
+  name: "SK2 KiZi 2"
+  start: 1.1.1
+  end: [3.3.3,3.3.4,3.3.5]
+- id: 8
+  name: "Rolladen KiZi 2 Fenster"
+  start: 1.1.1
+  end: [3.3.6]
+- id: 9
+  name: "Rolladen KiZi 2 Dachfenster"
+  start: 1.1.1
+  end: [3.3.7]
+- id: 10
+  name: "Licht KiZi 2"
+  start: 1.1.1
+  end: [3.3.15]

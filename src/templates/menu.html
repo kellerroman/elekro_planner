@@ -44,10 +44,23 @@ svg {width: 100%; height: auto;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+.move {
+  float: left;
+  position: relative;
+  left: 100px;
+  top: 350px;
+  z-index: 1000;
+  background-color: #92AD40;
+  padding: 5px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
 </style>
 </head>
 <body onload="clickInit()">
-<p id ="pos_text">This is the current position</p>
+<!-- <p id ="pos_text">This is the current position</p> -->
 <div class="tab">
   <button class="tablinks1" onclick="changeTab(event, 'gp')">Geschosspläne</button>
   <button class="tablinks1" onclick="changeTab(event, 'rb')">Raumbuch</button>
@@ -71,6 +84,9 @@ svg {width: 100%; height: auto;}
     {% autoescape false %}
     {{grundriss_eg}}
     {% endautoescape %}
+    <div id="eg_move" class="move">
+      <p id="text_move" >eg_move</p>
+    </div>
   </div>
   <div id="og" class="tabcontent2">
     <h3>Obergeschoss</h3>
@@ -146,9 +162,10 @@ svg {width: 100%; height: auto;}
 //<![CDATA[
 // document.getElementById("wall_1").setAttribute("fill", "red");
 const round = (number, decimalPlaces) => {
-    const factorOfTen = Math.pow(10, decimalPlaces);
-    return Math.round(number * factorOfTen) / factorOfTen;
-    }
+  const factorOfTen = Math.pow(10, decimalPlaces);
+  return Math.round(number * factorOfTen) / factorOfTen;
+}
+
 function changeTab(evt, cityName, tabname="tabcontent") {
   var i, tabcontent, tablinks;
   var classname = evt.currentTarget.className;
@@ -163,6 +180,7 @@ function changeTab(evt, cityName, tabname="tabcontent") {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
 function clickInit() {
   tablinks = document.getElementsByClassName("tablinks1");
   tablinks[0].click();
@@ -173,16 +191,12 @@ function clickInit() {
 function copy(text) {
   var textArea = document.createElement("textarea");
   textArea.value = text;
-
-  // Avoid scrolling to bottom
   textArea.style.top = "0";
   textArea.style.left = "0";
   textArea.style.position = "fixed";
-
   document.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
-
   try {
     var successful = document.execCommand('copy');
     var msg = successful ? 'successful' : 'unsuccessful';
@@ -192,8 +206,8 @@ function copy(text) {
   }
   document.body.removeChild(textArea);
 }
-document.onmousedown = who
-function who(e) {
+
+function onMouseDown(e) {
   var id = e.target.id;
   e.target.setAttribute("fill", "red");
   var loc=getCursor(e);
@@ -202,27 +216,42 @@ function who(e) {
   var text =  "        hori: ["+ x+","+y+"]";
   copy(text);
 }
-var svg=document.getElementById("svg_erdgeschoss");
-var pt=svg.createSVGPoint();
-document.onmousemove = handleMM
+
 function getCursor(evt) {
     pt.x=evt.clientX;
     pt.y=evt.clientY;
     return pt.matrixTransform(svg.getScreenCTM().inverse());
 }
-function handleMM(e) {
+
+function onMouseMove(e) {
   var id = e.target.id;
   // e.target.setAttribute("fill", "red");
-  var loc=getCursor(e);
-  var x = round(loc.x/10,1);
-  var y = round(loc.y/10,1);
+  // var loc=getCursor(e);
+  // var x = round(loc.x,1);
+  // var y = round(loc.y,1);
+  var x = e.clientX;
+  var y = e.clientY;
   var text =  x+";"+y;
-  document.getElementById('pos_text').innerHTML = text;
+  if (id != null) {
+    // var cn = document.getElementById(id).getAttribute("class");
+    var cn = e.target.getAttribute("class");
+    if (cn == "wall") {
+       // document.getElementById("eg_move").style.display = "inline";
+       //document.getElementById('eg_move').style.cssText = "left:" (x-75) "px";
+       //document.getElementById('eg_move').style.cssText = "top:" (y-75) "px";
+       document.getElementById('text_move').innerHTML  = text;
+    } else {
+       // document.getElementById("eg_move").style.display = "none";
+    }
+  }
+ // document.getElementById('pos_text').innerHTML = text;
 }
 
+var svg=document.getElementById("svg_erdgeschoss");
+var pt=svg.createSVGPoint();
+document.onmousemove = onMouseMove
+document.onmousedown = onMouseDown
 //]]>
 </script>
-
 </body>
 </html>
-

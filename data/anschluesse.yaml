@@ -3,6 +3,15 @@ geschosse:
   name: untergeschoss
   rooms:
   - id: 1
+    name: Technik
+    objects:
+    - id: 1
+      name: "Verteilerkasten"
+      con-type: steckdose
+      anzahl: 1
+      pos:
+        hori: [286.5,577.3]
+  - id: 2
     name: Eingang
     objects:
     - id: 1
@@ -60,7 +69,7 @@ geschosse:
       knx: schaltbar
       pos:
         vert: decke
-  - id: 2
+  - id: 3
     name: Einliegerwohnung
     objects:
     - id: 1
@@ -169,7 +178,7 @@ geschosse:
       knx: schaltbar
       pos:
         vert: decke
-  - id: 3
+  - id: 4
     name: Bad
     objects:
     - id: 1
@@ -218,7 +227,7 @@ geschosse:
       anzahl: 1
       knx: input
       pos:
-  - id: 4
+  - id: 5
     name: Diele
     objects:
     - id: 1

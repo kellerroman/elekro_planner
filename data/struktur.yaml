@@ -1,6 +1,7 @@
 geschosse:
 - id: 1
   name: untergeschoss
+  height: 2.36
   walls:
   - id: 1
     pos:
@@ -288,6 +289,7 @@ geschosse:
     ende: [88.5,11.5]
 - id: 3
   name: obergeschoss
+  height: 2.55
   walls:
   - id: 1
     pos:

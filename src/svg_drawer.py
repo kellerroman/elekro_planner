@@ -35,7 +35,7 @@ def create_svg(haus):
             ye = wall.dy * 10
             text = str(wall.id)
             # rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="black", fill="none", id="wall_"+text)
-            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="black", fill="black", id="wall_"+text)
+            rect = dwg.rect((xs,ys), (xe,ye), stroke="black", fill="black", id="wall_"+text)
             rect['class'] = 'wall'
             dwg.add(rect)
         for window in geschoss.windows:
@@ -44,7 +44,7 @@ def create_svg(haus):
             xe = window.dx * 10
             ye = window.dy * 10
             text = str(window.id)
-            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="blue", stroke_width=10, fill="white", id="window_"+text)
+            rect = dwg.rect((xs,ys), (xe,ye), stroke="blue", stroke_width=10, fill="white", id="window_"+text)
             rect['class'] = 'window'
             dwg.add(rect)
         for door in geschoss.doors:
@@ -53,7 +53,7 @@ def create_svg(haus):
             xe = door.dx * 10
             ye = door.dy * 10
             text = str(door.id)
-            rect = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="brown", stroke_width=10, fill="white", id="door_"+text)
+            rect = dwg.rect((xs,ys), (xe,ye), stroke="brown", stroke_width=10, fill="white", id="door_"+text)
             rect['class'] = 'door'
             dwg.add(rect)
         # draw wall ids
@@ -80,7 +80,7 @@ def create_svg(haus):
                         r = 100
                         xs = x
                         ys = y
-                        draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="yellow", stroke_width=line_width , fill="none")
+                        draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="yellow", stroke_width=line_width , fill="none", id="licht_"+str(obj.id))
                         draw_obj['class'] = 'licht'
                         xes = x - r / sqrt(2)
                         yes = y + r / sqrt(2)
@@ -90,6 +90,10 @@ def create_svg(haus):
                         yes = y - r / sqrt(2)
                         yss = y + r / sqrt(2)
                         line2 = dwg.line(start=(xss,yss), end=(xes,yes), style="cursor:crosshair", stroke="yellow", stroke_width = line_width, fill="yellow")
+                        line1['class'] = 'licht'
+                        line2['class'] = 'licht'
+                        xes = x - r / sqrt(2)
+                        xes = x - r / sqrt(2)
                         dwg.add(line1)
                         dwg.add(line2)
                     elif type(obj) is Knx:
@@ -100,24 +104,25 @@ def create_svg(haus):
                             xs = x
                             ys = y
                             draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="green", fill="none")
-                            draw_obj['class'] = 'pm_radius'
+                            draw_obj['class'] = 'knx_pm_radius'
                             dwg.add(draw_obj)
                             r = 1500
                             xs = x
                             ys = y
                             draw_obj = dwg.circle((xs,ys), r, style="cursor:crosshair", stroke="green", fill="none")
-                            draw_obj['class'] = 'pm_dist_licht'
+                            draw_obj['class'] = 'knx_pm_dist_licht'
                             dwg.add(draw_obj)
                             xe = 85
                             ye = 85
                             xs = x - xe * 0.5
                             ys = y - ye * 0.5
                             draw_obj = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="green", fill="green")
+                            draw_obj['class'] = 'knx'
                         else:
                             xe = xs + 100
                             ye = ys + 100
                             draw_obj = dwg.line(start=(xs,ys), end=(xe,ye), style="cursor:crosshair", stroke="green", stroke_width = 30, fill="green")
-                        draw_obj['class'] = 'knx'
+                            draw_obj['class'] = 'knx'
                     elif type(obj) is Netzwerk:
                         xe = xs + 100
                         ye = ys
