@@ -97,6 +97,7 @@ class Geschoss:
         self.walls = []
         self.windows = []
         self.doors = []
+        self.edges = []
         self.book = dict()
 
 class Room:
@@ -162,6 +163,7 @@ class Wall(Point):
         super().__init__(yaml,parent)
         self.x = self.pos.horizontal[0]
         self.y = self.pos.horizontal[1]
+        self.edges = []
         st = "ende"
         if yaml != None and st in yaml:
             self.dx = float(eval(str(yaml[st][0])))
@@ -188,3 +190,10 @@ class Door(Point):
         if yaml != None and st in yaml:
             self.dx = float(eval(str(yaml[st][0])))
             self.dy = float(eval(str(yaml[st][1])))
+class edge:
+    def __init__(self,x,y,parent):
+        self.x = x
+        self.y = y
+        self.n = 1
+        self.parent = parent
+        self.connections = []

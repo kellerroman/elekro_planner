@@ -31,7 +31,6 @@ body {font-family: Arial;}
   background-color: #ddd;
 }
 
-svg {width: 100%; height: auto;}
 /* Create an active/current tablink class */
 .tab button.active {
   background-color: #ccc;
@@ -40,21 +39,29 @@ svg {width: 100%; height: auto;}
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
+  position: relative;
+  <!-- padding: 6px 0px; -->
+  <!-- border: 1px solid #ccc; -->
   border-top: none;
 }
-
-.move {
+div.move {
   float: left;
-  position: relative;
-  left: 100px;
-  top: 350px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
   z-index: 1000;
   background-color: #92AD40;
   padding: 5px;
   color: #FFFFFF;
   font-weight: bold;
+}
+svg {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  left: 0;
+  top: 70;
+  z-index: -1;
 }
 
 </style>
@@ -84,8 +91,11 @@ svg {width: 100%; height: auto;}
     {% autoescape false %}
     {{grundriss_eg}}
     {% endautoescape %}
-    <div id="eg_move" class="move">
-      <p id="text_move" >eg_move</p>
+    <div id="eg_move" class="move" style="left: 0px; top: 200px">
+      <p id="text_move">eg_move</p>
+    </div>
+    <div id="eg_move2" class="move" style="left: 100px; top: 92px">
+      <p id="text_move">eg_move2</p>
     </div>
   </div>
   <div id="og" class="tabcontent2">
@@ -237,8 +247,8 @@ function onMouseMove(e) {
     var cn = e.target.getAttribute("class");
     if (cn == "wall") {
        // document.getElementById("eg_move").style.display = "inline";
-       //document.getElementById('eg_move').style.cssText = "left:" (x-75) "px";
-       //document.getElementById('eg_move').style.cssText = "top:" (y-75) "px";
+       document.getElementById('eg_move').style.cssText = "left:"+x+"px";
+       document.getElementById('eg_move').style.cssText += "top:"+(y-40)+"px";
        document.getElementById('text_move').innerHTML  = text;
     } else {
        // document.getElementById("eg_move").style.display = "none";

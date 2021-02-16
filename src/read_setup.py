@@ -3,6 +3,7 @@
 from data import  *
 from read_anschluesse import read_anschluesse
 from read_struktur import read_struktur
+from connect_walls import connect_walls
 import yaml
 import os
 
@@ -22,7 +23,7 @@ def read_setup(yaml_file):
 
     read_struktur(haus,yaml_struktur)
     read_anschluesse(haus,yaml_anschluesse)
-
+    connect_walls(haus)
 
     return haus
 if __name__ == '__main__':
