@@ -109,15 +109,30 @@ svg {
 <div id="rb" class="tabcontent">
   <h3>Raumbuch</h3>
   <p>Liste der Räume</p>
-  <p>  {{haus.book["object"]}}
-           | {{haus.book["licht"]}}
-           | {{haus.book["knx_input"]}}
-           | {{haus.book["knx_presenzmelder"]}}
-           | {{haus.book["knx_glastaster"]}}
-           | {{haus.book["stromanschluss"]}}
-           | {{haus.book["kontakt"]}}
-           | {{haus.book["netzwerk"]}}
-  </p>
+  <table>
+    <tr>
+      <th scope="col">Objects</th>
+      <th scope="col">Licht</th>
+      <th scope="col">KNX In</th>
+      <th scope="col">PM</th>
+      <th scope="col">GT</th>
+      <th scope="col">230V</th>
+      <th scope="col">Steckdose</th>
+      <th scope="col">Kontakt</th>
+      <th scope="col">CAT7</th>
+    </tr>
+    <tr>
+      <td>{{haus.book["object"]}}</td>
+  <td> {{haus.book["licht"]}} </td>
+  <td> {{haus.book["knx_input"]}} </td>
+  <td> {{haus.book["knx_presenzmelder"]}} </td>
+  <td> {{haus.book["knx_glastaster"]}} </td>
+  <td> {{haus.book["stromanschluss"]}} </td>
+  <td> {{haus.book["steckdose"]}} </td>
+  <td> {{haus.book["kontakt"]}} </td>
+  <td> {{haus.book["netzwerk"]}} </td>
+    </tr>
+  </table>
   <ul>
   {% for geschoss in haus.geschosse %}
   <li>
@@ -165,7 +180,112 @@ svg {
 
 <div id="mb" class="tabcontent">
   <h3>Materialbuch</h3>
-  <p>mb is the capital of Japan.</p>
+  <table>
+    <tr>
+      <th scope="col">Type</th>
+      <th scope="col">Anzahl</th>
+    </tr>
+    <tr>
+      <td scope="col">Objects</td>
+      <td>{{haus.book["object"]}}</td>
+    </tr>
+    <tr>
+      <td scope="col">Licht</td>
+      <td> {{haus.book["licht"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Led</td>
+      <td> {{haus.book["led"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">PM</td>
+      <td> {{haus.book["knx_presenzmelder"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">GT</td>
+      <td> {{haus.book["knx_glastaster"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">230V</td>
+      <td> {{haus.book["stromanschluss"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Steckdose</td>
+      <td> {{haus.book["steckdose"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Steckdose 1-fach</td>
+      <td> {{haus.book["steckdose 1-fach"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Steckdose 2-fach</td>
+      <td> {{haus.book["steckdose 2-fach"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Steckdose 3-fach</td>
+      <td> {{haus.book["steckdose 3-fach"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Rolladen</td>
+      <td> {{haus.book["rolladen"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kontakt</td>
+      <td> {{haus.book["kontakt"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">KNX Binärkontakte</td>
+      <td> {{haus.book["knx_input"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">CAT7</td>
+      <td> {{haus.book["netzwerk"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Unterputzdosen</td>
+      <td> {{haus.book["unterputzdosen"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kabel Länge NYM5x15</td>
+      <td> {{haus.book["laenge_kabel_NYM5x15"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kabel Länge NYM5x25</td>
+      <td> {{haus.book["laenge_kabel_NYM5x25"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kabel Länge CAT7</td>
+      <td> {{haus.book["laenge_kabel_CAT7"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kabel Länge KNX</td>
+      <td> {{haus.book["laenge_kabel_KNX"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Kabel Länge FMK</td>
+      <td> {{haus.book["laenge_kabel_FMK"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Anzahl Kabel NYM5x15</td>
+      <td> {{haus.book["anzahl_kabel_NYM5x15"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Anzahl Kabel NYM5x25</td>
+      <td> {{haus.book["anzahl_kabel_NYM5x25"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Anzahl Kabel CAT7</td>
+      <td> {{haus.book["anzahl_kabel_CAT7"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Anzahl Kabel KNX</td>
+      <td> {{haus.book["anzahl_kabel_KNX"]}} </td>
+    </tr>
+    <tr>
+      <td scope="col">Anzahl Kabel FMK</td>
+      <td> {{haus.book["anzahl_kabel_FMK"]}} </td>
+    </tr>
+  </table>
 </div>
 
 <script>
@@ -257,7 +377,7 @@ function onMouseMove(e) {
  // document.getElementById('pos_text').innerHTML = text;
 }
 
-var svg=document.getElementById("svg_erdgeschoss");
+var svg=document.getElementById("svg_untergeschoss");
 var pt=svg.createSVGPoint();
 document.onmousemove = onMouseMove
 document.onmousedown = onMouseDown

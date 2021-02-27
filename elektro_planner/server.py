@@ -2,9 +2,9 @@
 
 from flask import Flask, render_template, request
 app = Flask(__name__)
-from svg_drawer import create_svg
-from read_setup import read_setup
-from roombook import create_roombook
+from elektro_planner.read_setup import read_setup
+from elektro_planner.create_svg import create_svg
+from elektro_planner.create_roombook import create_roombook
 
 @app.route('/')
 def mainpage():

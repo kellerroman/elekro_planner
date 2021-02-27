@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 
-from data import  Haus, Geschoss, Wall, Window, Door
+from elektro_planner.data import  Haus, Geschoss, Wall, Window, Door
 import yaml
-def read_struktur(haus,yaml_file):
-    with open(yaml_file, 'r') as stream:
-        data = yaml.safe_load(stream)
-
+def read_struktur(haus,data):
     id = [0,0,0]
     wall_count = 0
     window_count = 0
     door_count = 0
     geschoss_count = 0
+    z = 0.0
     for geschoss in data["geschosse"]:
         id[0] = id[0] + 1
         id[1] = 0
@@ -19,7 +17,7 @@ def read_struktur(haus,yaml_file):
             print ("Geschoss-Id not correct {} ist: {}".format(id[0], gid))
             quit(1)
         # print(geschoss["name"]+"("+str(gid)+")")
-        haus.geschosse.append(Geschoss(geschoss))
+        haus.geschosse.append(Geschoss(geschoss,z))
         geschoss_count += 1
         if "walls" in geschoss:
             for obj in geschoss["walls"]:
@@ -39,7 +37,10 @@ def read_struktur(haus,yaml_file):
             for obj in geschoss["doors"]:
                 haus.geschosse[-1].doors.append(Door(obj,haus.geschosse[-1]))
                 door_count += 1
+        z += haus.geschosse[-1].height
 if __name__ == '__main__':
     haus = Haus()
-    yaml_file = "data/eg.yaml"
-    read_struktur(haus,yaml_file)
+    yaml_file = "data/struktur.yaml"
+    with open(yaml_file, 'r') as stream:
+        data = yaml.safe_load(stream)
+    read_struktur(haus,data)
