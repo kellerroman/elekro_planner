@@ -116,10 +116,21 @@ class Haus:
         self.geschoss_count = 0
         self.room_count = 0
         self.kabel = []
-        self.edges = dict()
+        self.nodes = dict()
+
+    def add_node(self,node):
+        self.nodes[node.id] = node
+
+    def add_nodes(self,nodes):
+        for node in nodes:
+            self.add_node(node)
+
+    def find_object(self,cid):
+        pos = cid.split(".")
+        return self.geschosse[int(pos[0])-1].rooms[int(pos[1])-1].objects[int(pos[2])-1]
 
 class Geschoss:
-    def __init__(self,yaml,z):
+    def __init__(self,yaml,z,parent):
         self.id = read_value_from_yaml(yaml,"id")
         self.cid = self.id
         self.name = read_value_from_yaml(yaml,"name")
@@ -127,12 +138,23 @@ class Geschoss:
         self.z0 = z
         self.height = read_value_from_yaml(yaml,"height")
         self.z1 = self.z0 + self.height
+        self.parent = parent
         self.rooms = []
         self.walls = []
         self.windows = []
         self.doors = []
-        self.edges = []
+        self.nodes = []
         self.book = dict()
+
+    def add_node(self,node):
+        if node in self.nodes:
+            raise RuntimeError(" Node Already in List: {} ".format(node))
+        self.nodes.append(node)
+        self.parent.add_node(node)
+
+    def add_nodes(self,nodes):
+        for node in nodes:
+            self.add_node(node)
 
 class Room:
     def __init__(self,yaml,parent):
@@ -159,7 +181,7 @@ class Object(Point):
         self.name = read_value_from_yaml(yaml,"name")
         self.connection_type = KabelType.NYM5x15
         self.associated_wall = None
-        self.associated_edge = None
+        self.associated_node = None
     def draw(self,dwg):
         x = self.pos.horizontal[0] * 10
         y = self.pos.horizontal[1] * 10
@@ -328,12 +350,21 @@ class Wall(Point):
         self.dx = 0
         self.dy = 0
         super().__init__(yaml,parent)
-        self.edges = []
+        self.nodes = []
         st = "ende"
         if yaml != None and st in yaml:
             self.dx = float(eval(str(yaml[st][0])))
             self.dy = float(eval(str(yaml[st][1])))
         self.waagrecht = self.dx>self.dy
+
+    def add_node(self,node,recursive = False):
+        self.nodes.append(node)
+        if recursive:
+            self.parent.add_node(node)
+
+    def add_nodes(self,nodes, recursive = False):
+        for node in nodes:
+            self.add_node(node,recursive)
 
 class Window(Point):
     def __init__(self,yaml,parent):
@@ -357,24 +388,127 @@ class Door(Point):
         if yaml != None and st in yaml:
             self.dx = float(eval(str(yaml[st][0])))
             self.dy = float(eval(str(yaml[st][1])))
-class Edge:
+class Node:
     id_counter = 0
     def __init__(self,x,y,z,parent):
         self.x = x
         self.y = y
         self.z = z
         self.n = 1
+        self.id = Node.id_counter
+        Node.id_counter += 1
+        self.parent = parent
+        # self.connections = []
+        self.edges = []
+
+    def __str__(self):
+        return "Node {} Position: {} {} {}, N: {}".format(self.id, self.x,self.y,self.z,self.n)
+
+    def is_node(self,node):
+        if not isinstance(node,Node):
+            raise RuntimeError("An Node must be passe to Node routine")
+
+    def connect(self,node):
+        self.is_node(node)
+        e = Edge(self,node)
+        self.n += 1
+        node.n += 1
+        self.edges.append(e)
+        node.edges.append(e)
+
+    def is_connected(self,node):
+        self.is_node(node)
+        return node in self.get_connected_nodes()
+
+    def get_edge_that_connects_to(self,node):
+        self.is_node(node)
+        for e in self.edges:
+            if e.get_con_node(self) == node:
+                return e
+        raise RuntimeError("Node {}: is not connected to Node {}".format(self.id,node.id))
+
+    def distance(self,node):
+        self.is_node(node)
+        return self.get_edge_that_connects_to(node).length
+
+    def get_connected_nodes(self):
+        list_of_nodes = []
+        for e in self.edges:
+            list_of_nodes.append(e.get_con_node(self)  )
+        return list_of_nodes
+
+    def replace_connection(self,node_old,node_new):
+        self.is_node(node_old)
+        self.is_node(node_new)
+        if self.is_connected(node_old):
+            #find the edge that makes the connection:
+            for e in self.edges:
+                if e.get_con_node(self) == node_old:
+                    node_old.edges.remove(e)
+                    node_old.n -= 1
+                    e.replace_node(node_old,node_new)
+                    node_new.edges.append(e)
+                    node_new.n += 1
+                    return
+        else:
+            raise RuntimeError("Replace Conection: Node: {} is not connected to {}".format(self.id,node_old.id))
+
+
+
+class Edge:
+    id_counter = 0
+    def __init__(self,node1,node2):
+        self.node = [node1,node2]
+        self.length = self.calc_length()
         self.id = Edge.id_counter
         Edge.id_counter += 1
-        self.parent = parent
-        self.connections = []
     def __str__(self):
-        return "Edge {} Position: {} {} {}, N: {}".format(self.id, self.x,self.y,self.z,self.n)
+        return "Edge {} Connecting-Edges: {} {} len: {}".format(self.id, self.node[0],self.node[1],self.length)
+
+    def calc_length(self):
+        n1 = self.node[0]
+        n2 = self.node[1]
+        dx = n1.x - n2.x
+        dy = n1.y - n2.y
+        dz = n1.z - n2.z
+        self.length =sqrt(dx*dx+dy*dy+dz*dz)
+        return self.length
+
+    def get_con_node(self,node):
+        if self.node[0].id == node.id:
+            return self.node[1]
+        return self.node[0]
+
+    def replace_node(self,node_old,node_new):
+        if self.node[0].id == node_old.id:
+            self.node[0] = node_new
+        elif self.node[1].id == node_old.id:
+            self.node[1] = node_new
+        self.calc_length()
+
 
 class Kabel:
-    def __init__(self,yaml):
-        self.start = read_value_from_yaml(yaml,"start")
-        self.end = read_value_from_yaml(yaml,"end")
+    def __init__(self,start,end):
+        self.is_obj(start)
+        self.start = start
+        if type(end) is list:
+            for o in end:
+                self.is_obj(o)
+            self.end = end
+        else:
+            self.is_obj(end)
+            self.end = [end]
+
         self.type = None
         self.length = 0.0
+    def is_obj(self,obj):
+        pass
+        # if not isinstance(obj,Object):
+        #     raise RuntimeError("An Object must be passe to Kabel")
+
+    @classmethod
+    def from_yaml(cls,yaml):
+        start = read_value_from_yaml(yaml,"start")
+        end = read_value_from_yaml(yaml,"end")
+        return cls(start,end)
         # print(" Kabel from {} to {}: {}".format(self.start,len(self.end),self.end))

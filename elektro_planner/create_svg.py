@@ -65,10 +65,10 @@ def create_svg(haus):
             text_style = "font-size:%ipx; font-family:%s" % (font_size, "Courier New")
             dwg.add(dwg.text(text, insert=(xs+0.5*(xe-font_size), ys+0.5*(ye+font_size)), fill='red', id="wall_test_"+text, style=text_style))
 
-        for edge in geschoss.edges:
-            for con in edge.connections:
-                xs = edge.x*10
-                ys = edge.y*10
+        for node in geschoss.nodes:
+            for con in node.get_connected_nodes():
+                xs = node.x*10
+                ys = node.y*10
                 xe = con.x*10
                 ye = con.y*10
                 draw_obj = dwg.line(start=(xs,ys), end=(xe,ye), stroke="green", stroke_width = 30, fill="green")
@@ -76,20 +76,20 @@ def create_svg(haus):
             r = 25
             line_width = 15
             color = "green"
-            if edge.n == 1:
+            if node.n == 1:
                 r = 75
-            elif edge.n == 2:
+            elif node.n == 2:
                 color = "red"
-            elif edge.n == 3:
+            elif node.n == 3:
                 color = "blue"
-            elif edge.n == 4:
+            elif node.n == 4:
                 color = "yellow"
-            elif edge.n == 5:
+            elif node.n == 5:
                 color = "white"
-            elif edge.n == 6:
+            elif node.n == 6:
                 color = "magenta"
-            # print(edge.n)
-            draw_obj = dwg.circle((edge.x*10,edge.y*10), r, stroke=color, stroke_width=line_width , fill=color)
+            # print(node.n)
+            draw_obj = dwg.circle((node.x*10,node.y*10), r, stroke=color, stroke_width=line_width , fill=color)
             dwg.add(draw_obj)
 
         for room in geschoss.rooms:

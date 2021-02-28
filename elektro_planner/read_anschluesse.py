@@ -21,8 +21,8 @@ def read_anschluesse(haus,data):
                 found = True
                 break
         if not found:
-            haus.geschosse.append(Geschoss(geschoss))
-            current_geschoss = haus.geschosse[-1]
+            # haus.geschosse.append(Geschoss(geschoss))
+            # current_geschoss = haus.geschosse[-1]
             raise RuntimeError ("Geschoss not in list: {}".format(gid, gname))
         geschoss_count += 1
         if "rooms" in geschoss:

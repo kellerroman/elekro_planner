@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-from elektro_planner.utils import add_edge_to_wall
-from elektro_planner.data import Edge
+from elektro_planner.utils import add_node_to_wall
+from elektro_planner.data import Node
 def associate_anschluesse(haus):
     print(" ==== Associate Anschluesse ==== ")
     delta = 5
@@ -24,15 +24,13 @@ def associate_anschluesse(haus):
                     obj.associated_wall = wall
 
                     # TODO: check if a close by edge exists
-                    e1 = Edge(obj.x,obj.y,obj.z,wall)
-                    wall.edges.append(e1)
-                    e2 = Edge(obj.x,obj.y,geschoss.z0,wall)
-                    add_edge_to_wall(wall,e2)
-                    e3 = Edge(obj.x,obj.y,geschoss.z1,wall)
-                    add_edge_to_wall(wall,e3)
-                    e1.connections.append(e2)
-                    e2.connections.append(e1)
-                    e1.connections.append(e3)
-                    e3.connections.append(e1)
-                    obj.associated_edge = e1
+                    e1 = Node(obj.x,obj.y,obj.z,wall)
+                    wall.add_node(e1,True)
+                    e2 = Node(obj.x,obj.y,geschoss.z0,wall)
+                    add_node_to_wall(wall,e2)
+                    e3 = Node(obj.x,obj.y,geschoss.z1,wall)
+                    add_node_to_wall(wall,e3)
+                    e1.connect(e2)
+                    e1.connect(e3)
+                    obj.associated_node = e1
         assert len(objects) == 0

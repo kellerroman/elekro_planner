@@ -17,7 +17,7 @@ def read_struktur(haus,data):
             print ("Geschoss-Id not correct {} ist: {}".format(id[0], gid))
             quit(1)
         # print(geschoss["name"]+"("+str(gid)+")")
-        haus.geschosse.append(Geschoss(geschoss,z))
+        haus.geschosse.append(Geschoss(geschoss,z,haus))
         geschoss_count += 1
         if "walls" in geschoss:
             for obj in geschoss["walls"]:

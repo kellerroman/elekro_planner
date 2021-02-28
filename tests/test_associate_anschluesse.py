@@ -7,6 +7,7 @@ from elektro_planner.read_struktur import read_struktur
 from elektro_planner.connect_walls import connect_walls
 from elektro_planner.associate_anschluesse import associate_anschluesse
 import simple_haus
+import math
 from pytest import approx
 
 def test_simple_haus_kabel():
@@ -21,12 +22,14 @@ def test_simple_haus_kabel():
     assert haus.geschosse[0].rooms[0].objects[0].associated_wall == haus.geschosse[0].walls[1]
     assert haus.geschosse[0].rooms[0].objects[1].associated_wall == haus.geschosse[0].walls[0]
 
-    assert len(haus.geschosse[0].walls[0].edges) == 7
-    e =  haus.geschosse[0].walls[0].edges
+    assert len(haus.geschosse[0].walls[0].nodes) == 7
+    nodes =  haus.geschosse[0].walls[0].nodes
     # connection to the new edge on the "floor"
-    assert e[0].connections[0].id == e[5].id
+    assert nodes[0].get_connected_nodes()[0].id == nodes[5].id
     # connection to the upper egde
-    assert e[0].connections[2].id == e[2].id
-    assert e[5].connections[2].id == e[4].id
-    assert e[4].connections[0].id == e[5].id
-    assert e[4].connections[1].id == e[6].id
+    assert nodes[0].get_connected_nodes()[2].id == nodes[2].id
+    # new edge on floor is connected to object edge
+    assert nodes[5].get_connected_nodes()[2].id == nodes[4].id
+
+    assert nodes[4].get_connected_nodes()[0].id == nodes[5].id
+    assert nodes[4].get_connected_nodes()[1].id == nodes[6].id

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # from context import *
-from elektro_planner.read_kabel import read_kabel
+from elektro_planner.read_kabel import read_kabel, connect_all_objects
 from elektro_planner.data import Haus,KabelType
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
@@ -10,6 +10,7 @@ from elektro_planner.create_roombook import create_roombook
 import simple_haus
 import simple_haus
 from pytest import approx
+
 def test_number_of_kabels():
     haus = Haus()
     yaml_data = {'kabel': [ \
@@ -27,6 +28,7 @@ def test_simple_haus_kabel():
     read_struktur(haus,yaml["struktur"])
     read_anschluesse(haus,yaml["anschluesse"])
     read_kabel(haus,yaml["kabel"])
+    connect_all_objects(haus)
     connect_walls(haus)
     create_roombook(haus)
     assert len(haus.kabel) == 7
@@ -51,18 +53,16 @@ def test_simple_haus_kabel():
 def test_indirect_connection():
     haus = Haus()
     yaml = simple_haus.define_testcase()
-
-    yaml["kabel"] = {'kabel': [ \
-                    {'id': 1, 'name': '1', 'start': '2.1.2', 'end': ['2.2.2']}\
-                 ]}
     read_struktur(haus,yaml["struktur"])
     read_anschluesse(haus,yaml["anschluesse"])
-    read_kabel(haus,yaml["kabel"])
     connect_walls(haus)
+    haus.kabel.append(Kabel("2.1.2","2.2.2"))
     create_roombook(haus)
-    assert haus.kabel[0].end[0] == "2.2.2"
-    assert haus.kabel[0].length == approx(1+1.5)
-    # assert haus.kabel[0].length == approx(2.4+1.2+0.9)
+    assert kabel.end[0] == "2.2.2"
+    assert kabel.length == approx(1+1.5)
+
+    # path = calc_kabel_len(haus,kabel)
+    assert kabel.length == approx(2.4+1.2+0.9)
 
 def test_indirect_connection():
     haus = Haus()
@@ -81,12 +81,14 @@ def test_indirect_connection():
     read_struktur(haus,yaml["struktur"])
     read_anschluesse(haus,yaml["anschluesse"])
     read_kabel(haus,yaml["kabel"])
+    connect_all_objects(haus)
     create_roombook(haus)
     assert len(haus.kabel) == 1
     assert haus.kabel[0].length == approx(1.30+3.30)
 
     haus.kabel = []
-    read_kabel(haus,yaml["kabel"],False)
+    read_kabel(haus,yaml["kabel"])
+    connect_all_objects(haus,False)
     create_roombook(haus)
     assert len(haus.kabel) == 2
     assert haus.kabel[0].length == approx(1.30+1.80)
