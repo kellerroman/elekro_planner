@@ -4,9 +4,9 @@
 from elektro_planner.data import Node, Haus
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
-from elektro_planner.connect_walls import connect_walls
-from elektro_planner.associate_anschluesse import associate_anschluesse
-from elektro_planner.read_kabel import connect_all_objects
+from elektro_planner.connect_walls import create_nodes_from_walls
+from elektro_planner.associate_anschluesse import associate_objects_to_walls_and_nodes
+from elektro_planner.read_kabel import autogenerate_kabel
 from elektro_planner.calc_kabel import calc_kabel_len
 import simple_haus
 from pytest import approx
@@ -49,9 +49,9 @@ def test_astar():
 
     read_struktur(haus,yaml["struktur"])
     read_anschluesse(haus,yaml["anschluesse"])
-    connect_walls(haus)
-    associate_anschluesse(haus)
-    connect_all_objects(haus)
+    create_nodes_from_walls(haus)
+    associate_objects_to_walls_and_nodes(haus)
+    autogenerate_kabel(haus)
 
     assert len(haus.kabel ) == 1
 
@@ -62,4 +62,4 @@ def test_astar():
     for e in path:
         print("EDGE: {}".format(e))
 
-    assert haus.kabel[0].length == approx(40+240+2*sqrt(10**2+30**2))
+    assert haus.kabel[0].length == approx((40+240+2*sqrt(10**2+30**2))*0.01)

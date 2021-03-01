@@ -7,12 +7,11 @@ def dist(e1,e2):
     dy = e1.y - e2.y
     return sqrt(dx*dx+dy*dy)
 
-def connect_walls(haus):
+def create_nodes_from_walls(haus):
     for geschoss in haus.geschosse:
         # geschoss = haus.geschosse[0]
         z = geschoss.z0
         for wall in geschoss.walls:
-
             if wall.waagrecht:
                 n1 = Node(wall.x+0.5*wall.dy,wall.y+0.5*wall.dy,z,wall)
                 n2 = Node(wall.x+wall.dx-0.5*wall.dy,wall.y+0.5*wall.dy,z,wall)
@@ -46,7 +45,7 @@ def connect_walls(haus):
                             connected = True
                             break
                     if not connected:
-                        # print("EDGE IS ON WALL: wall: {} ed_wall: {}".format(wall.id, ed.parent.id))
+                        # print("EDGE IS ON WALL: wall: {} edge: {}".format(wall.id, ed))
                         add_node_to_wall(wall,ed,False)
         # add the upper nodes
         # since an edge can be part of multiple walls, we have to check if the egde
@@ -89,5 +88,5 @@ if __name__ == '__main__':
         yaml_struktur = yaml.safe_load(stream)
     haus = Haus()
     read_struktur(haus,yaml_struktur)
-    connect_walls(haus)
+    create_nodes_from_walls(haus)
 

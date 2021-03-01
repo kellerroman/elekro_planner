@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 from elektro_planner.utils import add_node_to_wall
 from elektro_planner.data import Node
-def associate_anschluesse(haus):
-    print(" ==== Associate Anschluesse ==== ")
+def associate_objects_to_walls_and_nodes(haus):
     delta = 5
     for geschoss in haus.geschosse:
         objects = []
@@ -23,14 +22,25 @@ def associate_anschluesse(haus):
                     objects.remove(obj)
                     obj.associated_wall = wall
 
-                    # TODO: check if a close by edge exists
-                    e1 = Node(obj.x,obj.y,obj.z,wall)
-                    wall.add_node(e1,True)
+                    # TODO: check if a close-by edge exists
                     e2 = Node(obj.x,obj.y,geschoss.z0,wall)
                     add_node_to_wall(wall,e2)
+
                     e3 = Node(obj.x,obj.y,geschoss.z1,wall)
                     add_node_to_wall(wall,e3)
-                    e1.connect(e2)
-                    e1.connect(e3)
-                    obj.associated_node = e1
+                    # only add "Object node" if it is not naturally on one of the others
+                    object_is_on_top = abs(obj.z-geschoss.z1) <= delta
+                    object_is_on_bottom = abs(obj.z-geschoss.z0) <= delta
+                    if object_is_on_top:
+                        obj.associated_node = e3
+                    elif object_is_on_bottom:
+                        obj.associated_node = e2
+                    else:
+                        e1 = Node(obj.x,obj.y,obj.z,wall)
+                        wall.add_node(e1,True)
+                        e1.connect(e2)
+                        e1.connect(e3)
+                        obj.associated_node = e1
+
+
         assert len(objects) == 0

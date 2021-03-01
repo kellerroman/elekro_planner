@@ -15,22 +15,22 @@ def define_testcase():
     yaml["anschluesse"]= {'geschosse': [\
      {'id': 1, 'name': 'G1', 'rooms': [\
       {'id': 1, 'name': 'R11', 'objects': [\
-       {'id': 1, 'name': 'O111', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [50, 20], 'vert': 'oben'}}\
-      ,{'id': 2, 'name': 'O112', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [20, 250], 'vert': 'oben'}}\
-      ,{'id': 3, 'name': 'O113', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [350, 20], 'vert': 'oben'}}\
+       {'id': 1, 'name': 'O111', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [50, 10], 'vert': 'oben'}}\
+      ,{'id': 2, 'name': 'O112', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [10, 250], 'vert': 'oben'}}\
+      ,{'id': 3, 'name': 'O113', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [350, 10], 'vert': 'oben'}}\
      ]}\
     ]}\
     ,{'id': 2, 'name': 'G2', 'rooms': [\
       {'id': 1, 'name': 'R21', 'objects': [\
-       {'id': 1, 'name': 'O211', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [50, 20], 'vert': 'oben'}}\
-      ,{'id': 2, 'name': 'O212', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [20, 250], 'vert': 'oben'}}\
+       {'id': 1, 'name': 'O211', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [50, 10], 'vert': 'oben'}}\
+      ,{'id': 2, 'name': 'O212', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [10, 250], 'vert': 'oben'}}\
      ]}\
      ,{'id': 2, 'name': 'R22', 'objects': [\
-       {'id': 1, 'name': 'O221', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [350, 20], 'vert': 'oben'}}\
-      ,{'id': 2, 'name': 'O222', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [120, 100], 'vert': 'oben'}}\
-      ,{'id': 3, 'name': 'O223', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [450, 40], 'vert': 'oben'}}\
-      ,{'id': 4, 'name': 'O224', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [470, 40], 'vert': 'oben'}}\
-      ,{'id': 5, 'name': 'O225', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [490, 40], 'vert': 'oben'}}\
+       {'id': 1, 'name': 'O221', 'con-type': 'steckdose', 'anzahl': 1, 'pos': {'hori': [350, 10], 'vert': 'oben'}}\
+      ,{'id': 2, 'name': 'O222', 'con-type': 'steckdose', 'anzahl': 2, 'pos': {'hori': [110, 100], 'vert': 'oben'}}\
+      ,{'id': 3, 'name': 'O223', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [450, 30], 'vert': 'oben'}}\
+      ,{'id': 4, 'name': 'O224', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [470, 30], 'vert': 'oben'}}\
+      ,{'id': 5, 'name': 'O225', 'con-type': 'steckdose', 'anzahl': 3, 'pos': {'hori': [490, 30], 'vert': 'oben'}}\
      ]}\
     ]}\
     ]}

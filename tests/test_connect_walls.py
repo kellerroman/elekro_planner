@@ -2,7 +2,7 @@
 
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
-from elektro_planner.connect_walls import connect_walls
+from elektro_planner.connect_walls import create_nodes_from_walls
 from elektro_planner.data import Haus
 from elektro_planner.create_svg import create_svg
 import simple_haus
@@ -13,7 +13,7 @@ def test_read_struktur():
 
     read_struktur(haus,yaml["struktur"])
     read_anschluesse(haus,yaml["anschluesse"])
-    connect_walls(haus)
+    create_nodes_from_walls(haus)
     create_svg(haus)
 
     assert len(haus.nodes) == 24
@@ -61,11 +61,16 @@ def test_read_struktur():
 ## obergeschoss
     assert len(haus.geschosse[1].walls) == 4
     nodes = haus.geschosse[1].nodes
-    for e in nodes:
-        print("Edge: {}".format(e))
+    assert len(nodes) == 16
+    for i,e in enumerate(nodes):
+        print("Node: {}".format(e))
         for c in e.get_connected_nodes():
             print("-- connected to {}".format(c))
-    assert len(nodes) == 16
+        if i < 8: # nodes at bottom of the wall
+            assert e.z  == 200
+        else: # nodes at top of the wall
+            assert e.z  == 500
+
     assert len(nodes[0].get_connected_nodes()) == 3
     assert nodes[0].get_connected_nodes()[0].id == nodes[1].id
     assert nodes[0].get_connected_nodes()[1].id == nodes[2].id

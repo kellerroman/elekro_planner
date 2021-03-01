@@ -8,7 +8,7 @@ def read_kabel(haus,data):
         haus.kabel.append(Kabel.from_yaml(kabel))
 
 # generate cabel for not connected ojects and calculate
-def connect_all_objects(haus,knx_as_bus = True, start_obj = "1.1.1"):
+def autogenerate_kabel(haus,knx_as_bus = True, start_obj = "1.1.1"):
 
     connected_objects = [start_obj]
     for kabel  in haus.kabel:

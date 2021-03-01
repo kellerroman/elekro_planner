@@ -453,8 +453,6 @@ class Node:
         else:
             raise RuntimeError("Replace Conection: Node: {} is not connected to {}".format(self.id,node_old.id))
 
-
-
 class Edge:
     id_counter = 0
     def __init__(self,node1,node2):
@@ -512,3 +510,5 @@ class Kabel:
         end = read_value_from_yaml(yaml,"end")
         return cls(start,end)
         # print(" Kabel from {} to {}: {}".format(self.start,len(self.end),self.end))
+    def __str__(self):
+        return "Kabel from {} to {}".format(self.start,self.end[0])

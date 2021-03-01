@@ -4,8 +4,11 @@ def find_object(haus,cid):
     return haus.find_object(cid)
 
 def add_node_to_wall(wall,ed,recursive_add = True):
+    # print(" ==== Add Node To Wall ==== ")
     ed_temp = [ed]
+    # print(" Wall Nodes:")
     for e in wall.nodes:
+        # print(e)
         if abs(e.z-ed.z) <= 5:
             ed_temp.append(e)
     if wall.waagrecht:
@@ -14,6 +17,10 @@ def add_node_to_wall(wall,ed,recursive_add = True):
     else:
         nodes_sorted = sorted(ed_temp, key=lambda node: node.y)
         ed.x = wall.nodes[0].x
+    # print(" Sorted Wall Nodes:")
+    # for e in nodes_sorted:
+    #     print(e)
+
 
     n_nodes = len(ed_temp)
     pos_new = nodes_sorted.index(ed)
