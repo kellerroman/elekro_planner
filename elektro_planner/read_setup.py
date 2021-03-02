@@ -3,7 +3,7 @@
 from elektro_planner.data import  *
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
-from elektro_planner.read_kabel import read_kabel
+from elektro_planner.read_kabel import read_kabel, autogenerate_kabel
 from elektro_planner.connect_walls import create_nodes_from_walls
 import yaml
 import os
@@ -36,6 +36,7 @@ def read_setup(yaml_file):
     read_struktur(haus,yaml_struktur)
     read_anschluesse(haus,yaml_anschluesse)
     read_kabel(haus,yaml_kabel)
+    autogenerate_kabel(haus)
 
     create_nodes_from_walls(haus)
 

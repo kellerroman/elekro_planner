@@ -182,6 +182,7 @@ class Object(Point):
         self.connection_type = KabelType.NYM5x15
         self.associated_wall = None
         self.associated_node = None
+        self.print_name = "Object"
     def draw(self,dwg):
         x = self.pos.horizontal[0] * 10
         y = self.pos.horizontal[1] * 10
@@ -192,6 +193,9 @@ class Object(Point):
         draw_obj = dwg.rect((xs,ys), (xe,ye), style="cursor:crosshair", stroke="blue", fill="blue")
         draw_obj['class'] = 'object'
         dwg.add(draw_obj)
+    def __str__(self):
+        return "{}: {} ({},{},{}[{}] Name: {})"\
+                .format(self.print_name,self.cid,self.x,self.y,self.z,self.pos.vertical,self.name)
 
 class Stromanschluss(Object):
     def __init__(self,yaml,parent):
@@ -201,10 +205,12 @@ class Stromanschluss(Object):
         self.voltage = 230
         self.knx = read_value_from_yaml_to_enum(yaml,"knx",KnxType,False)
         self.connection_type = read_value_from_yaml_to_enum(yaml,"kabelanschluss",KabelType,False)
+        self.print_name = "Stromanschluss"
 
 class Steckdose(Stromanschluss):
     def __init__(self,yaml,parent):
         super().__init__(yaml,parent)
+        self.print_name = "Steckdose"
 
 class Licht(Stromanschluss):
     def __init__(self,yaml,parent):
@@ -212,6 +218,7 @@ class Licht(Stromanschluss):
         if self.knx !=KnxType.Schaltbar:
             raise RuntimeError("Licht nicht schaltbar: {}".format(self.cid))
         self.color = "yellow"
+        self.print_name = "Licht"
     def draw(self,dwg):
         x = self.pos.horizontal[0] * 10
         y = self.pos.horizontal[1] * 10
@@ -243,6 +250,7 @@ class Led(Licht):
         self.voltage = 24
         self.knx = KnxType.Dimmbar
         self.color = "orange"
+        self.print_name = "Led"
 
 class LedStrip(Led):
     def __init__(self,yaml,parent):
@@ -277,6 +285,7 @@ class LedStrip(Led):
         line3 = dwg.line(start=(xs,ys), end=(xe,ye), style="cursor:crosshair", stroke=self.color, stroke_width = line_width, fill=self.color)
         line3['class'] = 'led'
         dwg.add(line3)
+        self.print_name = "LedStrip"
 
 class Kontakt(Object):
     def __init__(self,yaml,parent):
@@ -284,6 +293,7 @@ class Kontakt(Object):
         self.anzahl = read_value_from_yaml(yaml,"anzahl")
         self.knx = read_value_from_yaml_to_enum(yaml,"knx",KnxType,False)
         self.connection_type = KabelType.FMK
+        self.print_name = "Kontakt"
     def draw(self,dwg):
         xs = self.pos.horizontal[0] * 10
         ys = self.pos.horizontal[1] * 10
@@ -298,6 +308,7 @@ class Knx(Object):
         super().__init__(yaml,parent)
         self.knx_anschluss = read_value_from_yaml_to_enum(yaml,"knx-component",KnxAnschluss)
         self.connection_type = KabelType.KNX
+        self.print_name = "KNX"
     def draw(self,dwg):
         x = self.pos.horizontal[0] * 10
         y = self.pos.horizontal[1] * 10
@@ -336,6 +347,7 @@ class Netzwerk(Object):
         super().__init__(yaml,parent)
         self.anzahl = read_value_from_yaml(yaml,"anzahl")
         self.connection_type = KabelType.CAT7
+        self.print_name = "Netzwerk"
     def draw(self,dwg):
         xs = self.pos.horizontal[0] * 10
         ys = self.pos.horizontal[1] * 10
@@ -366,6 +378,9 @@ class Wall(Point):
         for node in nodes:
             self.add_node(node,recursive)
 
+    def __str__(self):
+        return "Wall {}: {},{} to {},{}".format(self.cid,self.x,self.y,self.x+self.dy,self.y+self.dy)
+
 class Window(Point):
     def __init__(self,yaml,parent):
         self.dx = 0
@@ -387,10 +402,22 @@ class Door(Point):
         st = "ende"
         if yaml != None and st in yaml:
             self.dx = float(eval(str(yaml[st][0])))
-            self.dy = float(eval(str(yaml[st][1])))
+
+class NodeType(Enum):
+     Unknown = 0
+     StartBottom = 1
+     EndBottom = 2
+     StartTop = 3
+     EndTop = 4
+     Object = 5
+     ObjectBottom = 6
+     ObjectTop = 7
+     def __str__(self):
+        return str(self.name)
+
 class Node:
     id_counter = 0
-    def __init__(self,x,y,z,parent):
+    def __init__(self,x,y,z,parent,node_type = NodeType.Unknown):
         self.x = x
         self.y = y
         self.z = z
@@ -398,11 +425,19 @@ class Node:
         self.id = Node.id_counter
         Node.id_counter += 1
         self.parent = parent
+        self.type = node_type
         # self.connections = []
         self.edges = []
 
     def __str__(self):
-        return "Node {} Position: {} {} {}, N: {}".format(self.id, self.x,self.y,self.z,self.n)
+        return "Node {} Position: {} {} {}, N: {} T: {} P: {}"\
+                .format(self.id, self.x,self.y,self.z,self.n,self.type,self.parent)
+
+    def info(self):
+        text = self.__str__()
+        for node in self.get_connected_nodes():
+            text += "\n --  connected to {} distance: {}".format(node,self.distance(node))
+        return text
 
     def is_node(self,node):
         if not isinstance(node,Node):
@@ -451,7 +486,8 @@ class Node:
                     node_new.n += 1
                     return
         else:
-            raise RuntimeError("Replace Conection: Node: {} is not connected to {}".format(self.id,node_old.id))
+            raise RuntimeError("In Replace Conection of Node {}: Replacing Node {} with {} is not connected possible (not connected) \n {} \n {} \n {}"\
+                    .format(self.id,node_old.id,node_new.id,self.info(),node_old.info(),node_new.info()))
 
 class Edge:
     id_counter = 0

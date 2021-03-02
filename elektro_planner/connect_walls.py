@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from elektro_planner.data import Node
+from elektro_planner.data import Node, NodeType
 from elektro_planner.utils import add_node_to_wall
 from math import sqrt
 def dist(e1,e2):
@@ -13,11 +13,11 @@ def create_nodes_from_walls(haus):
         z = geschoss.z0
         for wall in geschoss.walls:
             if wall.waagrecht:
-                n1 = Node(wall.x+0.5*wall.dy,wall.y+0.5*wall.dy,z,wall)
-                n2 = Node(wall.x+wall.dx-0.5*wall.dy,wall.y+0.5*wall.dy,z,wall)
+                n1 = Node(wall.x+0.5*wall.dy,wall.y+0.5*wall.dy,z,wall, NodeType.StartBottom)
+                n2 = Node(wall.x+wall.dx-0.5*wall.dy,wall.y+0.5*wall.dy,z,wall, NodeType.EndBottom)
             else:
-                n1 = Node(wall.x+0.5*wall.dx,wall.y+0.5*wall.dx,z,wall)
-                n2 = Node(wall.x+0.5*wall.dx,wall.y+wall.dy-0.5*wall.dx,z,wall)
+                n1 = Node(wall.x+0.5*wall.dx,wall.y+0.5*wall.dx,z,wall, NodeType.StartBottom)
+                n2 = Node(wall.x+0.5*wall.dx,wall.y+wall.dy-0.5*wall.dx,z,wall, NodeType.EndBottom)
             n1.connect(n2)
             for id1, e1 in enumerate([n1,n2]):
                 for id2, e2 in enumerate(geschoss.nodes):
@@ -64,7 +64,8 @@ def create_nodes_from_walls(haus):
                 if n.id not in worked_on:
                     # prefent to add another upper edge for this
                     worked_on.append(n.id)
-                    n1 = Node(n.x,n.y,z,wall)
+                    node_type = NodeType.StartTop if n.type == NodeType.StartBottom else NodeType.EndTop
+                    n1 = Node(n.x,n.y,z,wall,node_type)
                     upper_id[n.id] = n1.id
                     wall.add_node(n1,True)
                     for e2 in n.get_connected_nodes():
