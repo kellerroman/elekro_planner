@@ -53,3 +53,13 @@ def test_simple_haus_kabel():
 
     assert nodes[6].get_connected_nodes()[0].id == nodes[4].id
     assert nodes[6].get_connected_nodes()[1].id == nodes[5].id
+
+
+def test_single_wall():
+    haus = Haus()
+    yaml = simple_haus.single_wall()
+
+    read_struktur(haus, yaml["struktur"])
+    read_anschluesse(haus, yaml["anschluesse"])
+    create_nodes_from_walls(haus)
+    associate_objects_to_walls_and_nodes(haus)

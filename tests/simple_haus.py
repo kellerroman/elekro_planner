@@ -197,3 +197,65 @@ def define_testcase_simple1():
         ]
     }
     return yaml
+
+
+def single_wall():
+    yaml = dict()
+    yaml["struktur"] = {
+        "geschosse": [
+            {
+                "id": 1,
+                "name": "G1",
+                "height": 200,
+                "walls": [
+                    {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 500]},
+                ],
+            }
+        ]
+    }
+    yaml["anschluesse"] = {
+        "geschosse": [
+            {
+                "id": 1,
+                "name": "G1",
+                "rooms": [
+                    {
+                        "id": 1,
+                        "name": "R11",
+                        "objects": [
+                            {
+                                "id": 1,
+                                "name": "O111",
+                                "con-type": "steckdose",
+                                "anzahl": 1,
+                                "pos": {"hori": [20, 100], "vert": "unten"},
+                            },
+                            {
+                                "id": 2,
+                                "name": "O112",
+                                "con-type": "steckdose",
+                                "anzahl": 2,
+                                "pos": {"hori": [20, 300], "vert": "unten"},
+                            },
+                            {
+                                "id": 3,
+                                "name": "O113",
+                                "con-type": "steckdose",
+                                "anzahl": 2,
+                                "pos": {"hori": [20, 300], "vert": "unten"},
+                            },
+                            {
+                                "id": 4,
+                                "name": "O114",
+                                "con-type": "steckdose",
+                                "anzahl": 2,
+                                "pos": {"hori": [20, 300], "vert": "unten"},
+                            },
+                        ],
+                    }
+                ],
+            }
+        ]
+    }
+    yaml["kabel"] = {"kabel": []}
+    return yaml
