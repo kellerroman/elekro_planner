@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 
 from elektro_planner.data import Node, Haus
@@ -13,12 +12,12 @@ from pytest import approx
 from math import sqrt
 import astar
 
-def test_astar():
-    e1 = Node(100,200,100,None)
-    e2 = Node(200,200,100,None)
-    e3 = Node(300,200,100,None)
-    e4 = Node(400,200,100,None)
 
+def test_astar():
+    e1 = Node(100, 200, 100, None)
+    e2 = Node(200, 200, 100, None)
+    e3 = Node(300, 200, 100, None)
+    e4 = Node(400, 200, 100, None)
 
     e1.connect(e2)
     e2.connect(e3)
@@ -32,34 +31,45 @@ def test_astar():
         for e in n1.edges:
             if e.get_con_node(n1) == n2:
                 return e.length
+
     def cost(n, goal):
         return abs(n.x - goal.x)
 
-    path = list(astar.find_path(e1, e4, neighbors_fnct=neighbors,
-                heuristic_cost_estimate_fnct=cost, distance_between_fnct=distance))
+    path = list(
+        astar.find_path(
+            e1,
+            e4,
+            neighbors_fnct=neighbors,
+            heuristic_cost_estimate_fnct=cost,
+            distance_between_fnct=distance,
+        )
+    )
     assert len(path) == 4
     assert path[0] == e1
     assert path[1] == e2
     assert path[2] == e3
     assert path[3] == e4
 
+
 def test_astar():
     haus = Haus()
     yaml = simple_haus.define_testcase_simple1()
 
-    read_struktur(haus,yaml["struktur"])
-    read_anschluesse(haus,yaml["anschluesse"])
+    read_struktur(haus, yaml["struktur"])
+    read_anschluesse(haus, yaml["anschluesse"])
     create_nodes_from_walls(haus)
     associate_objects_to_walls_and_nodes(haus)
     autogenerate_kabel(haus)
 
-    assert len(haus.kabel ) == 1
+    assert len(haus.kabel) == 1
 
-    path = calc_kabel_len(haus,haus.kabel[0])
+    path = calc_kabel_len(haus, haus.kabel[0])
 
     assert len(path) == 6
 
     for e in path:
         print("EDGE: {}".format(e))
 
-    assert haus.kabel[0].length == approx((40+240+2*sqrt(10**2+30**2))*0.01)
+    assert haus.kabel[0].length == approx(
+        (40 + 240 + 2 * sqrt(10 ** 2 + 30 ** 2)) * 0.01
+    )

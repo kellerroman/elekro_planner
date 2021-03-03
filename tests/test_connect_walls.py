@@ -7,12 +7,13 @@ from elektro_planner.data import Haus
 from elektro_planner.create_svg import create_svg
 import simple_haus
 
+
 def test_read_struktur():
     haus = Haus()
     yaml = simple_haus.define_testcase()
 
-    read_struktur(haus,yaml["struktur"])
-    read_anschluesse(haus,yaml["anschluesse"])
+    read_struktur(haus, yaml["struktur"])
+    read_anschluesse(haus, yaml["anschluesse"])
     create_nodes_from_walls(haus)
     create_svg(haus)
 
@@ -42,7 +43,7 @@ def test_read_struktur():
     assert nodes[3].get_connected_nodes()[0] == nodes[2]
     assert nodes[3].get_connected_nodes()[1] == nodes[7]
 
-#  upper nodes
+    #  upper nodes
     assert len(nodes[4].get_connected_nodes()) == 3
     assert nodes[4].get_connected_nodes()[0] == nodes[0]
     assert nodes[4].get_connected_nodes()[1] == nodes[5]
@@ -58,18 +59,18 @@ def test_read_struktur():
     assert nodes[7].get_connected_nodes()[0] == nodes[6]
     assert nodes[7].get_connected_nodes()[1] == nodes[3]
 
-## obergeschoss
+    ## obergeschoss
     assert len(haus.geschosse[1].walls) == 4
     nodes = haus.geschosse[1].nodes
     assert len(nodes) == 16
-    for i,e in enumerate(nodes):
+    for i, e in enumerate(nodes):
         print("Node: {}".format(e))
         for c in e.get_connected_nodes():
             print("-- connected to {}".format(c))
-        if i < 8: # nodes at bottom of the wall
-            assert e.z  == 200
-        else: # nodes at top of the wall
-            assert e.z  == 500
+        if i < 8:  # nodes at bottom of the wall
+            assert e.z == 200
+        else:  # nodes at top of the wall
+            assert e.z == 500
 
     assert len(nodes[0].get_connected_nodes()) == 3
     assert nodes[0].get_connected_nodes()[0].id == nodes[1].id

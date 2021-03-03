@@ -10,17 +10,24 @@ import simple_haus
 import math
 from pytest import approx
 
+
 def test_simple_haus_kabel():
     haus = Haus()
     yaml = simple_haus.define_testcase_simple1()
 
-    read_struktur(haus,yaml["struktur"])
-    read_anschluesse(haus,yaml["anschluesse"])
+    read_struktur(haus, yaml["struktur"])
+    read_anschluesse(haus, yaml["anschluesse"])
     create_nodes_from_walls(haus)
     associate_objects_to_walls_and_nodes(haus)
 
-    assert haus.geschosse[0].rooms[0].objects[0].associated_wall == haus.geschosse[0].walls[1]
-    assert haus.geschosse[0].rooms[0].objects[1].associated_wall == haus.geschosse[0].walls[0]
+    assert (
+        haus.geschosse[0].rooms[0].objects[0].associated_wall
+        == haus.geschosse[0].walls[1]
+    )
+    assert (
+        haus.geschosse[0].rooms[0].objects[1].associated_wall
+        == haus.geschosse[0].walls[0]
+    )
 
     # object 2 is added first becaus eit is on wall 1
     assert haus.geschosse[0].rooms[0].objects[1].associated_node.id == haus.nodes[10].id
@@ -36,7 +43,7 @@ def test_simple_haus_kabel():
     #  |            |           |
     #  0 ---------- 4 --------- 1
 
-    nodes =  haus.geschosse[0].walls[0].nodes
+    nodes = haus.geschosse[0].walls[0].nodes
     # connection to the new edge on the "floor"
     assert nodes[0].get_connected_nodes()[0].id == nodes[4].id
     # connection to the upper egde
