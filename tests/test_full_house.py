@@ -11,9 +11,10 @@ def test_fully_house():
     yaml_file = "data/setup.yaml"
     haus = read_setup(yaml_file)
 
-    # haus.geschosse[0].nodes[4].connect(haus.geschosse[1].nodes[0])
+    haus.geschosse[0].nodes[0].connect(haus.geschosse[1].nodes[0])
+    haus.geschosse[1].nodes[0].connect(haus.geschosse[2].nodes[0])
     associate_objects_to_walls_and_nodes(haus)
     #
     # create_roombook(haus)
     #
-    # calc_wires(haus)
+    calc_wires(haus)

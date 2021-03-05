@@ -14,19 +14,22 @@ def test_add_node_to_wall():
             pass
 
     p = Parent()
-    w = Wall({"id": 1, "pos": {"hori": [25, 0]}, "ende": [36.5, 324]}, p)
-    e1 = Node(100, 200, 100, None)
-    e2 = Node(300, 200, 100, None)
-    e3 = Node(100, 200, 300, None)
-    e4 = Node(300, 200, 300, None)
+    w = Wall({"id": 1, "pos": {"hori": [0, 0]}, "ende": [400, 40]}, p)
+    e1 = Node(100, 20, 100, None)
+    e2 = Node(300, 20, 100, None)
+    e3 = Node(100, 20, 300, None)
+    e4 = Node(300, 20, 300, None)
 
     w.add_nodes([e1, e2, e3, e4], False)
 
     assert len(w.nodes) == 4
 
     e1.connect(e2)
+    # e3.connect(e4)
+    # e1.connect(e3)
+    # e2.connect(e4)
 
-    e5 = Node(200, 200, 100, None)
+    e5 = Node(200, 20, 100, None)
     add_node_to_wall(w, e5)
 
     assert len(w.nodes) == 5

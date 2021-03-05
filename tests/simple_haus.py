@@ -242,14 +242,14 @@ def single_wall():
                                 "name": "O113",
                                 "con-type": "steckdose",
                                 "anzahl": 2,
-                                "pos": {"hori": [20, 300], "vert": "unten"},
+                                "pos": {"hori": [20, 300], "vert": "mitte"},
                             },
                             {
                                 "id": 4,
                                 "name": "O114",
                                 "con-type": "steckdose",
                                 "anzahl": 2,
-                                "pos": {"hori": [20, 300], "vert": "unten"},
+                                "pos": {"hori": [20, 300], "vert": "oben"},
                             },
                         ],
                     }

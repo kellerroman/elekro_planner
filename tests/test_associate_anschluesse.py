@@ -63,3 +63,8 @@ def test_single_wall():
     read_anschluesse(haus, yaml["anschluesse"])
     create_nodes_from_walls(haus)
     associate_objects_to_walls_and_nodes(haus)
+    assert len(haus.nodes) == 10
+    for g in haus.geschosse:
+        for r in g.rooms:
+            for o in r.objects:
+                assert o.associated_node != None

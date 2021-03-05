@@ -190,6 +190,7 @@ class Room:
         self.name = read_value_from_yaml(yaml, "name")
         self.objects = []
         self.book = dict()
+        self.parent = parent
 
 
 class Point:
@@ -632,6 +633,19 @@ class Node:
                     node_new.n += 1
                     return
         else:
+            dntp = []
+            for n in self.parent.associated_wall.nodes:
+                if n.z == self.z:
+                    dntp.append(n)
+
+            if self.parent.associated_wall.waagrecht:
+                dntp = sorted(dntp, key=lambda node: node.x * 10000 + node.id)
+            else:
+                dntp = sorted(dntp, key=lambda node: node.y * 10000 + node.id)
+
+            for n in dntp:
+                print(n.info())
+
             raise RuntimeError(
                 "In Replace Conection of Node {}: Replacing Node {} with {} is not connected possible (not connected) \n {} \n {} \n {}".format(
                     self.id,
@@ -664,7 +678,7 @@ class Edge:
         dx = n1.x - n2.x
         dy = n1.y - n2.y
         dz = n1.z - n2.z
-        self.length = sqrt(dx * dx + dy * dy + dz * dz)
+        self.length =  sqrt(dx * dx + dy * dy + dz * dz)
         return self.length
 
     def get_con_node(self, node):
