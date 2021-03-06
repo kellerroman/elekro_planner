@@ -61,25 +61,25 @@ def read_anschluesse(haus, data):
                         st = "con-type"
                         if st in obj:
                             if obj[st] == "knx":
-                                current_room.objects.append(Knx(obj, current_room))
+                                current_room.objects.append(Knx.from_yaml(obj, current_room))
                             elif obj[st] == "steckdose":
                                 current_room.objects.append(
-                                    Steckdose(obj, current_room)
+                                    Steckdose.from_yaml(obj, current_room)
                                 )
                             elif obj[st] == "anschluss":
                                 current_room.objects.append(
-                                    Stromanschluss(obj, current_room)
+                                    Stromanschluss.from_yaml(obj, current_room)
                                 )
                             elif obj[st] == "licht":
-                                current_room.objects.append(Licht(obj, current_room))
+                                current_room.objects.append(Licht.from_yaml(obj, current_room))
                             elif obj[st] == "led":
-                                current_room.objects.append(Led(obj, current_room))
+                                current_room.objects.append(Led.from_yaml(obj, current_room))
                             elif obj[st] == "ledstrip":
-                                current_room.objects.append(LedStrip(obj, current_room))
+                                current_room.objects.append(LedStrip.from_yaml(obj, current_room))
                             elif obj[st] == "kontakt":
-                                current_room.objects.append(Kontakt(obj, current_room))
+                                current_room.objects.append(Kontakt.from_yaml(obj, current_room))
                             elif obj[st] == "netzwerk":
-                                current_room.objects.append(Netzwerk(obj, current_room))
+                                current_room.objects.append(Netzwerk.from_yaml(obj, current_room))
                             else:
                                 raise RuntimeError(
                                     "Connection Type unknown {}".format(obj[st])

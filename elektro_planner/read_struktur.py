@@ -19,7 +19,7 @@ def read_struktur(haus, data):
             print("Geschoss-Id not correct {} ist: {}".format(id[0], gid))
             quit(1)
         # print(geschoss["name"]+"("+str(gid)+")")
-        haus.geschosse.append(Geschoss(geschoss, z, haus))
+        haus.geschosse.append(Geschoss.from_yaml(geschoss, z, haus))
         geschoss_count += 1
         if "walls" in geschoss:
             for obj in geschoss["walls"]:
@@ -28,15 +28,15 @@ def read_struktur(haus, data):
                 if id[1] != obj["id"]:
                     print("Wall-Id not correct {} ist: {}".format(id[1], obj["id"]))
                     quit(1)
-                haus.geschosse[-1].walls.append(Wall(obj, haus.geschosse[-1]))
+                haus.geschosse[-1].walls.append(Wall.from_yaml(obj, haus.geschosse[-1]))
                 wall_count += 1
         if "windows" in geschoss:
             for obj in geschoss["windows"]:
-                haus.geschosse[-1].windows.append(Window(obj, haus.geschosse[-1]))
+                haus.geschosse[-1].windows.append(Window.from_yaml(obj, haus.geschosse[-1]))
                 window_count += 1
         if "doors" in geschoss:
             for obj in geschoss["doors"]:
-                haus.geschosse[-1].doors.append(Door(obj, haus.geschosse[-1]))
+                haus.geschosse[-1].doors.append(Door.from_yaml(obj, haus.geschosse[-1]))
                 door_count += 1
         z += haus.geschosse[-1].height
 

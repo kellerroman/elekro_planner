@@ -14,7 +14,7 @@ def test_add_node_to_wall():
             pass
 
     p = Parent()
-    w = Wall({"id": 1, "pos": {"hori": [0, 0]}, "ende": [400, 40]}, p)
+    w = Wall.from_yaml({"id": 1, "pos": {"hori": [0, 0]}, "ende": [400, 40]}, p)
     e1 = Node(100, 20, 100, None)
     e2 = Node(300, 20, 100, None)
     e3 = Node(100, 20, 300, None)

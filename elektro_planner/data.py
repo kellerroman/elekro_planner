@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from enum import Enum
 from math import sqrt
 
@@ -116,18 +117,39 @@ def read_value_from_yaml_to_enum(yaml, value, enum, throw=True):
 
 
 class Position:
-    def __init__(self, yaml):
-        self.horizontal = [0, 0]
+    def __init__(self, x, y, vertical):
+        self.horizontal = [float(x), float(y)]
+        self.vertical = vertical
+
+    @classmethod
+    def from_yaml(cls, yaml):
+        # x = 0
+        # y = 0
+        # if yaml != None:
+        #     st = "hori"
+        #     if st in yaml:
+        #         x = float(eval(str(yaml[st][0])))
+        #         y = float(eval(str(yaml[st][1])))
+        # #     else:
+        # #         raise RuntimeError(
+        # #             "Position: Can not read YAML Value for {}.".format(st)
+        # #         )
+        # # else:
+        # #     raise RuntimeError("Position: YAML Invalid ")
+        # vertical = read_value_from_yaml_to_enum(yaml, "vert", VerticalPosition, False)
+        return cls(*cls.parse_yaml(yaml))
+
+    @staticmethod
+    def parse_yaml(yaml):
+        x = 0
+        y = 0
         if yaml != None:
             st = "hori"
             if st in yaml:
-                self.horizontal = [
-                    float(eval(str(yaml[st][0]))),
-                    float(eval(str(yaml[st][1]))),
-                ]
-        self.vertical = read_value_from_yaml_to_enum(
-            yaml, "vert", VerticalPosition, False
-        )
+                x = float(eval(str(yaml[st][0])))
+                y = float(eval(str(yaml[st][1])))
+        vertical = read_value_from_yaml_to_enum(yaml, "vert", VerticalPosition, False)
+        return x, y, vertical
 
 
 class Haus:
@@ -156,13 +178,13 @@ class Haus:
 
 
 class Geschoss:
-    def __init__(self, yaml, z, parent):
-        self.id = read_value_from_yaml(yaml, "id")
+    def __init__(self, gid, gname, gheight, z, parent):
+        self.id = gid
         self.cid = self.id
-        self.name = read_value_from_yaml(yaml, "name")
+        self.name = gname
         # starthöhe des stockwerks
         self.z0 = z
-        self.height = read_value_from_yaml(yaml, "height")
+        self.height = gheight
         self.z1 = self.z0 + self.height
         self.parent = parent
         self.rooms = []
@@ -171,6 +193,17 @@ class Geschoss:
         self.doors = []
         self.nodes = []
         self.book = dict()
+
+    @classmethod
+    def from_yaml(cls, yaml, z, parent):
+        return cls(*cls.parse_yaml(yaml), z, parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        gid = read_value_from_yaml(yaml, "id")
+        gname = read_value_from_yaml(yaml, "name")
+        gheight = read_value_from_yaml(yaml, "height")
+        return gid, gname, gheight
 
     def add_node(self, node):
         if node in self.nodes:
@@ -194,25 +227,45 @@ class Room:
 
 
 class Point:
-    def __init__(self, yaml, parent):
-        self.id = read_value_from_yaml(yaml, "id")
+    def __init__(self, pid, pos, parent):
+        self.id = pid
         self.cid = str(parent.cid) + "." + str(self.id)
-        self.pos = Position(yaml["pos"])
+        self.pos = pos
         self.parent = parent
         self.x = self.pos.horizontal[0]
         self.y = self.pos.horizontal[1]
         values = [30, 105, 200, 230]
         self.z = values[self.pos.vertical.value]
 
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        pos = Position.from_yaml(yaml["pos"])
+        pid = read_value_from_yaml(yaml, "id")
+        return pid, pos
+
 
 class Object(Point):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
-        self.name = read_value_from_yaml(yaml, "name")
+    def __init__(self, pid, pos, name, parent):
+        super().__init__(pid, pos, parent)
+        self.name = name
         self.connection_type = KabelType.NYM5x15
         self.associated_wall = None
         self.associated_node = None
         self.print_name = "Object"
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        pkt = Point.parse_yaml(yaml)
+        oname = read_value_from_yaml(yaml, "name")
+        return *pkt, oname
 
     def draw(self, dwg):
         x = self.pos.horizontal[0] * 10
@@ -240,29 +293,43 @@ class Object(Point):
 
 
 class Stromanschluss(Object):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
-        self.anzahl = read_value_from_yaml(yaml, "anzahl")
+    def __init__(self, oid, pos, name, anzahl, knx, connection_type, parent):
+        super().__init__(oid, pos, name, parent)
+        self.anzahl = anzahl
         self.stromstaerke = 0
         self.voltage = 230
-        self.knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
-        self.connection_type = read_value_from_yaml_to_enum(
+        self.knx = knx
+        self.connection_type = connection_type
+        self.print_name = "Stromanschluss"
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        obj = Object.parse_yaml(yaml)
+        anzahl = read_value_from_yaml(yaml, "anzahl")
+        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
+        connection_type = read_value_from_yaml_to_enum(
             yaml, "kabelanschluss", KabelType, False
         )
-        self.print_name = "Stromanschluss"
+        return *obj, anzahl, knx, connection_type
 
 
 class Steckdose(Stromanschluss):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
+    def __init__(self, oid, pos, name, anzahl, knx, connection_type, parent):
+        super().__init__(oid, pos, name, anzahl, knx, connection_type, parent)
         self.print_name = "Steckdose"
 
 
 class Licht(Stromanschluss):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
+    def __init__(self, oid, pos, name, anzahl, knx, connection_type, parent):
+        super().__init__(oid, pos, name, anzahl, knx, connection_type, parent)
         if self.knx != KnxType.Schaltbar:
-            raise RuntimeError("Licht nicht schaltbar: {}".format(self.cid))
+            raise RuntimeError(
+                "Licht nicht schaltbar: {} {} ".format(self.cid, self.knx)
+            )
         self.color = "yellow"
         self.print_name = "Licht"
 
@@ -315,8 +382,8 @@ class Licht(Stromanschluss):
 
 
 class Led(Licht):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
+    def __init__(self, oid, pos, name, anzahl, knx, connection_type, parent):
+        super().__init__(oid, pos, name, anzahl, knx, connection_type, parent)
         self.voltage = 24
         self.knx = KnxType.Dimmbar
         self.color = "orange"
@@ -324,10 +391,20 @@ class Led(Licht):
 
 
 class LedStrip(Led):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
+    def __init__(self, oid, pos, name, anzahl, knx, connection_type, length, parent):
+        super().__init__(oid, pos, name, anzahl, knx, connection_type, parent)
         self.color = "purple"
-        self.len = read_value_from_yaml(yaml, "len")
+        self.len = length
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        obj = Led.parse_yaml(yaml)
+        length = read_value_from_yaml(yaml, "len")
+        return *obj, length
 
     def draw(self, dwg):
         x = self.pos.horizontal[0] * 10
@@ -382,12 +459,36 @@ class LedStrip(Led):
 
 
 class Kontakt(Object):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
-        self.anzahl = read_value_from_yaml(yaml, "anzahl")
-        self.knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
+    def __init__(self, oid, pos, name, anzahl, knx, parent):
+        super().__init__(oid, pos, name, parent)
+        self.anzahl = anzahl
+        self.knx = knx
         self.connection_type = KabelType.FMK
         self.print_name = "Kontakt"
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        obj = Object.from_yaml(yaml, parent)
+        anzahl = read_value_from_yaml(yaml, "anzahl")
+        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
+        return cls(obj.id, obj.pos, obj.name, anzahl, knx, parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        oid, pos, name = Object.parse_yaml(yaml)
+        anzahl = read_value_from_yaml(yaml, "anzahl")
+        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
+        connection_type = read_value_from_yaml_to_enum(
+            yaml, "kabelanschluss", KabelType, False
+        )
+        return oid, pos, name, anzahl, knx, connection_type
+
+    @staticmethod
+    def parse_yaml(yaml):
+        obj = Object.from_yaml(yaml, parent)
+        anzahl = read_value_from_yaml(yaml, "anzahl")
+        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
+        return cls(obj.id, obj.pos, obj.name, anzahl, knx, parent)
 
     def draw(self, dwg):
         xs = self.pos.horizontal[0] * 10
@@ -407,13 +508,19 @@ class Kontakt(Object):
 
 
 class Knx(Object):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
-        self.knx_anschluss = read_value_from_yaml_to_enum(
+    def __init__(self, oid, pos, name, knx_anschluss, parent):
+        super().__init__(oid, pos, name, parent)
+        self.knx_anschluss = knx_anschluss
+        self.onnection_type = KabelType.KNX
+        self.print_name = "KNX"
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        obj = Object.from_yaml(yaml, parent)
+        knx_anschluss = read_value_from_yaml_to_enum(
             yaml, "knx-component", KnxAnschluss
         )
-        self.connection_type = KabelType.KNX
-        self.print_name = "KNX"
+        return cls(obj.id, obj.pos, obj.name, knx_anschluss, parent)
 
     def draw(self, dwg):
         x = self.pos.horizontal[0] * 10
@@ -467,11 +574,17 @@ class Knx(Object):
 
 
 class Netzwerk(Object):
-    def __init__(self, yaml, parent):
-        super().__init__(yaml, parent)
-        self.anzahl = read_value_from_yaml(yaml, "anzahl")
+    def __init__(self, oid, pos, name, anzahl, parent):
+        super().__init__(oid, pos, name, parent)
+        self.anzahl = anzahl
         self.connection_type = KabelType.CAT7
         self.print_name = "Netzwerk"
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        obj = Object.from_yaml(yaml, parent)
+        anzahl = read_value_from_yaml(yaml, "anzahl")
+        return cls(obj.id, obj.pos, obj.name, anzahl, parent)
 
     def draw(self, dwg):
         xs = self.pos.horizontal[0] * 10
@@ -491,16 +604,21 @@ class Netzwerk(Object):
 
 
 class Wall(Point):
-    def __init__(self, yaml, parent):
-        self.dx = 0
-        self.dy = 0
-        super().__init__(yaml, parent)
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, parent)
         self.nodes = []
+        self.dx = dx
+        self.dy = dy
+        self.waagrecht = self.dx > self.dy
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = float(eval(str(yaml[st][0])))
-            self.dy = float(eval(str(yaml[st][1])))
-        self.waagrecht = self.dx > self.dy
+            dx = float(eval(str(yaml[st][0])))
+            dy = float(eval(str(yaml[st][1])))
+        pkt = Point.from_yaml(yaml, parent)
+        return cls(pkt.id, pkt.pos, dx, dy, parent)
 
     def add_node(self, node, recursive=False):
         self.nodes.append(node)
@@ -518,28 +636,35 @@ class Wall(Point):
 
 
 class Window(Point):
-    def __init__(self, yaml, parent):
-        self.dx = 0
-        self.dy = 0
-        super().__init__(yaml, parent)
-        self.x = self.pos.horizontal[0]
-        self.y = self.pos.horizontal[1]
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, parent)
+        self.dx = dx
+        self.dy = dx
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = float(eval(str(yaml[st][0])))
-            self.dy = float(eval(str(yaml[st][1])))
+            dx = float(eval(str(yaml[st][0])))
+            dy = float(eval(str(yaml[st][1])))
+        pkt = Point.from_yaml(yaml, parent)
+        return cls(pkt.id, pkt.pos, dx, dy, parent)
 
 
 class Door(Point):
-    def __init__(self, yaml, parent):
-        self.dx = 0
-        self.dy = 0
-        super().__init__(yaml, parent)
-        self.x = self.pos.horizontal[0]
-        self.y = self.pos.horizontal[1]
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, parent)
+        self.dx = dx
+        self.dy = dx
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
         st = "ende"
         if yaml != None and st in yaml:
-            self.dx = float(eval(str(yaml[st][0])))
+            dx = float(eval(str(yaml[st][0])))
+            dy = float(eval(str(yaml[st][1])))
+        pkt = Point.from_yaml(yaml, parent)
+        return cls(pkt.id, pkt.pos, dx, dy, parent)
 
 
 class NodeType(Enum):
@@ -678,7 +803,7 @@ class Edge:
         dx = n1.x - n2.x
         dy = n1.y - n2.y
         dz = n1.z - n2.z
-        self.length =  sqrt(dx * dx + dy * dy + dz * dz)
+        self.length = sqrt(dx * dx + dy * dy + dz * dz)
         return self.length
 
     def get_con_node(self, node):
