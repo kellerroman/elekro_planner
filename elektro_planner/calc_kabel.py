@@ -24,8 +24,15 @@ def calc_kabel_len(haus, kabel):
     def cost(n, goal):
         return abs(n.x - goal.x)
 
+    print(kabel)
+    print(haus.find_object(kabel.start))
+    print(haus.find_object(kabel.end[0]))
     e1 = haus.find_object(kabel.start).associated_node
     e2 = haus.find_object(kabel.end[0]).associated_node
+    if e2 == None:
+        return
+    print(e1.info())
+    print(e2.info())
 
     path = list(
         astar.find_path(

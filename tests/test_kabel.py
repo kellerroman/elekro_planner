@@ -5,7 +5,10 @@ from elektro_planner.read_kabel import read_kabel, autogenerate_kabel
 from elektro_planner.data import Haus, KabelType, Kabel
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
-from elektro_planner.connect_walls import create_nodes_from_walls
+from elektro_planner.connect_walls import (
+    create_nodes_from_walls,
+    create_nodes_from_connectors,
+)
 from elektro_planner.create_roombook import create_roombook
 from elektro_planner.calc_kabel import calc_kabel_len, calc_wires
 from elektro_planner.associate_anschluesse import associate_objects_to_walls_and_nodes
@@ -189,3 +192,30 @@ def test_single_wall_kabel():
     associate_objects_to_walls_and_nodes(haus)
     autogenerate_kabel(haus, False)
     calc_wires(haus)
+
+
+def test_cable_with_connector():
+    haus = (
+        simple_haus.HausCreator()
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .wall(0, 0, 400, 40)
+        .wall(360, 0, 40, 400)
+        .con(0, 250, 0, 400, 0, 0)
+        .room()
+        .Steckdose(40, 200)
+        .Steckdose(360, 200)
+        .get_house()
+    )
+    create_nodes_from_walls(haus)
+    assert len(haus.nodes) == 12
+    associate_objects_to_walls_and_nodes(haus)
+    assert len(haus.nodes) == 12 + 3 * 2
+    autogenerate_kabel(haus)
+    assert len(haus.kabel) == 1
+    calc_wires(haus)
+    assert haus.kabel[-1].length > 7.9
+    create_nodes_from_connectors(haus)
+    assert len(haus.nodes) == 12 + 3 * 2 + 2
+    calc_wires(haus)
+    assert haus.kabel[-1].length < 7.9

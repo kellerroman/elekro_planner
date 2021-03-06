@@ -2,7 +2,10 @@
 
 from elektro_planner.read_anschluesse import read_anschluesse
 from elektro_planner.read_struktur import read_struktur
-from elektro_planner.connect_walls import create_nodes_from_walls
+from elektro_planner.connect_walls import (
+    create_nodes_from_walls,
+    create_nodes_from_connectors,
+)
 from elektro_planner.data import Haus
 from elektro_planner.create_svg import create_svg
 import simple_haus
@@ -133,3 +136,44 @@ def test_read_struktur():
     assert len(nodes[15].get_connected_nodes()) == 2
     assert nodes[15].get_connected_nodes()[0].id == nodes[12].id
     assert nodes[15].get_connected_nodes()[1].id == nodes[7].id
+
+
+def test_connector_waagrecht():
+    haus = (
+        simple_haus.HausCreator()
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .wall(0, 0, 400, 40)
+        .wall(360, 0, 40, 400)
+        .con(0, 250, 0, 400, 0, 0)
+        .room()
+        .Steckdose(40, 200)
+        .Steckdose(360, 200)
+        .get_house()
+    )
+    create_nodes_from_walls(haus)
+    assert len(haus.nodes) == 12
+    create_nodes_from_connectors(haus)
+    assert len(haus.nodes) == 14
+    assert haus.geschosse[-1].nodes[13].is_connected(haus.geschosse[-1].nodes[12])
+
+
+def test_connector_senkrecht():
+    haus = (
+        simple_haus.HausCreator()
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .room()
+        .Steckdose(40, 200)
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .room()
+        .Steckdose(40, 200)
+        .con(0, 250, 0, 0, 0, 300)
+        .get_house()
+    )
+    create_nodes_from_walls(haus)
+    assert len(haus.nodes) == 8
+    create_nodes_from_connectors(haus)
+    assert len(haus.nodes) == 11
+    # assert haus.geschosse[-1].nodes[13].is_connected(haus.geschosse[-1].nodes[12])

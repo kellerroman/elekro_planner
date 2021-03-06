@@ -47,7 +47,7 @@ def read_anschluesse(haus, data):
                     raise RuntimeError(
                         "Room-Id not correct {} is: {}".format(id[1], room["id"])
                     )
-                current_geschoss.rooms.append(Room(room, current_geschoss))
+                current_geschoss.rooms.append(Room.from_yaml(room, current_geschoss))
                 room_count += 1
                 if "objects" in room:
                     current_room = current_geschoss.rooms[-1]
@@ -61,7 +61,9 @@ def read_anschluesse(haus, data):
                         st = "con-type"
                         if st in obj:
                             if obj[st] == "knx":
-                                current_room.objects.append(Knx.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    Knx.from_yaml(obj, current_room)
+                                )
                             elif obj[st] == "steckdose":
                                 current_room.objects.append(
                                     Steckdose.from_yaml(obj, current_room)
@@ -71,15 +73,25 @@ def read_anschluesse(haus, data):
                                     Stromanschluss.from_yaml(obj, current_room)
                                 )
                             elif obj[st] == "licht":
-                                current_room.objects.append(Licht.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    Licht.from_yaml(obj, current_room)
+                                )
                             elif obj[st] == "led":
-                                current_room.objects.append(Led.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    Led.from_yaml(obj, current_room)
+                                )
                             elif obj[st] == "ledstrip":
-                                current_room.objects.append(LedStrip.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    LedStrip.from_yaml(obj, current_room)
+                                )
                             elif obj[st] == "kontakt":
-                                current_room.objects.append(Kontakt.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    Kontakt.from_yaml(obj, current_room)
+                                )
                             elif obj[st] == "netzwerk":
-                                current_room.objects.append(Netzwerk.from_yaml(obj, current_room))
+                                current_room.objects.append(
+                                    Netzwerk.from_yaml(obj, current_room)
+                                )
                             else:
                                 raise RuntimeError(
                                     "Connection Type unknown {}".format(obj[st])

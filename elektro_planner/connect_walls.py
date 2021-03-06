@@ -2,6 +2,7 @@
 from elektro_planner.data import Node, NodeType
 from elektro_planner.utils import add_node_to_wall
 from math import sqrt
+import numpy as np
 
 
 def dist(e1, e2):
@@ -117,6 +118,67 @@ def create_nodes_from_walls(haus):
                     # add this new edge to the wall as well.
                     # it should be the last connection of the original node, since only there brothers "upstears" are added
                     wall.add_node(n.get_connected_nodes()[-1], False)
+
+
+def create_nodes_from_connectors(haus):
+    for con in haus.connectors:
+        print("Checking Connector: {}".format(con))
+        if con.dz == 0:
+            x1 = con.x
+            x2 = con.x + con.dx
+            y1 = con.y
+            y2 = con.y + con.dy
+            found_correct_geschoss = False
+            for g in haus.geschosse:
+                if con.z >= g.z0 and con.z <= g.z1:
+                    found_correct_geschoss = True
+                    for wall in g.walls:
+                        print("Checking With Wall: {} {}".format(con.id, wall.cid))
+                        if wall.waagrecht:
+                            x3 = wall.x
+                            x4 = wall.x + wall.dx
+                            y3 = wall.y + wall.dy * 0.5
+                            y4 = y3
+                            wdx = wall.dx
+                            wdy = 0
+                        else:
+                            x3 = wall.x + wall.dx * 0.5
+                            x4 = x3
+                            y3 = wall.y
+                            y4 = wall.y + wall.dy
+                            wdx = 0
+                            wdy = wall.dy
+                        print(
+                            "{} {} {} {}: {}".format(
+                                wdx, con.dy, wdy, con.dx, wdx * con.dy - wdy * con.dx
+                            )
+                        )
+                        if not wdx * con.dy - wdy * con.dx == 0:
+                            print("Solving equation")
+                            a = np.array([[x2 - x1, x3 - x4], [y2 - y1, y3 - y4]])
+                            b = np.array([x3 - x1, y3 - y1])
+                            x = np.linalg.solve(a, b)
+                            print(x)
+                            if x[0] >= 0 and x[0] <= 1 and x[1] >= 0 and x[1] <= 1:
+                                nx = x3 + x[1] * wdx
+                                ny = y3 + x[1] * wdy
+                                print(" New Edge at: ({},{})".format(nx, ny))
+                                new_node = Node(nx, ny, con.z, wall, NodeType.Connector)
+                                add_node_to_wall(wall, new_node)
+                                con.add_node(new_node, x[0])
+
+                    break
+            if not found_correct_geschoss:
+                raise RuntimeError(
+                    "Could not associate Waagrechten Schacht to Geschoss"
+                )
+        else:
+            raise RuntimeError("Senkrechte Schacht noch nicth unterstützt")
+        # connect edges of connector
+        for i, n in enumerate(sorted(con.nodes)):
+            if i > 0:
+                con.nodes[n].connect(old)
+            old = con.nodes[n]
 
 
 if __name__ == "__main__":

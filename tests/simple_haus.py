@@ -1,3 +1,86 @@
+#!/usr/bin/env python3
+from elektro_planner.data import (
+    Haus,
+    Geschoss,
+    Room,
+    Wall,
+    Connector,
+    Position,
+    VerticalPosition,
+    Steckdose,
+    KnxType,
+    KabelType,
+)
+
+
+class HausCreator:
+    def __init__(self):
+        self.haus = Haus()
+
+    def get_house(self):
+        return self.haus
+
+    def geschoss(self, height=250):
+        gid = len(self.haus.geschosse) + 1
+        gname = "Geschoss" + str(gid)
+        z = 0
+        for g in self.haus.geschosse:
+            z += g.height
+        self.haus.geschosse.append(Geschoss(gid, gname, height, z, self.haus))
+        return self
+
+    def room(self):
+        rid = len(self.haus.geschosse[-1].rooms) + 1
+        rname = "Room" + str(rid)
+        self.haus.geschosse[-1].rooms.append(Room(rid, rname, self.haus.geschosse[-1]))
+        return self
+
+    def wall(self, x, y, dx, dy):
+        wid = len(self.haus.geschosse[-1].walls) + 1
+        self.haus.geschosse[-1].walls.append(
+            Wall(
+                wid,
+                Position(x, y, VerticalPosition.Unten),
+                dx,
+                dy,
+                self.haus.geschosse[-1],
+            )
+        )
+        return self
+
+    def con(self, x, y, z, dx, dy, dz):
+        name = "Connector" + str(len(self.haus.connectors) + 1)
+        self.haus.connectors.append(
+            Connector(
+                name,
+                x,
+                y,
+                z,
+                dx,
+                dy,
+                dz,
+                self.haus,
+            )
+        )
+        return self
+
+    def Steckdose(self, x, y, vert=VerticalPosition.Unten):
+        sid = len(self.haus.geschosse[-1].rooms[-1].objects) + 1
+        name = "Steckdose" + str(sid)
+        self.haus.geschosse[-1].rooms[-1].objects.append(
+            Steckdose(
+                sid,
+                Position(x, y, vert),
+                name,
+                1,
+                KnxType.NoKnx,
+                KabelType.NYM5x15,
+                self.haus.geschosse[-1].rooms[-1],
+            )
+        )
+        return self
+
+
 def define_testcase():
     yaml = dict()
     yaml["struktur"] = {

@@ -68,3 +68,38 @@ def test_single_wall():
         for r in g.rooms:
             for o in r.objects:
                 assert o.associated_node != None
+
+
+def test_single_wall():
+    haus = Haus()
+    yaml = simple_haus.single_wall()
+
+    read_struktur(haus, yaml["struktur"])
+    read_anschluesse(haus, yaml["anschluesse"])
+    create_nodes_from_walls(haus)
+    associate_objects_to_walls_and_nodes(haus)
+    assert len(haus.nodes) == 10
+    for g in haus.geschosse:
+        for r in g.rooms:
+            for o in r.objects:
+                assert o.associated_node != None
+
+
+def test_single_wall_with_obj_at_diff_sides_of_wall_same_pos():
+    haus = (
+        simple_haus.HausCreator()
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .room()
+        .Steckdose(0, 200)
+        .Steckdose(40, 200)
+        .get_house()
+    )
+    assert len(haus.geschosse) == 1
+    assert len(haus.geschosse[-1].rooms) == 1
+    assert len(haus.geschosse[-1].walls) == 1
+    assert len(haus.geschosse[-1].rooms[-1].objects) == 2
+    create_nodes_from_walls(haus)
+    assert len(haus.nodes) == 4
+    associate_objects_to_walls_and_nodes(haus)
+    assert len(haus.nodes) == 10

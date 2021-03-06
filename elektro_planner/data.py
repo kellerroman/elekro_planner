@@ -159,6 +159,7 @@ class Haus:
         self.geschoss_count = 0
         self.room_count = 0
         self.kabel = []
+        self.connectors = []
         self.nodes = dict()
 
     def add_node(self, node):
@@ -217,13 +218,23 @@ class Geschoss:
 
 
 class Room:
-    def __init__(self, yaml, parent):
-        self.id = read_value_from_yaml(yaml, "id")
+    def __init__(self, room_id, name, parent):
+        self.id = room_id
         self.cid = str(parent.cid) + "." + str(self.id)
-        self.name = read_value_from_yaml(yaml, "name")
+        self.name = name
         self.objects = []
         self.book = dict()
         self.parent = parent
+
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        rid = read_value_from_yaml(yaml, "id")
+        name = read_value_from_yaml(yaml, "name")
+        return rid, name
 
 
 class Point:
@@ -256,10 +267,6 @@ class Object(Point):
         self.associated_wall = None
         self.associated_node = None
         self.print_name = "Object"
-
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        return cls(*cls.parse_yaml(yaml), parent)
 
     @staticmethod
     def parse_yaml(yaml):
@@ -301,10 +308,6 @@ class Stromanschluss(Object):
         self.knx = knx
         self.connection_type = connection_type
         self.print_name = "Stromanschluss"
-
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        return cls(*cls.parse_yaml(yaml), parent)
 
     @staticmethod
     def parse_yaml(yaml):
@@ -396,10 +399,6 @@ class LedStrip(Led):
         self.color = "purple"
         self.len = length
 
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        return cls(*cls.parse_yaml(yaml), parent)
-
     @staticmethod
     def parse_yaml(yaml):
         obj = Led.parse_yaml(yaml)
@@ -466,29 +465,12 @@ class Kontakt(Object):
         self.connection_type = KabelType.FMK
         self.print_name = "Kontakt"
 
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        obj = Object.from_yaml(yaml, parent)
-        anzahl = read_value_from_yaml(yaml, "anzahl")
-        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
-        return cls(obj.id, obj.pos, obj.name, anzahl, knx, parent)
-
     @staticmethod
     def parse_yaml(yaml):
-        oid, pos, name = Object.parse_yaml(yaml)
+        obj = Object.parse_yaml(yaml)
         anzahl = read_value_from_yaml(yaml, "anzahl")
         knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
-        connection_type = read_value_from_yaml_to_enum(
-            yaml, "kabelanschluss", KabelType, False
-        )
-        return oid, pos, name, anzahl, knx, connection_type
-
-    @staticmethod
-    def parse_yaml(yaml):
-        obj = Object.from_yaml(yaml, parent)
-        anzahl = read_value_from_yaml(yaml, "anzahl")
-        knx = read_value_from_yaml_to_enum(yaml, "knx", KnxType, False)
-        return cls(obj.id, obj.pos, obj.name, anzahl, knx, parent)
+        return *obj, anzahl, knx
 
     def draw(self, dwg):
         xs = self.pos.horizontal[0] * 10
@@ -514,13 +496,13 @@ class Knx(Object):
         self.onnection_type = KabelType.KNX
         self.print_name = "KNX"
 
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        obj = Object.from_yaml(yaml, parent)
+    @staticmethod
+    def parse_yaml(yaml):
+        obj = Object.parse_yaml(yaml)
         knx_anschluss = read_value_from_yaml_to_enum(
             yaml, "knx-component", KnxAnschluss
         )
-        return cls(obj.id, obj.pos, obj.name, knx_anschluss, parent)
+        return *obj, knx_anschluss
 
     def draw(self, dwg):
         x = self.pos.horizontal[0] * 10
@@ -580,11 +562,11 @@ class Netzwerk(Object):
         self.connection_type = KabelType.CAT7
         self.print_name = "Netzwerk"
 
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        obj = Object.from_yaml(yaml, parent)
+    @staticmethod
+    def parse_yaml(yaml):
+        obj = Object.parse_yaml(yaml)
         anzahl = read_value_from_yaml(yaml, "anzahl")
-        return cls(obj.id, obj.pos, obj.name, anzahl, parent)
+        return *obj, anzahl
 
     def draw(self, dwg):
         xs = self.pos.horizontal[0] * 10
@@ -603,22 +585,39 @@ class Netzwerk(Object):
         dwg.add(draw_obj)
 
 
-class Wall(Point):
+class StructureElement(Point):
     def __init__(self, pid, pos, dx, dy, parent):
         super().__init__(pid, pos, parent)
-        self.nodes = []
         self.dx = dx
         self.dy = dy
-        self.waagrecht = self.dx > self.dy
+        self.print_name = "StructureElement"
 
-    @classmethod
-    def from_yaml(cls, yaml, parent):
+    @staticmethod
+    def parse_yaml(yaml):
         st = "ende"
         if yaml != None and st in yaml:
             dx = float(eval(str(yaml[st][0])))
             dy = float(eval(str(yaml[st][1])))
-        pkt = Point.from_yaml(yaml, parent)
-        return cls(pkt.id, pkt.pos, dx, dy, parent)
+        pkt = Point.parse_yaml(yaml)
+        return *pkt, dx, dy
+
+    def __str__(self):
+        return "{} {}: {},{} to {},{}".format(
+            self.print_name,
+            self.cid,
+            self.x,
+            self.y,
+            self.x + self.dy,
+            self.y + self.dy,
+        )
+
+
+class Wall(StructureElement):
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, dx, dy, parent)
+        self.nodes = []
+        self.waagrecht = self.dx > self.dy
+        self.print_name = "StructureElement"
 
     def add_node(self, node, recursive=False):
         self.nodes.append(node)
@@ -629,42 +628,48 @@ class Wall(Point):
         for node in nodes:
             self.add_node(node, recursive)
 
+
+class Window(StructureElement):
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, dx, dy, parent)
+        self.print_name = "Window"
+
+
+class Door(StructureElement):
+    def __init__(self, pid, pos, dx, dy, parent):
+        super().__init__(pid, pos, dx, dy, parent)
+        self.print_name = "Door"
+
+
+class Connector:
+    id_counter = 0
+
+    def __init__(self, name, x, y, z, dx, dy, dz, parent):
+        self.id = Connector.id_counter
+        Connector.id_counter += 1
+        self.name = name
+        self.parent = parent
+        self.x = x
+        self.y = y
+        self.z = z
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+        self.nodes = dict()
+
     def __str__(self):
-        return "Wall {}: {},{} to {},{}".format(
-            self.cid, self.x, self.y, self.x + self.dy, self.y + self.dy
+        return "Connector {}: ({},{},{}) -> ({},{},{})".format(
+            self.id,
+            self.x,
+            self.y,
+            self.z,
+            self.x + self.dx,
+            self.y + self.dy,
+            self.z + self.dz,
         )
 
-
-class Window(Point):
-    def __init__(self, pid, pos, dx, dy, parent):
-        super().__init__(pid, pos, parent)
-        self.dx = dx
-        self.dy = dx
-
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        st = "ende"
-        if yaml != None and st in yaml:
-            dx = float(eval(str(yaml[st][0])))
-            dy = float(eval(str(yaml[st][1])))
-        pkt = Point.from_yaml(yaml, parent)
-        return cls(pkt.id, pkt.pos, dx, dy, parent)
-
-
-class Door(Point):
-    def __init__(self, pid, pos, dx, dy, parent):
-        super().__init__(pid, pos, parent)
-        self.dx = dx
-        self.dy = dx
-
-    @classmethod
-    def from_yaml(cls, yaml, parent):
-        st = "ende"
-        if yaml != None and st in yaml:
-            dx = float(eval(str(yaml[st][0])))
-            dy = float(eval(str(yaml[st][1])))
-        pkt = Point.from_yaml(yaml, parent)
-        return cls(pkt.id, pkt.pos, dx, dy, parent)
+    def add_node(self,node, rel_pos):
+        self.nodes[rel_pos] = node
 
 
 class NodeType(Enum):
@@ -676,6 +681,7 @@ class NodeType(Enum):
     Object = 5
     ObjectBottom = 6
     ObjectTop = 7
+    Connector = 7
 
     def __str__(self):
         return str(self.name)
