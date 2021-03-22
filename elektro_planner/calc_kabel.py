@@ -6,11 +6,28 @@ import astar
 
 def calc_wires(haus):
     for k in haus.kabel:
-        calc_kabel_len(haus, k)
+        get_kabel_objects(haus, k)
+        set_kabel_type(k)
+        calc_kabel_len(k)
 
 
-def calc_kabel_len(haus, kabel):
+def get_kabel_objects(haus, kabel):
+    kabel.objects_associated = True
+    kabel.start_obj = haus.find_object(kabel.start)
+    for edge in kabel.end:
+        kabel.end_objs.append(haus.find_object(edge))
 
+
+def set_kabel_type(kabel):
+    assert kabel.objects_associated
+    kabel.type = kabel.end_objs[0].connection_type
+    for obj in kabel.end_objs[1:]:
+        if kabel.type != obj.connection_type:
+            raise RuntimeError("Verschiedene Kabel Typen verbunden")
+
+
+def calc_kabel_len(kabel):
+    assert kabel.objects_associated
     if not isinstance(kabel, Kabel):
         raise RuntimeError("Kabel is not of Type Kabel")
 
@@ -25,25 +42,70 @@ def calc_kabel_len(haus, kabel):
         return abs(n.x - goal.x)
 
     print(kabel)
-    print(haus.find_object(kabel.start))
-    print(haus.find_object(kabel.end[0]))
-    e1 = haus.find_object(kabel.start).associated_node
-    e2 = haus.find_object(kabel.end[0]).associated_node
-    if e2 == None:
-        return
-    print(e1.info())
-    print(e2.info())
+    print(kabel.start_obj)
+    print(kabel.end_objs[0])
+    kabel.length = 10000000.0
+    connected_objects = []
+    path = None
+    for obj in kabel.end_objs:
+        e1 = kabel.start_obj.associated_node
+        e2 = obj.associated_node
+        # TODO: all objects must be connected
+        if e2 == None:
+            kabel.length = 0.0
+            return
+        print(e1.info())
+        print(e2.info())
 
-    path = list(
-        astar.find_path(
-            e1,
-            e2,
-            neighbors_fnct=neighbors,
-            heuristic_cost_estimate_fnct=cost,
-            distance_between_fnct=distance,
+        temp_path = list(
+            astar.find_path(
+                e1,
+                e2,
+                neighbors_fnct=neighbors,
+                heuristic_cost_estimate_fnct=cost,
+                distance_between_fnct=distance,
+            )
         )
-    )
-    kabel.length = calc_path_length(path) * 0.01
+        le = calc_path_length(temp_path) * 0.01
+        if le < kabel.length:
+            kabel.length = le
+            connected_objects = [obj]
+            path = temp_path
+    print(" Length after First: {}".format(kabel.length))
+    unconnected_objects = list(set(kabel.end_objs) - set(connected_objects))
+    for u in unconnected_objects:
+        print("Unconnected Objects: {}".format(u))
+    while len(unconnected_objects) > 0:
+        min_dist = 1000000.0
+        path2 = None
+        obj_to_add = None
+        for obj1 in connected_objects:
+            for obj2 in unconnected_objects:
+                e1 = obj1.associated_node
+                e2 = obj2.associated_node
+                temp_path = list(
+                    astar.find_path(
+                        e1,
+                        e2,
+                        neighbors_fnct=neighbors,
+                        heuristic_cost_estimate_fnct=cost,
+                        distance_between_fnct=distance,
+                    )
+                )
+                le = calc_path_length(temp_path) * 0.01
+                if le < min_dist:
+                    min_dist = le
+                    obj_to_add = obj2
+                    path2 = temp_path
+        connected_objects.append(obj_to_add)
+        unconnected_objects.remove(obj_to_add)
+        kabel.length += min_dist
+        path += path2
+        print(" Length next: {}".format(kabel.length))
+        for e in path2:
+            print(e)
+        for u in unconnected_objects:
+            print("Unconnected Objects: {}".format(u))
     return path
 
 

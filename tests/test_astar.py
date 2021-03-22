@@ -6,7 +6,7 @@ from elektro_planner.read_struktur import read_struktur
 from elektro_planner.connect_walls import create_nodes_from_walls
 from elektro_planner.associate_anschluesse import associate_objects_to_walls_and_nodes
 from elektro_planner.read_kabel import autogenerate_kabel
-from elektro_planner.calc_kabel import calc_kabel_len
+from elektro_planner.calc_kabel import calc_kabel_len ,get_kabel_objects
 import simple_haus
 from pytest import approx
 from math import sqrt
@@ -63,7 +63,8 @@ def test_astar():
 
     assert len(haus.kabel) == 1
 
-    path = calc_kabel_len(haus, haus.kabel[0])
+    get_kabel_objects(haus, haus.kabel[0])
+    path = calc_kabel_len( haus.kabel[0])
 
     assert len(path) == 6
 

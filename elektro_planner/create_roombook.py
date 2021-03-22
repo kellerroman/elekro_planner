@@ -92,40 +92,35 @@ def create_roombook(haus):
 
 
 def calc_length(kabel, haus):
+    assert kabel.objects_associated
+    if kabel.length != 0:
+        return
     kabel.length = 10000000.0
-    start = find_object(haus, kabel.start)
+    start = kabel.start_obj
     # connection to the "clostest" object
     connected_objects = []
-    for edge in kabel.end:
-        obj = find_object(haus, edge)
+    for obj in kabel.end_objs:
         dx = start.x - obj.x
         dy = start.y - obj.y
         dz = start.z - obj.z
         le = (abs(dx) + abs(dy) + abs(dz)) * 0.01
         if le < kabel.length:
             kabel.length = le
-            connected_objects = [edge]
-        if edge == kabel.end[0]:
-            kabel.type = obj.connection_type
-        else:
-            if kabel.type != obj.connection_type:
-                raise RuntimeError("Verschiedene Kabel Typen verbunden")
+            connected_objects = [obj]
     # connection to the other objects
-    unconnected_objects = list(set(kabel.end) - set(connected_objects))
+    unconnected_objects = list(set(kabel.end_objs) - set(connected_objects))
     while len(unconnected_objects) > 0:
         min_dist = 1000000.0
         obj_to_add = None
-        for o1 in connected_objects:
-            for o2 in unconnected_objects:
-                obj1 = find_object(haus, o1)
-                obj2 = find_object(haus, o2)
+        for obj1 in connected_objects:
+            for obj2 in unconnected_objects:
                 dx = obj1.x - obj2.x
                 dy = obj1.y - obj2.y
                 dz = obj1.z - obj2.z
                 le = (abs(dx) + abs(dy) + abs(dz)) * 0.01
                 if le < min_dist:
                     min_dist = le
-                    obj_to_add = o2
+                    obj_to_add = obj2
         connected_objects.append(obj_to_add)
         unconnected_objects.remove(obj_to_add)
         kabel.length += min_dist

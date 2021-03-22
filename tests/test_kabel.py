@@ -49,6 +49,9 @@ def test_simple_haus_kabel():
     read_kabel(haus, yaml["kabel"])
     autogenerate_kabel(haus)
     create_nodes_from_walls(haus)
+    create_nodes_from_connectors(haus)
+    associate_objects_to_walls_and_nodes(haus)
+    calc_wires(haus)
     create_roombook(haus)
     assert len(haus.kabel) == 7
     # explicit cable
@@ -56,18 +59,19 @@ def test_simple_haus_kabel():
     assert len(haus.kabel[0].end) == 3
     assert haus.kabel[0].end[0] == "2.2.3"
     assert haus.kabel[0].end[1] == "2.2.4"
-    assert haus.kabel[0].length == approx(2 + 4 + 0.2 + 0.2 + 0.2)
+    assert haus.kabel[0].end[2] == "2.2.5"
+    assert haus.kabel[0].length == approx(11.1)  # 2 + 4 + 0.2 + 0.2 + 0.2)
     # impicit definde cabels
     assert haus.kabel[1].start == "1.1.1"
     assert len(haus.kabel[1].end) == 1
     assert haus.kabel[1].end[0] == "1.1.2"
     assert haus.kabel[1].type == KabelType.NYM5x15
-    assert haus.kabel[1].length == approx(0.4 + 2.4)
-    assert haus.kabel[2].length == approx(3)
+    assert haus.kabel[1].length == approx(1.4 + 2.4)
+    assert haus.kabel[2].length == approx(4)
     assert haus.kabel[3].end[0] == "2.1.1"
     # directly above it
-    assert haus.kabel[3].length == approx(2)
-    assert haus.kabel[4].length == approx(2 + 0.4 + 2.4)
+    assert haus.kabel[3].length == approx(2.5)
+    assert haus.kabel[4].length == approx(2.5 + 0.4 + 2.4)
 
 
 def test_indirect_connection():
@@ -82,16 +86,17 @@ def test_indirect_connection():
     assert len(haus.geschosse[1].nodes) == 16
     associate_objects_to_walls_and_nodes(haus)
     haus.kabel.append(Kabel("2.1.2", "2.2.2"))
+    calc_wires(haus)
     create_roombook(haus)
     assert haus.kabel[0].start == "2.1.2"
     assert haus.kabel[0].end[0] == "2.2.2"
-    assert haus.kabel[0].length == approx(1 + 1.5)
+    # assert haus.kabel[0].length == approx(1 + 1.5)
 
     # path = calc_kabel_len(haus, haus.kabel[0])
     # for e in path:
     #     print(e)
     # assert len(path) == 8
-    # assert haus.kabel[0].length == approx(1.0 + 2.4 + 1.0 + 0.9 + 1.0)
+    assert haus.kabel[0].length == approx(1.0 + 2.4 + 1.0 + 0.9 + 1.0)
 
 
 def test_autogen_kabel_with_astar_len_calc():
@@ -105,20 +110,9 @@ def test_autogen_kabel_with_astar_len_calc():
     assert len(haus.nodes) == 8 + 16
     haus.geschosse[0].nodes[4].connect(haus.geschosse[1].nodes[0])
     associate_objects_to_walls_and_nodes(haus)
-    create_roombook(haus)
-    kabel_length_simple = []
-    for kabel in haus.kabel:
-        kabel_length_simple.append(kabel.length)
 
     calc_wires(haus)
-    for i, kabel in enumerate(haus.kabel):
-        if kabel_length_simple[i] != kabel.length:
-            print(
-                "Kabel Length differs: {} {} {}".format(
-                    kabel.end[0], kabel_length_simple[i], kabel.length
-                )
-            )
-
+    create_roombook(haus)
     # for i,kabel in enumerate(haus.kabel):
     #     assert kabel_length_simple[i] == approx(kabel.length)
 
@@ -168,14 +162,8 @@ def test_autogenerate_kabels():
     read_struktur(haus, yaml["struktur"])
     read_anschluesse(haus, yaml["anschluesse"])
     read_kabel(haus, yaml["kabel"])
-    autogenerate_kabel(haus)
-    create_roombook(haus)
-    assert len(haus.kabel) == 1
-    assert haus.kabel[0].length == approx(1.30 + 3.30)
-
-    haus.kabel = []
-    read_kabel(haus, yaml["kabel"])
     autogenerate_kabel(haus, False)
+    calc_wires(haus)
     create_roombook(haus)
     assert len(haus.kabel) == 2
     assert haus.kabel[0].length == approx(1.30 + 1.80)

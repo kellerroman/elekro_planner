@@ -121,6 +121,7 @@ def create_nodes_from_walls(haus):
 
 
 def create_nodes_from_connectors(haus):
+    delta = 10
     for con in haus.connectors:
         print("Checking Connector: {}".format(con))
         if con.dz == 0:
@@ -162,7 +163,10 @@ def create_nodes_from_connectors(haus):
                             if x[0] >= 0 and x[0] <= 1 and x[1] >= 0 and x[1] <= 1:
                                 nx = x3 + x[1] * wdx
                                 ny = y3 + x[1] * wdy
-                                print(" New Edge at: ({},{})".format(nx, ny))
+                                print(" New Node at: ({},{})".format(nx, ny))
+                                print(wall)
+                                for n in wall.nodes:
+                                    print(n)
                                 new_node = Node(nx, ny, con.z, wall, NodeType.Connector)
                                 add_node_to_wall(wall, new_node)
                                 con.add_node(new_node, x[0])
@@ -172,11 +176,35 @@ def create_nodes_from_connectors(haus):
                 raise RuntimeError(
                     "Could not associate Waagrechten Schacht to Geschoss"
                 )
+        elif con.dx == 0 and con.dy == 0:
+            for g in haus.geschosse:
+                if con.z <= g.z1 and con.z + con.dz >= g.z0:
+                    for wall in g.walls:
+                        if (
+                            con.x >= wall.x - delta
+                            and con.x <= wall.x + wall.dx + delta
+                            and con.y >= wall.y - delta
+                            and con.y <= wall.y + wall.dy + delta
+                        ):
+                            heights = [g.z0, g.z1]
+                            for h in heights:
+                                if con.z <= h and con.z + con.dz >= h:
+                                    new_node = Node(
+                                        con.x, con.y, h, wall, NodeType.Connector
+                                    )
+                                    add_node_to_wall(wall, new_node)
+                                    con.add_node(new_node, h)
+                                    print(
+                                        "Adding node: {} to {}".format(new_node, wall)
+                                    )
+
         else:
-            raise RuntimeError("Senkrechte Schacht noch nicth unterstützt")
+            raise RuntimeError("Schräger Schacht noch nicht unterstützt")
         # connect edges of connector
+        print("Connecting Edges of Connectorto each other{}".format(len(con.nodes)))
         for i, n in enumerate(sorted(con.nodes)):
             if i > 0:
+                print("Connecting {} to {}".format(con.nodes[n], old))
                 con.nodes[n].connect(old)
             old = con.nodes[n]
 

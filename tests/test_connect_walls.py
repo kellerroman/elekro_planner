@@ -71,9 +71,9 @@ def test_read_struktur():
         for c in e.get_connected_nodes():
             print("-- connected to {}".format(c))
         if i < 8:  # nodes at bottom of the wall
-            assert e.z == 200
+            assert e.z == 250
         else:  # nodes at top of the wall
-            assert e.z == 500
+            assert e.z == 550
 
     assert len(nodes[0].get_connected_nodes()) == 3
     assert nodes[0].get_connected_nodes()[0].id == nodes[1].id
@@ -169,11 +169,26 @@ def test_connector_senkrecht():
         .wall(0, 0, 40, 400)
         .room()
         .Steckdose(40, 200)
-        .con(0, 250, 0, 0, 0, 300)
+        .con(0, 250, 100, 0, 0, 300)
         .get_house()
     )
     create_nodes_from_walls(haus)
     assert len(haus.nodes) == 8
     create_nodes_from_connectors(haus)
-    assert len(haus.nodes) == 11
-    # assert haus.geschosse[-1].nodes[13].is_connected(haus.geschosse[-1].nodes[12])
+    assert len(haus.nodes) == 10
+    assert len(haus.geschosse[0].walls[0].nodes) == 5
+    assert len(haus.geschosse[0].walls[0].nodes[4].get_connected_nodes()) == 3
+    assert (
+        haus.geschosse[0]
+        .walls[0]
+        .nodes[4]
+        .is_connected(haus.geschosse[0].walls[0].nodes[2])
+    )
+    assert (
+        haus.geschosse[0]
+        .walls[0]
+        .nodes[4]
+        .is_connected(haus.geschosse[0].walls[0].nodes[3])
+    )
+    assert len(haus.geschosse[1].walls[0].nodes) == 5
+    # assert haus.geschosse[0].nodes[4].is_connected(haus.geschosse[1].nodes[4])

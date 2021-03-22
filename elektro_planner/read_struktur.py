@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from elektro_planner.data import Haus, Geschoss, Wall, Window, Door
+from elektro_planner.data import Haus, Geschoss, Wall, Window, Door, Connector
 import yaml
 
 
@@ -32,13 +32,18 @@ def read_struktur(haus, data):
                 wall_count += 1
         if "windows" in geschoss:
             for obj in geschoss["windows"]:
-                haus.geschosse[-1].windows.append(Window.from_yaml(obj, haus.geschosse[-1]))
+                haus.geschosse[-1].windows.append(
+                    Window.from_yaml(obj, haus.geschosse[-1])
+                )
                 window_count += 1
         if "doors" in geschoss:
             for obj in geschoss["doors"]:
                 haus.geschosse[-1].doors.append(Door.from_yaml(obj, haus.geschosse[-1]))
                 door_count += 1
         z += haus.geschosse[-1].height
+    if "connectors" in data:
+        for con in data["connectors"]:
+            haus.connectors.append(Connector.from_yaml(con, haus))
 
 
 if __name__ == "__main__":

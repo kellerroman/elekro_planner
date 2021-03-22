@@ -88,7 +88,7 @@ def define_testcase():
             {
                 "id": 1,
                 "name": "G1",
-                "height": 200,
+                "height": 250,
                 "walls": [
                     {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 300]},
                     {"id": 2, "pos": {"hori": [0, 0]}, "ende": [500, 20]},
@@ -105,7 +105,14 @@ def define_testcase():
                     {"id": 4, "pos": {"hori": [100, 0]}, "ende": [20, 150]},
                 ],
             },
-        ]
+        ],
+        "connectors": [
+            {
+                "start": [50.0, 10, 0],
+                "vector": [0, 0.0, 500],
+                "name": "Steigschacht Kamin",
+            }
+        ],
     }
     yaml["anschluesse"] = {
         "geschosse": [

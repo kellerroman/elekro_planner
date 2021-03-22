@@ -493,7 +493,7 @@ class Knx(Object):
     def __init__(self, oid, pos, name, knx_anschluss, parent):
         super().__init__(oid, pos, name, parent)
         self.knx_anschluss = knx_anschluss
-        self.onnection_type = KabelType.KNX
+        self.connection_type = KabelType.KNX
         self.print_name = "KNX"
 
     @staticmethod
@@ -607,7 +607,7 @@ class StructureElement(Point):
             self.cid,
             self.x,
             self.y,
-            self.x + self.dy,
+            self.x + self.dx,
             self.y + self.dy,
         )
 
@@ -617,7 +617,7 @@ class Wall(StructureElement):
         super().__init__(pid, pos, dx, dy, parent)
         self.nodes = []
         self.waagrecht = self.dx > self.dy
-        self.print_name = "StructureElement"
+        self.print_name = "Wall"
 
     def add_node(self, node, recursive=False):
         self.nodes.append(node)
@@ -657,6 +657,17 @@ class Connector:
         self.dz = dz
         self.nodes = dict()
 
+    @classmethod
+    def from_yaml(cls, yaml, parent):
+        return cls(*cls.parse_yaml(yaml), parent)
+
+    @staticmethod
+    def parse_yaml(yaml):
+        start = read_value_from_yaml(yaml, "start")
+        vector = read_value_from_yaml(yaml, "vector")
+        name = read_value_from_yaml(yaml, "name")
+        return name, start[0], start[1], start[2], vector[0], vector[1], vector[2]
+
     def __str__(self):
         return "Connector {}: ({},{},{}) -> ({},{},{})".format(
             self.id,
@@ -668,7 +679,9 @@ class Connector:
             self.z + self.dz,
         )
 
-    def add_node(self,node, rel_pos):
+    def add_node(self, node, rel_pos):
+        if rel_pos in self.nodes.keys():
+            rel_pos += 0.01
         self.nodes[rel_pos] = node
 
 
@@ -839,6 +852,11 @@ class Kabel:
 
         self.type = None
         self.length = 0.0
+        # defines if the objects are still only "adresse" from creation
+        # or if the association to "!real" objects has been one
+        self.objects_associated = False
+        self.start_obj = None
+        self.end_objs = []
 
     def is_obj(self, obj):
         pass
