@@ -15,7 +15,9 @@ def get_kabel_objects(haus, kabel):
     kabel.objects_associated = True
     kabel.start_obj = haus.find_object(kabel.start)
     for edge in kabel.end:
-        kabel.end_objs.append(haus.find_object(edge))
+        obj = haus.find_object(edge)
+        kabel.end_objs.append(obj)
+        obj.setKabel(kabel)
 
 
 def set_kabel_type(kabel):
@@ -106,6 +108,9 @@ def calc_kabel_len(kabel):
             print(e)
         for u in unconnected_objects:
             print("Unconnected Objects: {}".format(u))
+    for n in path:
+        kabel.addNode(n)
+        n.addKabel(kabel)
     return path
 
 

@@ -8,6 +8,7 @@ class VerticalPosition(Enum):
     Mitte = 1
     Oben = 2
     Decke = 3
+    Boden = 4
 
     def __str__(self):
         return str(self.name)
@@ -22,6 +23,8 @@ class VerticalPosition(Enum):
             return VerticalPosition.Mitte
         elif label in ("oben", "Oben"):
             return VerticalPosition.Oben
+        elif label in ("boden", "Boden"):
+            return VerticalPosition.Boden
         else:
             raise NotImplementedError
 
@@ -245,7 +248,7 @@ class Point:
         self.parent = parent
         self.x = self.pos.horizontal[0]
         self.y = self.pos.horizontal[1]
-        values = [30, 105, 200, 230]
+        values = [30, 105, 200, 230, 0]
         self.z = values[self.pos.vertical.value]
 
     @classmethod
@@ -266,6 +269,7 @@ class Object(Point):
         self.connection_type = KabelType.NYM5x15
         self.associated_wall = None
         self.associated_node = None
+        self.connected_kabel = None
         self.print_name = "Object"
 
     @staticmethod
@@ -273,6 +277,20 @@ class Object(Point):
         pkt = Point.parse_yaml(yaml)
         oname = read_value_from_yaml(yaml, "name")
         return *pkt, oname
+
+    def setKabel(self, kabel):
+        if self.connected_kabel == None:
+            self.connected_kabel = kabel
+        else:
+            raise RuntimeError(
+                "Objects is already connected to a Kabel {} {} {}".format(
+                    self, kabel, self.connected_kabel
+                )
+            )
+
+    def getKabel(self):
+        if self.connected_kabel != None:
+            return self.connected_kabel
 
     def draw(self, dwg):
         x = self.pos.horizontal[0] * 10
@@ -580,6 +598,7 @@ class Netzwerk(Object):
             stroke="red",
             stroke_width=30,
             fill="red",
+            id=str(self.id),
         )
         draw_obj["class"] = "netzwerk"
         dwg.add(draw_obj)
@@ -714,6 +733,7 @@ class Node:
         self.type = node_type
         # self.connections = []
         self.edges = []
+        self.kabel = []
 
     def __str__(self):
         return "Node {} Position: {} {} {}, N: {} T: {} P: {}".format(
@@ -731,6 +751,9 @@ class Node:
     def is_node(self, node):
         if not isinstance(node, Node):
             raise RuntimeError("An Node must be passe to Node routine")
+
+    def addKabel(self, kabel):
+        self.kabel.append(kabel)
 
     def connect(self, node):
         self.is_node(node)
@@ -839,7 +862,11 @@ class Edge:
 
 
 class Kabel:
+    id_counter = 0
+
     def __init__(self, start, end):
+        self.id = Kabel.id_counter
+        Kabel.id_counter += 1
         self.is_obj(start)
         self.start = start
         if type(end) is list:
@@ -857,11 +884,15 @@ class Kabel:
         self.objects_associated = False
         self.start_obj = None
         self.end_objs = []
+        self.path = []
 
     def is_obj(self, obj):
         pass
         # if not isinstance(obj,Object):
         #     raise RuntimeError("An Object must be passe to Kabel")
+
+    def addNode(self, node):
+        self.path.append(node)
 
     @classmethod
     def from_yaml(cls, yaml):
@@ -871,4 +902,8 @@ class Kabel:
         # print(" Kabel from {} to {}: {}".format(self.start,len(self.end),self.end))
 
     def __str__(self):
-        return "Kabel from {} to {}".format(self.start, self.end[0])
+        str = "Kabel {} from {} to".format(self.id, self.start)
+        for e in self.end:
+            str += " " + e
+
+        return str

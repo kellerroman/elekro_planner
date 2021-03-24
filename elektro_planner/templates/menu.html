@@ -55,6 +55,18 @@ div.move {
   color: #FFFFFF;
   font-weight: bold;
 }
+div.control {
+  width: 400px;
+  float: right;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1000;
+  background-color: #92AD40;
+  padding: 5px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
 svg {
   width: 100%;
   height: auto;
@@ -91,11 +103,15 @@ svg {
     {% autoescape false %}
     {{grundriss_eg}}
     {% endautoescape %}
-    <div id="eg_move" class="move" style="left: 0px; top: 200px">
-      <p id="text_move">eg_move</p>
-    </div>
-    <div id="eg_move2" class="move" style="left: 100px; top: 92px">
-      <p id="text_move">eg_move2</p>
+    <!-- <div id="eg_move" class="move" style="left: 0px; top: 200px"> -->
+    <!--   <p id="text_move">eg_move</p> -->
+    <!-- </div> -->
+    <div id="eg_move2" class="control" style="left: 200px; top: 92px">
+        <input type="checkbox" value="edge" checked onclick="showHideObjectByClass(this)"><label>Edges</label><br>
+        <input type="checkbox" value="node" checked onclick="showHideObjectByClass(this)"><label>Nodes</label><br>
+        <input type="checkbox" value="kabel" checked onclick="showHideObjectByClass(this)"><label>Kabel</label><br>
+        <input type="checkbox" value="wall_ids" checked onclick="showHideObjectByClass(this)"><label>Wall Ids</label><br>
+        <input type="checkbox" value="node_text" checked onclick="showHideObjectByClass(this)"><label>Node Kabel </label><br>
     </div>
   </div>
   <div id="og" class="tabcontent2">
@@ -296,6 +312,17 @@ const round = (number, decimalPlaces) => {
   return Math.round(number * factorOfTen) / factorOfTen;
 }
 
+function showHideObjectByClass(evt) {
+  tabcontent = document.getElementsByClassName(evt.value);
+  for (i = 0; i < tabcontent.length; i++) {
+    if (evt.checked) {
+       tabcontent[i].style.visibility = "visible";
+    } else {
+       tabcontent[i].style.visibility = "hidden";
+    }
+  }
+}
+
 function changeTab(evt, cityName, tabname="tabcontent") {
   var i, tabcontent, tablinks;
   var classname = evt.currentTarget.className;
@@ -316,6 +343,12 @@ function clickInit() {
   tablinks[0].click();
   tablinks = document.getElementsByClassName("tablinks2");
   tablinks[1].click();
+  console.log("Selecting Kabel");
+  tabcontent  = document.getElementsByClassName("obj_id_22");
+  for (i = 0; i < tabcontent.length; i++) {
+    console.log("Kabel");
+    tabcontent[i].setAttribute("fill", "blue");
+  }
 }
 
 function copy(text) {
@@ -339,7 +372,7 @@ function copy(text) {
 
 function onMouseDown(e) {
   var id = e.target.id;
-  e.target.setAttribute("fill", "red");
+  e.target.setAttribute("fill", "blue");
   var loc=getCursor(e);
   var x = round(loc.x/10,1);
   var y = round(loc.y/10,1);
@@ -370,6 +403,11 @@ function onMouseMove(e) {
        document.getElementById('eg_move').style.cssText = "left:"+x+"px";
        document.getElementById('eg_move').style.cssText += "top:"+(y-40)+"px";
        document.getElementById('text_move').innerHTML  = text;
+    // } else if (cn == "netzwerk") {
+    //    tabcontent  = document.getElementsByClassName("kabel_id_"+e.target.getAttribute("id"));
+    //    for (i = 0; i < tabcontent.length; i++) {
+    //    tabcontent[i].setAttribute("fill", "blue");
+    //    }
     } else {
        // document.getElementById("eg_move").style.display = "none";
     }

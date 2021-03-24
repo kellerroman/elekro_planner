@@ -388,30 +388,35 @@ geschosse:
       kabelanschluss: NYM5x25
       pos:
         hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        vert: boden
     - id: 11
       name: "Steckdose Herd"
       con-type: steckdose
       anzahl: 1
       pos:
         hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        vert: boden
     - id: 12
       name: "Netzwerk Herd"
       con-type: netzwerk
       anzahl: 1
       pos:
         hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        vert: boden
     - id: 13
       name: "KNX Herd"
       con-type: knx
       knx-component: re
       pos:
         hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        vert: boden
     - id: 14
       name: "Kontakt Herd"
       con-type: kontakt
       anzahl: 1
       pos:
         hori: [7+1422.5-18-36.5-0.5*438.5, 36.5*2+200]
+        vert: boden
     - id: 15
       name: "Präsenzmelder Küche"
       con-type: knx
@@ -1136,7 +1141,7 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
-        hori: [649.7,33]
+        hori: [649.7,15]
     - id: 7
       name: "Fensterheber"
       con-type: anschluss
@@ -1371,6 +1376,7 @@ geschosse:
       knx: rolladen
       pos:
         hori: [222.9,211.2]
+        vert: decke
     - id: 8
       name: "Netzwerk Fenster"
       con-type: netzwerk
@@ -1403,6 +1409,7 @@ geschosse:
       knx: input
       pos:
         hori: [320.7,211.2]
+        vert: decke
     - id: 13
       name: "KNX Glastaster"
       con-type: knx
@@ -1415,6 +1422,7 @@ geschosse:
       knx-component: pm
       pos:
         hori: [461.7,210.4]
+        vert: decke
     - id: 15
       name: "Licht"
       con-type: licht
@@ -1443,7 +1451,7 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
-        hori: [33.4,1001.8]
+        hori: [23.4,1001.8]
     - id: 4
       name: "Steckdose Oben links"
       con-type: steckdose
@@ -1481,7 +1489,7 @@ geschosse:
       con-type: netzwerk
       anzahl: 1
       pos:
-        hori: [33.4,1001.8]
+        hori: [23.4,1001.8]
     - id: 10
       name: "Netzwerk Oben links"
       con-type: netzwerk
@@ -1514,6 +1522,7 @@ geschosse:
       knx-component: pm
       pos:
         hori: [459.4,881.3]
+        vert: decke
     - id: 15
       name: "Licht"
       con-type: licht
@@ -1621,6 +1630,7 @@ geschosse:
       knx-component: pm
       pos:
         hori: [993.8,870.7]
+        vert: decke
     - id: 15
       name: "Licht"
       con-type: licht
@@ -1721,6 +1731,7 @@ geschosse:
       knx-component: pm
       pos:
         hori: [1254.6,310.5]
+        vert: decke
     - id: 14
       name: "Licht"
       con-type: licht

@@ -106,7 +106,7 @@ kabel:
 - id: 27
   name: "Flur Anschluss Fenster "
   start: 1.1.1
-  end: [3.1.6]
+  end: [3.1.7]
 - id: 28
   name: "Flur Licht"
   start: 1.1.1
@@ -146,7 +146,7 @@ kabel:
 - id: 37
   name: "Küche SK links"
   start: 1.1.1
-  end: [2.1.1,2.1.3]
+  end: [2.1.1]
 - id: 38
   name: "Küche SK oben"
   start: 1.1.1

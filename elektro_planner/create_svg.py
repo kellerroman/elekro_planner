@@ -77,15 +77,15 @@ def create_svg(haus):
             ye = wall.dy * 10
             text = str(wall.id)
             text_style = "font-size:%ipx; font-family:%s" % (font_size, "Courier New")
-            dwg.add(
-                dwg.text(
-                    text,
-                    insert=(xs + 0.5 * (xe - font_size), ys + 0.5 * (ye + font_size)),
-                    fill="red",
-                    id="wall_test_" + text,
-                    style=text_style,
-                )
+            draw_obj = dwg.text(
+                text,
+                insert=(xs + 0.5 * (xe - font_size), ys + 0.5 * (ye + font_size)),
+                fill="red",
+                id="wall_test_" + text,
+                style=text_style,
             )
+            draw_obj["class"] = "wall_ids"
+            dwg.add(draw_obj)
 
         for node in geschoss.nodes:
             for con in node.get_connected_nodes():
@@ -99,7 +99,9 @@ def create_svg(haus):
                     stroke="green",
                     stroke_width=30,
                     fill="green",
+                    id="edge_" + str(con.id),
                 )
+                draw_obj["class"] = "edge"
                 dwg.add(draw_obj)
             r = 25
             line_width = 15
@@ -124,12 +126,44 @@ def create_svg(haus):
                 stroke_width=line_width,
                 fill=color,
             )
+            draw_obj["class"] = "node"
+            dwg.add(draw_obj)
+
+            text = str(len(node.kabel))
+            text_style = "font-size:%ipx; font-family:%s" % (font_size, "Courier New")
+            draw_obj = dwg.text(
+                text,
+                insert=(node.x * 10, node.y * 10 + node.z),
+                fill="red",
+                id="node_text_" + str(node.id),
+                style=text_style,
+            )
+            draw_obj["class"] = "node_text"
             dwg.add(draw_obj)
 
         for room in geschoss.rooms:
             for obj in room.objects:
                 if obj.pos.horizontal != [0, 0]:
                     obj.draw(dwg)
+                    k = obj.getKabel()
+
+                    if k != None:
+                        for e in range(len(k.path) - 1):
+                            n1 = k.path[e]
+                            n2 = k.path[e + 1]
+                            xs = n1.x * 10
+                            ys = n1.y * 10
+                            xe = n2.x * 10
+                            ye = n2.y * 10
+                            draw_obj = dwg.line(
+                                start=(xs, ys),
+                                end=(xe, ye),
+                                stroke="red",
+                                stroke_width=30,
+                                fill="red",
+                            )
+                            draw_obj["class"] = "kabel obj_id_"+ str(obj.id)
+                            dwg.add(draw_obj)
 
         dwg.viewbox(minx=0, miny=0, width=WIDTH, height=HEIGHT)
         dwg.save()

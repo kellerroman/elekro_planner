@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 from elektro_planner.utils import add_node_to_wall
-from elektro_planner.data import Node, NodeType
+from elektro_planner.data import Node, NodeType, VerticalPosition
 
 
 def associate_objects_to_walls_and_nodes(haus):
     delta = 1
+    error = False
     for geschoss in haus.geschosse:
         objects = []
         # dist of list with the objects at same position with the first objects id beening the key
@@ -67,3 +68,15 @@ def associate_objects_to_walls_and_nodes(haus):
                         o.associated_wall = wall
 
         # assert len(objects) == 0
+        for o in objects:
+            if o.pos.vertical not in [VerticalPosition.Decke, VerticalPosition.Boden]:
+                error = True
+                print(
+                    "Object can not be associated even if it is not on the decke: {}".format(
+                        o
+                    )
+                )
+    # if error:
+    #     raise RuntimeError(
+    #         "Object can not be associated even if it is not on the decke: "
+    #     )
