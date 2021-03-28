@@ -303,6 +303,7 @@ class Object(Point):
             (xs, ys), (xe, ye), style="cursor:crosshair", stroke="blue", fill="blue"
         )
         draw_obj["class"] = "object"
+        draw_obj["id"] = self.cid
         dwg.add(draw_obj)
 
     def __str__(self):
@@ -368,9 +369,9 @@ class Licht(Stromanschluss):
             stroke=self.color,
             stroke_width=line_width,
             fill="none",
-            id="licht_" + str(self.id),
+            id=self.cid,
         )
-        draw_obj["class"] = "led"
+        draw_obj["class"] = "object led"
         xes = x - r / sqrt(2)
         yes = y + r / sqrt(2)
         xss = x + r / sqrt(2)
@@ -382,6 +383,7 @@ class Licht(Stromanschluss):
             stroke=self.color,
             stroke_width=line_width,
             fill=self.color,
+            id=self.cid,
         )
         yes = y - r / sqrt(2)
         yss = y + r / sqrt(2)
@@ -392,9 +394,10 @@ class Licht(Stromanschluss):
             stroke=self.color,
             stroke_width=line_width,
             fill=self.color,
+            id=self.cid,
         )
-        line1["class"] = "led"
-        line2["class"] = "led"
+        line1["class"] = "object led"
+        line2["class"] = "object led"
         xes = x - r / sqrt(2)
         xes = x - r / sqrt(2)
         dwg.add(line1)
@@ -436,8 +439,9 @@ class LedStrip(Led):
             stroke=self.color,
             stroke_width=line_width,
             fill=self.color,
+            id=self.cid,
         )
-        line1["class"] = "led"
+        line1["class"] = "object led"
         dwg.add(line1)
         len_strip = sqrt(self.len[0] ** 2 + self.len[1] ** 2)
         dx = self.len[1] * 100 / len_strip
@@ -453,8 +457,9 @@ class LedStrip(Led):
             stroke=self.color,
             stroke_width=line_width,
             fill=self.color,
+            id=self.cid,
         )
-        line2["class"] = "led"
+        line2["class"] = "object led"
         dwg.add(line2)
         x += self.len[0] * 10
         y += self.len[1] * 10
@@ -469,8 +474,9 @@ class LedStrip(Led):
             stroke=self.color,
             stroke_width=line_width,
             fill=self.color,
+            id=self.cid,
         )
-        line3["class"] = "led"
+        line3["class"] = "object led"
         dwg.add(line3)
         self.print_name = "LedStrip"
 
@@ -502,8 +508,9 @@ class Kontakt(Object):
             stroke="purple",
             stroke_width=30,
             fill="purple",
+            id=self.cid,
         )
-        draw_obj["class"] = "kontakt"
+        draw_obj["class"] = "object kontakt"
         dwg.add(draw_obj)
 
 
@@ -534,17 +541,27 @@ class Knx(Object):
             xs = x
             ys = y
             draw_obj = dwg.circle(
-                (xs, ys), r, style="cursor:crosshair", stroke="green", fill="none"
+                (xs, ys),
+                r,
+                style="cursor:crosshair",
+                stroke="green",
+                fill="none",
+                id=str(self.cid),
             )
-            draw_obj["class"] = "knx_pm_radius"
+            draw_obj["class"] = "object knx_pm_radius"
             dwg.add(draw_obj)
             r = 1500
             xs = x
             ys = y
             draw_obj = dwg.circle(
-                (xs, ys), r, style="cursor:crosshair", stroke="green", fill="none"
+                (xs, ys),
+                r,
+                style="cursor:crosshair",
+                stroke="green",
+                fill="none",
+                id=str(self.cid),
             )
-            draw_obj["class"] = "knx_pm_dist_licht"
+            draw_obj["class"] = "object knx_pm_dist_licht"
             dwg.add(draw_obj)
             xe = 85
             ye = 85
@@ -556,8 +573,9 @@ class Knx(Object):
                 style="cursor:crosshair",
                 stroke="green",
                 fill="green",
+                id=str(self.cid),
             )
-            draw_obj["class"] = "knx"
+            draw_obj["class"] = "object knx"
         else:
             xe = xs + 100
             ye = ys + 100
@@ -568,8 +586,9 @@ class Knx(Object):
                 stroke="green",
                 stroke_width=30,
                 fill="green",
+                id=str(self.cid),
             )
-            draw_obj["class"] = "knx"
+            draw_obj["class"] = "object knx"
         dwg.add(draw_obj)
 
 
@@ -598,9 +617,9 @@ class Netzwerk(Object):
             stroke="red",
             stroke_width=30,
             fill="red",
-            id=str(self.id),
+            id=str(self.cid),
         )
-        draw_obj["class"] = "netzwerk"
+        draw_obj["class"] = "object netzwerk"
         dwg.add(draw_obj)
 
 
@@ -688,7 +707,8 @@ class Connector:
         return name, start[0], start[1], start[2], vector[0], vector[1], vector[2]
 
     def __str__(self):
-        return "Connector {}: ({},{},{}) -> ({},{},{})".format(
+        return "Connector {} {}: ({},{},{}) -> ({},{},{})".format(
+            self.name,
             self.id,
             self.x,
             self.y,
@@ -713,7 +733,7 @@ class NodeType(Enum):
     Object = 5
     ObjectBottom = 6
     ObjectTop = 7
-    Connector = 7
+    Connector = 8
 
     def __str__(self):
         return str(self.name)
@@ -736,8 +756,8 @@ class Node:
         self.kabel = []
 
     def __str__(self):
-        return "Node {} Position: {} {} {}, N: {} T: {} P: {}".format(
-            self.id, self.x, self.y, self.z, self.n, self.type, self.parent
+        return "Node {} {} Position: {} {} {}, N: {} T: {} P: {}".format(
+            self.id, self.type, self.x, self.y, self.z, self.n, self.type, self.parent
         )
 
     def info(self):
@@ -772,9 +792,7 @@ class Node:
         for e in self.edges:
             if e.get_con_node(self) == node:
                 return e
-        raise RuntimeError(
-            "Node {}: is not connected to Node {}".format(self.id, node.id)
-        )
+        raise RuntimeError("Node {}: is not connected to Node {}".format(self, node))
 
     def distance(self, node):
         self.is_node(node)
@@ -833,6 +851,7 @@ class Edge:
         self.length = self.calc_length()
         self.id = Edge.id_counter
         Edge.id_counter += 1
+        self.kabel = []
 
     def __str__(self):
         return "Edge {} Connecting-Edges: {} {} len: {}".format(
@@ -859,6 +878,9 @@ class Edge:
         elif self.node[1].id == node_old.id:
             self.node[1] = node_new
         self.calc_length()
+
+    def addKabel(self, kabel):
+        self.kabel.append(kabel)
 
 
 class Kabel:
@@ -905,5 +927,8 @@ class Kabel:
         str = "Kabel {} from {} to".format(self.id, self.start)
         for e in self.end:
             str += " " + e
+        str += " path:"
+        for p in self.path:
+            str += " " + p.__str__()
 
         return str

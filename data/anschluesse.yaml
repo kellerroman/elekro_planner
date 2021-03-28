@@ -100,13 +100,13 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
-        hori: [1375.6,978.3]
+        hori: [1375.6,980.3]
     - id: 4
       name: "Steckdose Terassentüre links"
       con-type: steckdose
       anzahl: 2
       pos:
-        hori: [951.7,988]
+        hori: [951.7,990]
     - id: 5
       name: "Anschluss Kühlschrank "
       con-type: steckdose
@@ -127,14 +127,14 @@ geschosse:
       einzelsicherung: 16A
       kabelanschluss: NYM5x25
       pos:
-        hori: [1372.6,788.4]
+        hori: [1374.6,788.4]
     - id: 8
       name: "Anschluss Backofen"
       con-type: anschluss
       anzahl: 1
       einzelsicherung: 16A
       pos:
-        hori: [1372.6,788.4]
+        hori: [1374.6,788.4]
     - id: 9
       name: "Steckdose Spüle links"
       con-type: steckdose
@@ -173,7 +173,7 @@ geschosse:
       con-type: netzwerk
       anzahl: 1
       pos:
-        hori: [951.7,988]
+        hori: [951.7,990]
     - id: 15
       name: "Kontakt Terasentüre "
       con-type: kontakt
@@ -217,7 +217,7 @@ geschosse:
       con-type: steckdose
       anzahl: 1
       pos:
-        hori: [1238.1,603.7]
+        hori: [1238.1,605.7]
     - id: 2
       name: "Steckdose Spiegel links"
       con-type: steckdose
@@ -235,7 +235,7 @@ geschosse:
       con-type: knx
       knx-component: gt
       pos:
-        hori: [1238.1,603.7]
+        hori: [1238.1,605.7]
     - id: 5
       name: "Präsenzmelder"
       con-type: knx
@@ -257,7 +257,7 @@ geschosse:
       anzahl: 1
       knx: schaltbar
       pos:
-        hori: [1179,473.7]
+        hori: [1179,470.7]
         vert: oben
     - id: 8
       name: "Kontakt Türe"
@@ -274,26 +274,31 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [917.1,305.9]
     - id: 2
       name: "Steckdose 2"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [619.9,581.5]
     - id: 3
       name: "Steckdose 3"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [920.8,555.3]
     - id: 4
       name: "Steckdose 4"
       con-type: steckdose
       anzahl: 2
       pos:
+        hori: [647.5,140.8]
     - id: 5
       name: "Netzwerk Accesspoint"
       con-type: netzwerk
       anzahl: 1
       pos:
+        hori: [776,546.3]
         vert: decke
     - id: 6
       name: "Präsenzmelder"
@@ -675,6 +680,7 @@ geschosse:
       anzahl: 3
       pos:
         hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
+        vert: boden
     - id: 7
       name: "Doppelsteckdose Trennwand rechts"
       con-type: steckdose
@@ -711,6 +717,7 @@ geschosse:
       anzahl: 1
       pos:
         hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
+        vert: boden
     - id: 13
       name: "Netzwerk Ofen"
       con-type: netzwerk
@@ -737,6 +744,7 @@ geschosse:
       anzahl: 1
       pos:
         hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
+        vert: boden
     - id: 17
       name: "Kontakt Ofen"
       con-type: kontakt
@@ -755,6 +763,7 @@ geschosse:
       knx-component: re
       pos:
         hori: [36.5+415+10,36.5+245+17.5+276+24+100+10+206*0.5]
+        vert: boden
     - id: 20
       name: "KNX Ofen"
       con-type: knx
@@ -1271,21 +1280,21 @@ geschosse:
       anzahl: 2
       knx: input
       pos:
-        hori: [510.2,1079.9]
+        hori: [510.2,1095]
     - id: 9
       name: "Kontakt Fenster mitte"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
-        hori: [649.7,1079.1]
+        hori: [649.7,1095]
     - id: 10
       name: "Kontakt Fenster rechts"
       con-type: kontakt
       anzahl: 1
       knx: input
       pos:
-        hori: [787.6,1080.7]
+        hori: [787.6,1095]
     - id: 11
       name: "KNX Tür Zi3"
       con-type: knx
@@ -1502,7 +1511,7 @@ geschosse:
       anzahl: 2
       knx: input
       pos:
-        hori: [361.6,1078.4]
+        hori: [361.6,1095]
     - id: 12
       name: "Kontakt Fenster links"
       con-type: kontakt
@@ -1559,7 +1568,7 @@ geschosse:
       con-type: steckdose
       anzahl: 2
       pos:
-        hori: [1378.1,1001.1]
+        hori: [1381.6,1026.6]
     - id: 4
       name: "Steckdose Oben rechts"
       con-type: steckdose
@@ -1578,7 +1587,7 @@ geschosse:
       anzahl: 2
       knx: rolladen
       pos:
-        hori: [1071.1,1079.9]
+        hori: [1071.1,1095]
     - id: 7
       name: "Rolladen Fenster rechts"
       con-type: anschluss
@@ -1597,7 +1606,7 @@ geschosse:
       con-type: netzwerk
       anzahl: 1
       pos:
-        hori: [1378.1,1001.1]
+        hori: [1381.6,1026.6]
     - id: 10
       name: "Netzwerk oben rechts"
       con-type: netzwerk
@@ -1610,9 +1619,9 @@ geschosse:
       anzahl: 2
       knx: input
       pos:
-        hori: [937,1079.1]
+        hori: [937,1095]
     - id: 12
-      name: "Kontakt Fenster links"
+      name: "Kontakt Fenster rechts"
       con-type: kontakt
       anzahl: 2
       knx: input

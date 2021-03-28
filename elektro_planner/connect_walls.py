@@ -202,6 +202,8 @@ def create_nodes_from_connectors(haus):
             raise RuntimeError("Schräger Schacht noch nicht unterstützt")
         # connect edges of connector
         print("Connecting Edges of Connectorto each other{}".format(len(con.nodes)))
+        if len(con.nodes) <= 1:
+            raise RuntimeError("Not Enough Nodes associated to Connector: {}".format(con))
         for i, n in enumerate(sorted(con.nodes)):
             if i > 0:
                 print("Connecting {} to {}".format(con.nodes[n], old))

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import svgwrite
 from math import sqrt
+from elektro_planner.data import NodeType, Knx, Netzwerk
 
 
 def create_svg(haus):
@@ -87,8 +88,13 @@ def create_svg(haus):
             draw_obj["class"] = "wall_ids"
             dwg.add(draw_obj)
 
+        edges_drawn = []
         for node in geschoss.nodes:
             for con in node.get_connected_nodes():
+                edge = node.get_edge_that_connects_to(con)
+                if edge in edges_drawn:
+                    continue
+                edges_drawn.append(edge)
                 xs = node.x * 10
                 ys = node.y * 10
                 xe = con.x * 10
@@ -103,6 +109,50 @@ def create_svg(haus):
                 )
                 draw_obj["class"] = "edge"
                 dwg.add(draw_obj)
+                if sqrt((xs - xe) ** 2 + (ys - ye) ** 2) > 1000:
+                    dy = +100
+                    if node.type in [
+                        NodeType.StartBottom,
+                        NodeType.EndBottom,
+                        NodeType.ObjectBottom,
+                    ]:
+                        dy = -100
+                    text = len(con.kabel)
+                    text_style = "font-size:%ipx; font-family:%s" % (
+                        font_size,
+                        "Courier New",
+                    )
+                    draw_obj = dwg.text(
+                        text,
+                        insert=(
+                            0.5 * (xs + xe) - font_size,
+                            0.5 * (ys + ye) - dy,
+                        ),
+                        fill="green",
+                        id="edge_text_" + str(con.id),
+                        style=text_style,
+                    )
+                    draw_obj["class"] = "edge edge_number"
+                    dwg.add(draw_obj)
+                elif node.type == NodeType.Connector:
+                    text = len(edge.kabel)
+                    text_style = "font-size:%ipx; font-family:%s" % (
+                        font_size,
+                        "Courier New",
+                    )
+                    draw_obj = dwg.text(
+                        text,
+                        insert=(
+                            xs,
+                            ys,
+                        ),
+                        fill="red",
+                        id="edge_text_" + str(con.id),
+                        style=text_style,
+                    )
+                    draw_obj["class"] = "edge edge_number"
+                    dwg.add(draw_obj)
+
             r = 25
             line_width = 15
             color = "green"
@@ -131,23 +181,53 @@ def create_svg(haus):
 
             text = str(len(node.kabel))
             text_style = "font-size:%ipx; font-family:%s" % (font_size, "Courier New")
+            if node.type in [NodeType.StartBottom, NodeType.EndBottom]:
+                color = "red"
+                dx = 200
+                dy = 200
+            elif node.type in [NodeType.StartTop, NodeType.EndTop]:
+                color = "green"
+                dx = 200
+                dy = -200
+            elif node.type in [NodeType.ObjectBottom]:
+                color = "magenta"
+                dx = -200
+                dy = 200
+            elif node.type in [NodeType.ObjectTop]:
+                color = "brown"
+                dx = -200
+                dy = -200
+            elif node.type == NodeType.Connector:
+                color = "yellow"
+                dx = 0
+                dy = -200
+            else:
+                color = "blue"
+                dx = 0
+                dy = 400
             draw_obj = dwg.text(
                 text,
-                insert=(node.x * 10, node.y * 10 + node.z),
-                fill="red",
+                insert=(node.x * 10 + dx, node.y * 10 + dy),
+                fill=color,
                 id="node_text_" + str(node.id),
                 style=text_style,
             )
             draw_obj["class"] = "node_text"
             dwg.add(draw_obj)
 
+        kabel_drawn = []
         for room in geschoss.rooms:
             for obj in room.objects:
                 if obj.pos.horizontal != [0, 0]:
                     obj.draw(dwg)
                     k = obj.getKabel()
-
+                    # if type(obj) != Knx:
+                    #     continue
                     if k != None:
+                        if k in kabel_drawn:
+                            continue
+                        kabel_drawn.append(k)
+                        # raise RuntimeError("test {} {}".format(k, obj))
                         for e in range(len(k.path) - 1):
                             n1 = k.path[e]
                             n2 = k.path[e + 1]
@@ -162,7 +242,9 @@ def create_svg(haus):
                                 stroke_width=30,
                                 fill="red",
                             )
-                            draw_obj["class"] = "kabel obj_id_"+ str(obj.id)
+                            draw_obj["class"] = "kabel kabel_for_obj_" + str(
+                                obj.cid
+                            ).replace(".", "_")
                             dwg.add(draw_obj)
 
         dwg.viewbox(minx=0, miny=0, width=WIDTH, height=HEIGHT)

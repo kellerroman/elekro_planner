@@ -103,15 +103,16 @@ svg {
     {% autoescape false %}
     {{grundriss_eg}}
     {% endautoescape %}
-    <!-- <div id="eg_move" class="move" style="left: 0px; top: 200px"> -->
-    <!--   <p id="text_move">eg_move</p> -->
-    <!-- </div> -->
-    <div id="eg_move2" class="control" style="left: 200px; top: 92px">
+    <div id="eg_move" class="move" style="left: 0px; top: 200px">
+      <p id="text_move">eg_move</p>
+    </div>
+    <div id="control" class="control" style="left: 200px; top: 92px">
         <input type="checkbox" value="edge" checked onclick="showHideObjectByClass(this)"><label>Edges</label><br>
         <input type="checkbox" value="node" checked onclick="showHideObjectByClass(this)"><label>Nodes</label><br>
         <input type="checkbox" value="kabel" checked onclick="showHideObjectByClass(this)"><label>Kabel</label><br>
         <input type="checkbox" value="wall_ids" checked onclick="showHideObjectByClass(this)"><label>Wall Ids</label><br>
         <input type="checkbox" value="node_text" checked onclick="showHideObjectByClass(this)"><label>Node Kabel </label><br>
+        <input type="checkbox" value="object" checked onclick="showHideObjectByClass(this)"><label>Objects</label><br>
     </div>
   </div>
   <div id="og" class="tabcontent2">
@@ -313,7 +314,8 @@ const round = (number, decimalPlaces) => {
 }
 
 function showHideObjectByClass(evt) {
-  tabcontent = document.getElementsByClassName(evt.value);
+  // tabcontent = document.getElementsByClassName(evt.value);
+  tabcontent = document.querySelectorAll("."+evt.value);
   for (i = 0; i < tabcontent.length; i++) {
     if (evt.checked) {
        tabcontent[i].style.visibility = "visible";
@@ -334,9 +336,53 @@ function changeTab(evt, cityName, tabname="tabcontent") {
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
+  document.getElementById(cityName).appendChild(
+        document.getElementById('control')
+    );
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
+if (tabname == "ug") {
+    svg=document.getElementById("svg_untergeschoss");
+    pt=svg.createSVGPoint();
+    }
+else if (tabname == "eg") {
+    svg=document.getElementById("svg_erdgeschoss");
+    pt=svg.createSVGPoint();
+    }
+else if (tabname == "og") {
+    svg=document.getElementById("svg_obergeschoss");
+    pt=svg.createSVGPoint();
+    }
 }
+var elem = document,
+    div = document.getElementById('control'),
+    x = 0,
+    y = 0,
+    mousedown = false;
+ // div event mousedown
+ div.addEventListener('mousedown', function (e) {
+     // mouse state set to true
+     mousedown = true;
+     // subtract offset
+     x = div.offsetLeft - e.clientX;
+     y = div.offsetTop - e.clientY;
+ }, true);
+
+ // div event mouseup
+ div.addEventListener('mouseup', function (e) {
+     // mouse state set to false
+     mousedown = false;
+ }, true);
+
+ // element mousemove to stop
+ elem.addEventListener('mousemove', function (e) {
+     // Is mouse pressed
+     if (mousedown) {
+         // Now we calculate the difference upwards
+         div.style.left = e.clientX + x + 'px';
+         div.style.top = e.clientY + y + 'px';
+     }
+ }, true);
 
 function clickInit() {
   tablinks = document.getElementsByClassName("tablinks1");
@@ -394,15 +440,24 @@ function onMouseMove(e) {
   // var y = round(loc.y,1);
   var x = e.clientX;
   var y = e.clientY;
-  var text =  x+";"+y;
+        var z = 10000;
   if (id != null) {
     // var cn = document.getElementById(id).getAttribute("class");
     var cn = e.target.getAttribute("class");
-    if (cn == "wall") {
+    if (cn.includes("object") ) {
+       var obj_id = e.target.getAttribute("id")
        // document.getElementById("eg_move").style.display = "inline";
        document.getElementById('eg_move').style.cssText = "left:"+x+"px";
        document.getElementById('eg_move').style.cssText += "top:"+(y-40)+"px";
-       document.getElementById('text_move').innerHTML  = text;
+       document.getElementById('text_move').innerHTML  = obj_id;
+        tabcontent = document.querySelectorAll(".kabel");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.visibility = "hidden";
+        }
+       kabel = document.querySelectorAll(".kabel_for_obj_"+obj_id.split('.').join('_'));
+       for (i = 0; i < kabel.length; i++) {
+               kabel[i].style.visibility = "visible";
+           }
     // } else if (cn == "netzwerk") {
     //    tabcontent  = document.getElementsByClassName("kabel_id_"+e.target.getAttribute("id"));
     //    for (i = 0; i < tabcontent.length; i++) {

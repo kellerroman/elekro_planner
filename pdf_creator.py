@@ -15,7 +15,7 @@ dim_geschoss = [
 file_name = ["UG", "EG", "DG"]
 yaml_file = "data/setup.yaml"
 haus = read_setup(yaml_file)
-for i in range(2, 3):
+for i in range(0, 3):
     geschoss = haus.geschosse[i]
     file_name_file = "{}.pdf".format(file_name[i])
     file_name_full = "data/plaene/{}".format(file_name_file)

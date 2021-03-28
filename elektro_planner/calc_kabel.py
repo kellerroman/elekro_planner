@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from elektro_planner.data import Kabel
+from elektro_planner.data import Kabel, Knx
 import astar
 
 
@@ -49,12 +49,15 @@ def calc_kabel_len(kabel):
     kabel.length = 10000000.0
     connected_objects = []
     path = None
+    te = False
     for obj in kabel.end_objs:
         e1 = kabel.start_obj.associated_node
         e2 = obj.associated_node
         # TODO: all objects must be connected
         if e2 == None:
             kabel.length = 0.0
+            # if te:
+            #     raise RuntimeError("KNX Object: {} {}".format(obj, kabel))
             return
         print(e1.info())
         print(e2.info())
@@ -73,6 +76,9 @@ def calc_kabel_len(kabel):
             kabel.length = le
             connected_objects = [obj]
             path = temp_path
+            if type(connected_objects[0]) == Knx:
+                te = True
+                # raise RuntimeError("KNX Object: {} {}".format(obj, kabel))
     print(" Length after First: {}".format(kabel.length))
     unconnected_objects = list(set(kabel.end_objs) - set(connected_objects))
     for u in unconnected_objects:
@@ -111,6 +117,10 @@ def calc_kabel_len(kabel):
     for n in path:
         kabel.addNode(n)
         n.addKabel(kabel)
+    for n in range(len(path) - 1):
+        if path[n].is_connected(path[n + 1]):
+            edge = path[n].get_edge_that_connects_to(path[n + 1])
+            edge.addKabel(kabel)
     return path
 
 

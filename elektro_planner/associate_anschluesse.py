@@ -76,7 +76,7 @@ def associate_objects_to_walls_and_nodes(haus):
                         o
                     )
                 )
-    # if error:
-    #     raise RuntimeError(
-    #         "Object can not be associated even if it is not on the decke: "
-    #     )
+    if error:
+        raise RuntimeError(
+            "Object can not be associated even if it is not on the decke: "
+        )
