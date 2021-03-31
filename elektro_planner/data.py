@@ -4,11 +4,11 @@ from math import sqrt
 
 
 class VerticalPosition(Enum):
-    Unten = 0
-    Mitte = 1
-    Oben = 2
-    Decke = 3
-    Boden = 4
+    Boden = 0
+    Unten = 1
+    Mitte = 2
+    Oben = 3
+    Decke = 4
 
     def __str__(self):
         return str(self.name)
@@ -182,13 +182,14 @@ class Haus:
 
 
 class Geschoss:
-    def __init__(self, gid, gname, gheight, z, parent):
+    def __init__(self, gid, gname, gheight, heights, z, parent):
         self.id = gid
         self.cid = self.id
         self.name = gname
         # starthöhe des stockwerks
         self.z0 = z
         self.height = gheight
+        self.heights = heights
         self.z1 = self.z0 + self.height
         self.parent = parent
         self.rooms = []
@@ -207,7 +208,8 @@ class Geschoss:
         gid = read_value_from_yaml(yaml, "id")
         gname = read_value_from_yaml(yaml, "name")
         gheight = read_value_from_yaml(yaml, "height")
-        return gid, gname, gheight
+        heights = read_value_from_yaml(yaml, "heights")
+        return gid, gname, gheight, heights
 
     def add_node(self, node):
         if node in self.nodes:
@@ -248,8 +250,6 @@ class Point:
         self.parent = parent
         self.x = self.pos.horizontal[0]
         self.y = self.pos.horizontal[1]
-        values = [30, 105, 200, 230, 0]
-        self.z = values[self.pos.vertical.value]
 
     @classmethod
     def from_yaml(cls, yaml, parent):
@@ -271,6 +271,8 @@ class Object(Point):
         self.associated_node = None
         self.connected_kabel = None
         self.print_name = "Object"
+        values = self.parent.parent.heights
+        self.z = values[self.pos.vertical.value]
 
     @staticmethod
     def parse_yaml(yaml):
@@ -649,6 +651,14 @@ class StructureElement(Point):
             self.y + self.dy,
         )
 
+    def isInside(self, x, y):
+        return (
+            self.x <= x
+            and self.x + self.dx >= x
+            and self.y <= y
+            and self.y + self.dy >= y
+        )
+
 
 class Wall(StructureElement):
     def __init__(self, pid, pos, dx, dy, parent):
@@ -656,6 +666,12 @@ class Wall(StructureElement):
         self.nodes = []
         self.waagrecht = self.dx > self.dy
         self.print_name = "Wall"
+
+    def __info__(self):
+        ps = super().__str__()
+        for n in self.nodes:
+            ps += "\n {}".format(n)
+        return ps
 
     def add_node(self, node, recursive=False):
         self.nodes.append(node)
@@ -734,6 +750,7 @@ class NodeType(Enum):
     ObjectBottom = 6
     ObjectTop = 7
     Connector = 8
+    SeelingConnect = 9
 
     def __str__(self):
         return str(self.name)
@@ -842,6 +859,14 @@ class Node:
                 )
             )
 
+    def getWall(self):
+        if isinstance(self.parent, Wall):
+            return self.parent
+        elif isinstance(self.parent, Object):
+            if self.parent.associated_wall != None:
+                return self.parent.associated_wall
+        raise RuntimeError("Edge.getWall cannot get Wall: {}".format(self))
+
 
 class Edge:
     id_counter = 0
@@ -852,6 +877,8 @@ class Edge:
         self.id = Edge.id_counter
         Edge.id_counter += 1
         self.kabel = []
+        self.p0 = []
+        self.vec = []
 
     def __str__(self):
         return "Edge {} Connecting-Edges: {} {} len: {}".format(
@@ -881,6 +908,20 @@ class Edge:
 
     def addKabel(self, kabel):
         self.kabel.append(kabel)
+
+    def getWall(self):
+        wall1 = self.node[0].getWall()
+        wall2 = self.node[1].getWall()
+        if wall1 == wall2:
+            return wall1
+        else:
+            if wall1.isInside(self.node[1].x, self.node[1].y):
+                return wall1
+            else:
+                return wall2
+            raise RuntimeError(
+                "Edge.getWall: Not all Nodes have the same wall: {} ".format(self)
+            )
 
 
 class Kabel:
@@ -928,7 +969,7 @@ class Kabel:
         for e in self.end:
             str += " " + e
         str += " path:"
-        for p in self.path:
-            str += " " + p.__str__()
+        for i,p in enumerate(self.path):
+            str += "\n  {}:  {} " .format(i,p.__str__())
 
         return str

@@ -2,6 +2,7 @@ geschosse:
 - id: 1
   name: untergeschoss
   height: 236
+  heights: [0,30,105,220,236]
   walls:
   - id: 1
     pos:
@@ -156,6 +157,7 @@ geschosse:
 - id: 2
   name: erdgeschoss
   height: 255
+  heights: [0,30,105,240,255]
   walls:
   - id: 1
     pos:
@@ -294,6 +296,7 @@ geschosse:
 - id: 3
   name: obergeschoss
   height: 255
+  heights: [0,30,105,240,255]
   walls:
   - id: 1
     pos:

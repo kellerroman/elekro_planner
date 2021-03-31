@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from elektro_planner.utils import add_node_to_wall
 from elektro_planner.data import Node, NodeType, VerticalPosition
+import numpy as np
 
 
 def associate_objects_to_walls_and_nodes(haus):
@@ -68,8 +69,10 @@ def associate_objects_to_walls_and_nodes(haus):
                         o.associated_wall = wall
 
         # assert len(objects) == 0
+        if len(objects) > 0:
+            edges = getEdgesofGeschoss(geschoss)
         for o in objects:
-            if o.pos.vertical not in [VerticalPosition.Decke, VerticalPosition.Boden]:
+            if not associate_special_object(o, geschoss, edges):
                 error = True
                 print(
                     "Object can not be associated even if it is not on the decke: {}".format(
@@ -80,3 +83,84 @@ def associate_objects_to_walls_and_nodes(haus):
         raise RuntimeError(
             "Object can not be associated even if it is not on the decke: "
         )
+
+
+def associate_special_object(obj, geschoss, edges):
+    print("==========================================================")
+    print("==========================================================")
+    print("============ ASSOCIATE SPECIAL OBJECT ====================")
+    print("==========================================================")
+    print(obj)
+    print("==========================================================")
+    if obj.pos.vertical not in [VerticalPosition.Decke, VerticalPosition.Boden]:
+        return False
+
+    n = Node(obj.x, obj.y, obj.z, obj, NodeType.Object)
+    geschoss.add_node(n)
+    # obj.associated_node = n
+    L = 10 * 100
+    dirs = [[L, 0], [-L, 0], [0, L], [0, -L]]
+    xn1 = obj.x
+    yn1 = obj.y
+    for d in dirs:
+        xn2 = xn1 + d[0]
+        yn2 = yn1 + d[1]
+        dxn = d[0]
+        dyn = d[1]
+        print("Number of Edges in Geschoss: {}".format(len(edges)))
+        x_array = []
+        e_array = []
+        for e in edges:
+            # print(e)
+            if abs(e.node[0].z - obj.z) < 100:
+                xe1 = e.node[0].x
+                ye1 = e.node[0].y
+                dxe = e.node[1].x - e.node[0].x
+                dye = e.node[1].y - e.node[0].y
+                xe2 = e.node[1].x
+                ye2 = e.node[1].y
+                if not dxe * dyn - dye * dxn == 0:
+                    a = np.array([[xn2 - xn1, xe1 - xe2], [yn2 - yn1, ye1 - ye2]])
+                    b = np.array([xe1 - xn1, ye1 - yn1])
+                    x = np.linalg.solve(a, b)
+                    if x[0] >= 0 and x[0] <= 1 and x[1] >= 0 and x[1] <= 1:
+                        x_array.append(x[0])
+                        e_array.append(e)
+                        # nx = xn1 + x[0] * dxn
+                        # ny = yn1 + x[0] * dyn
+                        # print( "Found connection for {} {}: {} {}".format(xn1, yn1, nx, ny))
+                        # wall = e.getWall()
+                        # n2 = Node(nx, ny, obj.z, wall, NodeType.SeelingConnect)
+                        # n2.connect(n)
+                        # geschoss.add_node(n2)
+                        # # add_node_to_wall(wall, n2)
+
+        n1 = n
+        sorted_list = sorted(zip(x_array, e_array), key=lambda node: node[0])
+        for x, e in sorted_list:
+            nx = xn1 + x * dxn
+            ny = yn1 + x * dyn
+            print("Found connection for {} {}: {} {}".format(xn1, yn1, nx, ny))
+            wall = e.getWall()
+            n2 = Node(nx, ny, obj.z, wall, NodeType.SeelingConnect)
+            n2.connect(n1)
+            # geschoss.add_node(n2)
+            add_node_to_wall(wall, n2)
+            n1 = n2
+    return True
+
+
+def getEdgesofGeschoss(geschoss):
+    print("==========================================================")
+    print("==========================================================")
+    print("============ Get Edges of Geschoss    ====================")
+    print("==========================================================")
+    print("==========================================================")
+    edges = []
+    for n in geschoss.nodes:
+        for e in n.edges:
+            if e not in edges:
+                if e.node[0].z == e.node[1].z:
+                    edges.append(e)
+    print("Number of Edges in Geschoss: {}".format(len(edges)))
+    return edges

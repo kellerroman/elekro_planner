@@ -26,7 +26,8 @@ class HausCreator:
         z = 0
         for g in self.haus.geschosse:
             z += g.height
-        self.haus.geschosse.append(Geschoss(gid, gname, height, z, self.haus))
+        heights = [0, 30, 100, 220, height]
+        self.haus.geschosse.append(Geschoss(gid, gname, height, heights, z, self.haus))
         return self
 
     def room(self):
@@ -80,6 +81,22 @@ class HausCreator:
         )
         return self
 
+    def Lampe(self, x, y, vert=VerticalPosition.Decke):
+        sid = len(self.haus.geschosse[-1].rooms[-1].objects) + 1
+        name = "Lampe" + str(sid)
+        self.haus.geschosse[-1].rooms[-1].objects.append(
+            Steckdose(
+                sid,
+                Position(x, y, vert),
+                name,
+                1,
+                KnxType.NoKnx,
+                KabelType.NYM5x15,
+                self.haus.geschosse[-1].rooms[-1],
+            )
+        )
+        return self
+
 
 def define_testcase():
     yaml = dict()
@@ -89,6 +106,7 @@ def define_testcase():
                 "id": 1,
                 "name": "G1",
                 "height": 250,
+                "heights": [0, 30, 100, 220, 250],
                 "walls": [
                     {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 300]},
                     {"id": 2, "pos": {"hori": [0, 0]}, "ende": [500, 20]},
@@ -98,6 +116,7 @@ def define_testcase():
                 "id": 2,
                 "name": "G2",
                 "height": 300,
+                "heights": [0, 30, 100, 250, 300],
                 "walls": [
                     {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 300]},
                     {"id": 2, "pos": {"hori": [0, 0]}, "ende": [400, 20]},
@@ -239,6 +258,7 @@ def define_testcase_simple1():
                 "id": 1,
                 "name": "G1",
                 "height": 200,
+                "heights": [0, 30, 100, 150, 200],
                 "walls": [
                     {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 300]},
                     {"id": 2, "pos": {"hori": [0, 0]}, "ende": [500, 20]},
@@ -297,6 +317,7 @@ def single_wall():
                 "id": 1,
                 "name": "G1",
                 "height": 200,
+                "heights": [0, 30, 100, 150, 200],
                 "walls": [
                     {"id": 1, "pos": {"hori": [0, 0]}, "ende": [20, 500]},
                 ],

@@ -13,8 +13,8 @@ from elektro_planner.create_roombook import create_roombook
 from elektro_planner.calc_kabel import calc_kabel_len, calc_wires
 from elektro_planner.associate_anschluesse import associate_objects_to_walls_and_nodes
 import simple_haus
-import simple_haus
 from pytest import approx
+import copy
 
 
 def test_number_of_kabels():
@@ -60,18 +60,19 @@ def test_simple_haus_kabel():
     assert haus.kabel[0].end[0] == "2.2.3"
     assert haus.kabel[0].end[1] == "2.2.4"
     assert haus.kabel[0].end[2] == "2.2.5"
-    assert haus.kabel[0].length == approx(11.1)  # 2 + 4 + 0.2 + 0.2 + 0.2)
+    assert haus.kabel[0].length == approx(9.4)
     # impicit definde cabels
     assert haus.kabel[1].start == "1.1.1"
     assert len(haus.kabel[1].end) == 1
     assert haus.kabel[1].end[0] == "1.1.2"
     assert haus.kabel[1].type == KabelType.NYM5x15
-    assert haus.kabel[1].length == approx(1.4 + 2.4)
-    assert haus.kabel[2].length == approx(4)
+    assert haus.kabel[1].length == approx(3.4)
+
+    assert haus.kabel[2].length == approx(3.6)
     assert haus.kabel[3].end[0] == "2.1.1"
     # directly above it
-    assert haus.kabel[3].length == approx(2.5)
-    assert haus.kabel[4].length == approx(2.5 + 0.4 + 2.4)
+    assert haus.kabel[3].length == approx(2.8)
+    assert haus.kabel[4].length == approx(5.6)
 
 
 def test_indirect_connection():
@@ -96,7 +97,8 @@ def test_indirect_connection():
     # for e in path:
     #     print(e)
     # assert len(path) == 8
-    assert haus.kabel[0].length == approx(1.0 + 2.4 + 1.0 + 0.9 + 1.0)
+    print(haus.kabel[0])
+    assert haus.kabel[0].length == approx(2.4 + 1.0 + 0.9 + 1.0)
 
 
 def test_autogen_kabel_with_astar_len_calc():
@@ -195,6 +197,7 @@ def test_cable_with_connector():
         .Steckdose(360, 200)
         .get_house()
     )
+    haus2 = copy.deepcopy(haus)
     create_nodes_from_walls(haus)
     assert len(haus.nodes) == 12
     associate_objects_to_walls_and_nodes(haus)
@@ -203,7 +206,11 @@ def test_cable_with_connector():
     assert len(haus.kabel) == 1
     calc_wires(haus)
     assert haus.kabel[-1].length > 7.9
-    create_nodes_from_connectors(haus)
-    assert len(haus.nodes) == 12 + 3 * 2 + 2
-    calc_wires(haus)
-    assert haus.kabel[-1].length < 7.9
+
+    create_nodes_from_walls(haus2)
+    associate_objects_to_walls_and_nodes(haus2)
+    autogenerate_kabel(haus2)
+    create_nodes_from_connectors(haus2)
+    assert len(haus2.nodes) == 12 + 3 * 2 + 2
+    calc_wires(haus2)
+    assert haus2.kabel[-1].length < 7.9

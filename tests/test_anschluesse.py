@@ -78,6 +78,7 @@ def test_read_struktur():
                 "id": 1,
                 "name": "G1",
                 "height": 236,
+                "heights": [0, 30, 100, 210, 236],
                 "walls": [
                     {"id": 1, "pos": {"hori": [25, 0]}, "ende": [36.5, 1049]},
                     {
@@ -91,6 +92,7 @@ def test_read_struktur():
                 "id": 2,
                 "name": "G2",
                 "height": 255,
+                "heights": [0, 30, 100, 230, 255],
                 "walls": [
                     {"id": 1, "pos": {"hori": [25, 0]}, "ende": [36.5, 324]},
                     {
@@ -104,6 +106,7 @@ def test_read_struktur():
                 "id": 3,
                 "name": "G3",
                 "height": 255,
+                "heights": [0, 30, 100, 230, 255],
                 "walls": [
                     {"id": 1, "pos": {"hori": [25, 0]}, "ende": [24, "292.5+31.5"]},
                     {"id": 2, "pos": {"hori": [0, 292.5]}, "ende": [24, 883]},

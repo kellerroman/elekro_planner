@@ -25,6 +25,12 @@ def add_node_to_wall(wall, ed, recursive_add=True):
     #         print("Identical Nodes found")
 
     n_nodes = len(ed_temp)
+    if n_nodes <= 1:
+        raise RuntimeError(
+            "add_node_to_wall: Node: {} \n Wall doesnt have enought nodes: {}".format(
+                ed, wall.__info__()
+            )
+        )
     pos_new = nodes_sorted.index(ed)
     wall.add_node(ed, recursive_add)
     if pos_new == 0:

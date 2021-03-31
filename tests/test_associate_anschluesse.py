@@ -103,3 +103,21 @@ def test_single_wall_with_obj_at_diff_sides_of_wall_same_pos():
     assert len(haus.nodes) == 4
     associate_objects_to_walls_and_nodes(haus)
     assert len(haus.nodes) == 10
+
+
+def test_decke():
+    haus = (
+        simple_haus.HausCreator()
+        .geschoss()
+        .wall(0, 0, 40, 400)
+        .wall(0, 0, 400, 40)
+        .wall(200, 0, 40, 400)
+        .wall(360, 0, 40, 400)
+        .room()
+        .Steckdose(0, 200)
+        .Steckdose(40, 200)
+        .Lampe(300, 200)
+        .get_house()
+    )
+    create_nodes_from_walls(haus)
+    associate_objects_to_walls_and_nodes(haus)
